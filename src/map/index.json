@@ -1,0 +1,50 @@
+{
+  "0": [
+    {
+      "name": "个人信息",
+      "path": "/user/info",
+      "hasSubMenu": false,
+      "icon":"el-icon-user"
+    }
+  ],
+  "1": [
+    {
+      "name": "个人信息",
+      "path": "/user/info",
+      "hasSubMenu": false,
+      "icon":"el-icon-user"
+    }
+  ],
+  "2": [
+    {
+      "name": "个人信息",
+      "path": "/user/info",
+      "hasSubMenu": false,
+      "icon":"el-icon-user"
+    }
+  ],
+  "3": [
+    {
+      "name": "个人信息",
+      "path": "/user/info",
+      "hasSubMenu": false,
+      "icon":"el-icon-user"
+    }
+  ],
+  "4": [
+    {
+      "name": "个人信息",
+      "path": "/user/info",
+      "hasSubMenu": false,
+      "icon":"el-icon-user"
+    }
+  ],
+  "5": [
+    {
+      "name": "个人信息",
+      "path": "/user/info",
+      "hasSubMenu": false,
+      "icon":"el-icon-user"
+    }
+  ]
+}
