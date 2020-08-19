@@ -87,7 +87,7 @@ export default {
 };
 </script>
 <style lang='less'>
-@headerHeight: 110px;
+@headerHeight: 90px;
 .user-page {
   height: 100%;
   .user-header {
