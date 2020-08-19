@@ -102,7 +102,7 @@ export default {
     position: relative;
     .user-menu {
       position: absolute;
-      width: 200px;
+      width: 220px;
       overflow: auto;
       height: 100%;
       top: 0;
