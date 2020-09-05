@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
-
+import Fun from './fun'
 Vue.use(VueRouter)
 
   const routes = [
@@ -14,17 +14,7 @@ Vue.use(VueRouter)
     path:'/user',
     name:"国合处管理系统",
     component:()=>import('views/user'),
-    children:[
-      {
-        path:"/",
-        redirect:'info'
-      },
-      {
-        path:"info",
-        name:"个人信息",
-        component:()=>import('views/user/info')
-      }
-    ]
+    children:Fun
   }
 ]
 

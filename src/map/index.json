@@ -37,6 +37,18 @@
       "path": "/user/info",
       "hasSubMenu": false,
       "icon":"el-icon-user"
+    },
+    {
+      "name":"查看国合机构",
+      "path":"/user/icCheck",
+      "hasSubMenu":false,
+      "icon":"el-icon-s-management"
+    },
+    {
+      "name":"填报申请",
+      "path":"/user/apply",
+      "hasSubMenu":false,
+      "icon":"el-icon-tickets"
     }
   ],
   "5": [
@@ -45,6 +57,18 @@
       "path": "/user/info",
       "hasSubMenu": false,
       "icon":"el-icon-user"
+    },
+    {
+      "name":"查看国合机构",
+      "path":"/user/icCheck",
+      "hasSubMenu":false,
+      "icon":"el-icon-s-management"
+    },
+    {
+      "name":"填报申请",
+      "path":"/user/apply",
+      "hasSubMenu":false,
+      "icon":"el-icon-tickets"
     }
   ]
 }

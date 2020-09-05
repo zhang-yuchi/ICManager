@@ -1,0 +1,21 @@
+module.exports = [
+  {
+    path:"/",
+    redirect:'info'
+  },
+  {
+    path:"info",
+    name:"个人信息",
+    component:()=>import('views/user/info')
+  },
+  {
+    path:"icCheck",
+    name:"国合机构查看",
+    component:()=>import('views/user/icCheck')
+  },
+  {
+    path:"apply",
+    name:"申请填写",
+    component:()=>import('views/user/apply')
+  }
+]
