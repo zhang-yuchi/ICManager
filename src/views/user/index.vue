@@ -7,31 +7,19 @@
     <div class="user-content">
       <div class="user-menu">
         <el-menu
-          default-active="/user/info"
+          :default-active="$route.path"
           class="el-menu-vertical-demo"
           background-color="#f9f8f5"
           text-color="#333"
           active-text-color="#00b79e"
           :router="true"
         >
-          <el-submenu index="1">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>导航一</span>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item index="1-1">选项1</el-menu-item>
-              <el-menu-item index="1-2">选项2</el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>
-          <el-menu-item index="/user/info">
-            <i class="el-icon-menu"></i>
-            <span slot="title">导航二</span>
-          </el-menu-item>
-          <el-menu-item index="4">
-            <i class="el-icon-setting"></i>
-            <span slot="title">导航四</span>
-          </el-menu-item>
+          <div v-for="item in authBox" :key="item.path">
+            <el-menu-item  :index="item.path">
+              <i :class="item.icon"></i>
+              <span slot="title">{{item.name}}</span>
+            </el-menu-item>
+          </div>
         </el-menu>
       </div>
       <div class="user-wrap">
@@ -51,7 +39,11 @@ export default {
   components: {},
   data() {
     //这里存放数据
-    return {};
+    return {
+      authBox: [],
+      applyModule:[],
+      statisticsModule:[]
+    };
   },
   //监听属性 类似于data概念
   computed: {},
@@ -63,7 +55,8 @@ export default {
   created() {},
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {
-    console.log(mergeFun([1, 4, 5]));
+    this.authBox = mergeFun([4,5]);
+    console.log(this.authBox);
   },
   beforeCreate() {}, //生命周期 - 创建之前
   beforeMount() {}, //生命周期 - 挂载之前
@@ -106,6 +99,7 @@ export default {
       }
     }
     .user-wrap {
+      background-color: #fafafa;
       margin-left: 200px;
       height: 100%;
       box-sizing: border-box;

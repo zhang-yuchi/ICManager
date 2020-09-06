@@ -11,11 +11,11 @@ module.exports = [
   {
     path:"icCheck",
     name:"国合机构查看",
-    component:()=>import('views/user/icCheck')
+    component:()=>import('views/function/icCheck')
   },
   {
     path:"apply",
     name:"申请填写",
-    component:()=>import('views/user/apply')
+    component:()=>import('views/function/apply')
   }
 ]
