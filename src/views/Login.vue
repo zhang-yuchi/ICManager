@@ -11,7 +11,7 @@
         </div>
         <div class="form-line">
           <img class="icon" src="~assets/image/psd.svg" alt="" />
-          <el-input v-model="psd" type="password" placeholder="密码"></el-input>
+          <el-input v-model="pwd" type="password" placeholder="密码"></el-input>
         </div>
         <div class="form-line">
           <img class="icon" src="~assets/image/quanxian.svg" alt="" />
@@ -21,18 +21,39 @@
                 v-for="item in roles"
                 :label="item.index"
                 :key="item.index"
-                @click.prevent
                 >{{ item.role }}</el-checkbox-button
               >
             </el-checkbox-group>
           </div>
         </div>
         <div class="form-line">
-          <div class="icon"></div>
-          <el-button type="primary" @click="to">登录</el-button>
+          <el-button type="primary" @click="to">登 录</el-button>
+        </div>
+        <div class="form-line">
+          <el-link type="primary" @click="dialogFormVisible = true">注 册</el-link>
         </div>
       </div>
     </div>
+
+    <el-dialog title="注 册" :visible.sync="dialogFormVisible">
+      <el-form :model="register">
+        <el-form-item label="学 号">
+          <el-input v-model="register.account"></el-input>
+        </el-form-item>
+        <el-form-item label="身份证后六位">
+          <el-input v-model="register.idCard"></el-input>
+        </el-form-item>
+        <el-form-item label="设置密码">
+          <el-input v-model="register.pwd"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="subRegister"
+          >提 交</el-button
+        >
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -47,7 +68,7 @@ export default {
     //这里存放数据
     return {
       account: "",
-      psd: "",
+      pwd: "",
       roles: [
         { role: "学生", index: 5 },
         { role: "教职工", index: 4 },
@@ -57,6 +78,8 @@ export default {
         { role: "管理员", index: 0 },
       ],
       role: [],
+      dialogFormVisible: false,
+      register:{}
     };
   },
   //监听属性 类似于data概念
@@ -69,6 +92,10 @@ export default {
       this.$store.commit("setRole", this.role);
       console.log(this.$store.state.role);
       this.$router.push("/user");
+    },
+    subRegister(){
+      console.log('提交注册');
+      register = {}
     },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
@@ -107,7 +134,7 @@ export default {
       width: 680px;
       height: 440px;
       box-sizing: border-box;
-      padding: 10px 20px;
+      padding: 10px 60px 0;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -152,6 +179,12 @@ export default {
                 width: 100%;
               }
             }
+          }
+        }
+        .el-link--primary {
+          .el-link--inner {
+            font-size: 16px;
+            padding: 2px;
           }
         }
       }
