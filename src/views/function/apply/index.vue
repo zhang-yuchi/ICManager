@@ -1,23 +1,37 @@
 <!--  -->
 <template>
   <div class>
-    <router-view></router-view>
+    <list :total='20' title='申报登记列表' ></list>
   </div>
 </template>
 
 <script>
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 //例如：import 《组件名称》 from '《组件路径》';
-
+import list from "components/list";
 export default {
   //import引入的组件需要注入到对象中才能使用
-  components: {},
+  components: { list },
   data() {
     //这里存放数据
-    return {};
+    return {
+      
+    };
   },
   //监听属性 类似于data概念
-  computed: {},
+  computed: {
+    funModule() {
+      return this.$store.state.funModule;
+    },
+    applyModule() {
+      return this.funModule.find((val) => {
+        return val.path.search(/apply/) !== -1;
+      });
+    },
+    applySubFun() {
+      return this.applyModule.subMenu;
+    },
+  },
   //监控data中的数据变化
   watch: {},
   //方法集合
@@ -25,7 +39,10 @@ export default {
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {},
   //生命周期 - 挂载完成（可以访问DOM元素）
-  mounted() {},
+  mounted() {
+    console.log("111");
+    console.log(this.applySubFun);
+  },
   beforeCreate() {}, //生命周期 - 创建之前
   beforeMount() {}, //生命周期 - 挂载之前
   beforeUpdate() {}, //生命周期 - 更新之前

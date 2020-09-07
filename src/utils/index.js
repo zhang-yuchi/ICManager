@@ -1,4 +1,7 @@
-import authMap from '../map/index.json'
+import {
+  authMap
+} from '../map/index'
+console.log(authMap);
 export const mergeFun = function (auth) {
   let authBox = []
   auth.map((authNum) => {

@@ -14,8 +14,8 @@
           active-text-color="#00b79e"
           :router="true"
         >
-          <div v-for="item in authBox" :key="item.path">
-            <el-menu-item  :index="item.path">
+          <div v-for="item in funModule" :key="item.path">
+            <el-menu-item :index="item.path">
               <i :class="item.icon"></i>
               <span slot="title">{{item.name}}</span>
             </el-menu-item>
@@ -39,14 +39,14 @@ export default {
   components: {},
   data() {
     //这里存放数据
-    return {
-      authBox: [],
-      applyModule:[],
-      statisticsModule:[]
-    };
+    return {};
   },
   //监听属性 类似于data概念
-  computed: {},
+  computed: {
+    funModule(){
+      return this.$store.state.funModule
+    }
+  },
   //监控data中的数据变化
   watch: {},
   //方法集合
@@ -55,8 +55,10 @@ export default {
   created() {},
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {
-    this.authBox = mergeFun([4,5]);
-    console.log(this.authBox);
+    this.$store.commit({
+      type: "changeFunModule",
+      module: mergeFun([5]),
+    });
   },
   beforeCreate() {}, //生命周期 - 创建之前
   beforeMount() {}, //生命周期 - 挂载之前
@@ -100,7 +102,7 @@ export default {
     }
     .user-wrap {
       background-color: #fafafa;
-      margin-left: 200px;
+      margin-left: 220px;
       height: 100%;
       box-sizing: border-box;
       overflow: auto;
