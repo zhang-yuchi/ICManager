@@ -43,9 +43,9 @@ export default {
   },
   //监听属性 类似于data概念
   computed: {
-    funModule(){
-      return this.$store.state.funModule
-    }
+    funModule() {
+      return this.$store.state.funModule;
+    },
   },
   //监控data中的数据变化
   watch: {},
@@ -57,8 +57,9 @@ export default {
   mounted() {
     this.$store.commit({
       type: "changeFunModule",
-      module: mergeFun([5]),
+      module: mergeFun([3, 5]),
     });
+    console.log(this.$store.state);
   },
   beforeCreate() {}, //生命周期 - 创建之前
   beforeMount() {}, //生命周期 - 挂载之前

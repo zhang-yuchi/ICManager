@@ -4,9 +4,22 @@
     <div class="ov-table-title">
       <div class="title-text">{{title}}</div>
       <div class="ov-operation-list">
+        <el-select v-model="queryField" class="select-input" placeholder="请选择">
+          <el-option
+            v-for="item in queryOption"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
+        </el-select>
+        <el-input
+          v-model="querystr"
+          class="query-input"
+          @keydown.native="query"
+          placeholder="请输入搜素内容"
+        ></el-input>
         <!-- 操作组件 -->
         <el-pagination
-          @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="1"
           :page-size="pageSize"
@@ -16,9 +29,32 @@
       </div>
     </div>
     <el-table :data="tableData" stripe style="width: 100%">
-      <el-table-column prop="num" label="序号" width="180"></el-table-column>
-      <el-table-column prop="name" label="申报登记项目" width="180"></el-table-column>
-      <el-table-column prop="address" label="操作"></el-table-column>
+      <el-table-column
+        v-for="(item,index) in tableColumn"
+        :key="item[columnKey]"
+        :prop="item.prop"
+        :label="item.name"
+        :width="index<tableColumn.length-1?item.width?item.width:180:0"
+      >
+        <template slot-scope="scope">
+          <div v-if="item.prop!=='operator'">{{scope.row[item.prop]}}</div>
+          <div v-else>
+            <el-button
+              @click="handleCheck(scope.row,btn.emit)"
+              type="text"
+              size="small"
+              v-for="btn in item.button"
+              :key="btn.btnName"
+            >{{btn.btnName}}</el-button>
+          </div>
+        </template>
+      </el-table-column>
+      <!-- <el-table-column prop="name" label="申报登记项目" width="180"></el-table-column>
+      <el-table-column  label="操作">
+        <template slot-scope="scope">
+          <el-button @click="handleCheckk(scope.row)" type="text" size="small">查看</el-button>
+        </template>
+      </el-table-column>-->
     </el-table>
   </div>
 </template>
@@ -30,46 +66,66 @@
 export default {
   //import引入的组件需要注入到对象中才能使用
   props: {
-    title:String,
+    title: String,
     total: Number,
     pageSize: {
       type: Number,
-      default: 10,
+      default: 9,
+    },
+    tableData: { type: Array, default: [] },
+    tableColumn: {
+      type: Array,
+      default: [],
+    },
+    columnKey: {
+      type: String,
+      required: true,
     },
   },
   components: {},
   data() {
     //这里存放数据
     return {
-      tableData: [
-        {
-          num: 1,
-          name: "zyc",
-          address: "sss",
-        },
-        {
-          num: 1,
-          name: "zyc",
-          address: "sss",
-        },
-      ],
+      querystr: "",
+      queryField: "",
     };
   },
   //监听属性 类似于data概念
   computed: {
-    maxPage(){
-      return Math.ceil(this.total/this.pageSize)
-    }
+    maxPage() {
+      return Math.ceil(this.total / this.pageSize);
+    },
+    queryOption() {
+      let arr = [];
+      this.tableColumn.map((item) => {
+        if (!item.noQuery) {
+          arr.push({
+            label: item.name,
+            value: item.prop,
+          });
+        }
+      });
+      return arr
+    },
   },
   //监控data中的数据变化
   watch: {},
   //方法集合
   methods: {
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
-    },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      this.$emit("pageChange", val);
+    },
+    handleCheck(val, emitName) {
+      this.$emit(emitName, val);
+    },
+    query(e) {
+      if (e.code === "Enter") {
+        console.log("搜索");
+        this.$emit('query',{
+          prop:this.queryField,
+          str:this.querystr
+        })
+      }
     },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
@@ -97,6 +153,18 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+  .ov-operation-list {
+    display: flex;
+    align-items: center;
+    .select-input {
+      margin-right: 15px;
+      width: 150px;
+    }
+    .query-input {
+      margin-right: 15px;
+      width: 200px !important;
+    }
   }
 }
 </style>

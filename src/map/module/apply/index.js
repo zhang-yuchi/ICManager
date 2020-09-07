@@ -4,6 +4,7 @@ export default function (subModules) {
     "name": "填报申请",
     "path": "/user/apply",
     "icon": "el-icon-tickets",
+    listAuth:[1,2,3],
     subMenu:[]
   }
   subModules.map(num=>{

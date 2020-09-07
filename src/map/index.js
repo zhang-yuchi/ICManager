@@ -1,7 +1,6 @@
 import info from './module/user/info' //个人中心
 import checkIC from './module/user/checkIC'
 import apply from './module/apply/index'
-
 export const authMap = {
   "0": [
     info
