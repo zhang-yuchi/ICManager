@@ -12,7 +12,6 @@ Vue.use(VueRouter)
   },
   {
     path:'/user',
-    name:"国合处管理系统",
     component:()=>import('views/user'),
     children:Fun
   }
