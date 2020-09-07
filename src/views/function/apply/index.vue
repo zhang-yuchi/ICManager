@@ -17,7 +17,7 @@
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 //例如：import 《组件名称》 from '《组件路径》';
 import list from "components/list";
-
+import { checkAuth } from "../../../utils/index";
 export default {
   //import引入的组件需要注入到对象中才能使用
   components: { list },
@@ -31,7 +31,7 @@ export default {
         {
           prop: "operator",
           name: "操作",
-          noQuery:true,//不需要纳入查询
+          noQuery: true, //不需要纳入查询
           button: [
             {
               btnName: "登记",
@@ -65,19 +65,25 @@ export default {
         };
       });
     },
+    role() {
+      return this.$store.state.role;
+    },
   },
   //监控data中的数据变化
   watch: {},
   //方法集合
   methods: {
-    findAuth(){
-
-    },
     handleCheck(val) {
-      console.log(val);
-    },
-    handleDelete(val) {
-      console.log("delete", val);
+      let isList = checkAuth(this.applyModule.listAuth, this.role);
+      const index = val.num - 1;
+      const routerName = this.applySubFun[index].path;
+      if (isList) {
+        //去list
+        this.$router.push("/user/apply/" + routerName + "/list");
+      } else {
+        //去info
+        this.$router.push("/user/apply/" + routerName + "/info");
+      }
     },
     pageChange(page) {
       this.currentPage = page;

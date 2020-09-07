@@ -30,7 +30,17 @@ export const mergeFun = function (auth) {
   })
   return authBox
 }
-
+export const checkAuth = function(auth,role){
+  let flag = false
+  auth.map(au=>{
+    role.map(item=>{
+      if(au==item){
+        flag = true
+      }
+    })
+  })
+  return flag
+}
 function _flat(obj, src) {
   const len = obj.length
   src.map(item => {

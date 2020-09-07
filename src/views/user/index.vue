@@ -3,6 +3,7 @@
   <div class="user-page">
     <div class="user-header">
       <img src="../../assets/image/logo.png" height="100%" alt />
+      <i class="el-icon-switch-button" @click="logout"></i>
     </div>
     <div class="user-content">
       <div class="user-menu">
@@ -46,19 +47,27 @@ export default {
     funModule() {
       return this.$store.state.funModule;
     },
+    role() {
+      return this.$store.state.role;
+    },
   },
   //监控data中的数据变化
   watch: {},
   //方法集合
-  methods: {},
+  methods: {
+    logout(){
+      this.$router.push('/')
+    }
+  },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {},
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {
     this.$store.commit({
       type: "changeFunModule",
-      module: mergeFun([3, 5]),
+      module: mergeFun(this.role),
     });
+    console.log(this.funModule);
     console.log(this.$store.state);
   },
   beforeCreate() {}, //生命周期 - 创建之前
@@ -75,6 +84,7 @@ export default {
 @headerHeight: 90px;
 .user-page {
   height: 100%;
+  // position: relative;
   .user-header {
     position: relative;
     background-color: rgb(249, 248, 245);
@@ -83,6 +93,15 @@ export default {
     // width:100%
     border-bottom: solid 1px #e6e6e6;
     box-sizing: border-box;
+    .el-icon-switch-button {
+      color: #9e9c9c;
+      font-size: 18px;
+      right: 30px;
+      position: absolute;
+      top: 50%;
+      cursor: pointer;
+      transform: translateY(-50%);
+    }
   }
   .user-content {
     height: calc(100% - @headerHeight);
