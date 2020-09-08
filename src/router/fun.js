@@ -29,5 +29,13 @@ module.exports = [{
     path: "statistics",
     name: "统计汇总",
     component: () => import('views/function/statistics'),
-  }
+  },
+  {
+    path: "statistics/:router/info",
+    component: () => import('views/function/info')
+  },
+  {
+    path: "statistics/:router/list",
+    component: () => import('views/function/list')
+  },
 ]
