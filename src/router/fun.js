@@ -25,4 +25,9 @@ module.exports = [{
     path: "apply/:router/list",
     component: () => import('views/function/list')
   },
+  {
+    path: "statistics",
+    name: "统计汇总",
+    component: () => import('views/function/statistics'),
+  }
 ]
