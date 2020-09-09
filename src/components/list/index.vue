@@ -77,10 +77,6 @@ export default {
       type: Array,
       default: [],
     },
-    columnKey: {
-      type: String,
-      required: true,
-    },
   },
   components: {},
   data() {
@@ -88,6 +84,7 @@ export default {
     return {
       querystr: "",
       queryField: "",
+      columnKey:""
     };
   },
   //监听属性 类似于data概念
@@ -131,7 +128,9 @@ export default {
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {},
   //生命周期 - 挂载完成（可以访问DOM元素）
-  mounted() {},
+  mounted() {
+    this.columnKey = this.tableColumn[0].prop
+  },
   beforeCreate() {}, //生命周期 - 创建之前
   beforeMount() {}, //生命周期 - 挂载之前
   beforeUpdate() {}, //生命周期 - 更新之前

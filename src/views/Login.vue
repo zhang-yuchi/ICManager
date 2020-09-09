@@ -135,22 +135,15 @@ export default {
 </script>
 <style lang="less">
 .login-page {
-  width: 100%;
   height: 100%;
-  min-height: 820px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background-color: #f9f8f5;
   .content {
-    min-width: 1236px;
-    min-height: 630px;
-    margin-top: -190px;
+    // margin-top: -25px;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    // justify-content: center;
     .login-box {
       width: 680px;
       height: 440px;

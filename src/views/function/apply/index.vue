@@ -5,7 +5,6 @@
       :total="tableAllData.length"
       title="申报登记列表"
       :tableColumn="tableColumn"
-      columnKey="name"
       @pageChange="pageChange"
       :tableData="tableData"
       @handleCheck="handleCheck"
