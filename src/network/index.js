@@ -5,7 +5,7 @@ const service = axios.create({
 //请求处理
 service.interceptors.request.use((config) => {
   config.headers = Object.assign({}, config.headers, {
-    token: localStorage.getItem('token')
+    token: sessionStorage.getItem('ICtoken')
   })
   return config
 })
@@ -19,3 +19,4 @@ service.interceptors.response.use((res) => {
 
 })
 export default service
+

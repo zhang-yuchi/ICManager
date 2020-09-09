@@ -15,22 +15,22 @@
         </div>
         <div class="form-line">
           <img class="icon" src="~assets/image/quanxian.svg" alt="" />
-          <div class="line">
-            <el-checkbox-group v-model="role">
-              <el-checkbox-button
-                v-for="item in roles"
-                :label="item.index"
-                :key="item.index"
-                >{{ item.role }}</el-checkbox-button
-              >
-            </el-checkbox-group>
-          </div>
+          <el-radio-group v-model="role">
+            <el-radio-button
+              v-for="item in roles"
+              :key="item.index"
+              :label="item.index"
+              >{{ item.role }}</el-radio-button
+            >
+          </el-radio-group>
         </div>
         <div class="form-line">
           <el-button type="primary" @click="to">登 录</el-button>
         </div>
         <div class="form-line">
-          <el-link type="primary" @click="dialogFormVisible = true">注 册</el-link>
+          <el-link type="primary" @click="dialogFormVisible = true"
+            >注 册</el-link
+          >
         </div>
       </div>
     </div>
@@ -49,9 +49,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="subRegister"
-          >提 交</el-button
-        >
+        <el-button type="primary" @click="subRegister">提 交</el-button>
       </div>
     </el-dialog>
   </div>
@@ -60,6 +58,7 @@
 <script>
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 //例如：import 《组件名称》 from '《组件路径》';
+import { login } from "network/public";
 
 export default {
   //import引入的组件需要注入到对象中才能使用
@@ -77,9 +76,9 @@ export default {
         { role: "校领导", index: 1 },
         { role: "管理员", index: 0 },
       ],
-      role: [],
+      role: "",
       dialogFormVisible: false,
-      register:{}
+      register: {},
     };
   },
   //监听属性 类似于data概念
@@ -89,13 +88,35 @@ export default {
   //方法集合
   methods: {
     to() {
-      this.$store.commit("setRole", this.role);
-      console.log(this.$store.state.role);
-      this.$router.push("/user");
+      if (!this.account || !this.pwd) {
+        this.$message.error("请输入账号或密码");
+      } else if (!this.role && this.role !== 0) {
+        this.$message.error("请 选 择 身 份");
+        return 0;
+      } else {
+        this.$store.commit("setRole", [this.role]);
+        console.log(this.$store.state.role);
+        let obj = {
+          username: this.account,
+          password: this.pwd,
+          icRole: this.role,
+        };
+        login(obj).then((res) => {
+          console.log(res);
+          if (res.code === 0) {
+            sessionStorage.setItem('ICtoken',res.token)
+            console.log(res.token);
+            this.$router.push("/user");
+          } else {
+            this.$message.error(res.msg);
+          }
+        });
+        
+      }
     },
-    subRegister(){
-      console.log('提交注册');
-      register = {}
+    subRegister() {
+      console.log("提交注册");
+      register = {};
     },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
@@ -170,21 +191,16 @@ export default {
           flex: 1;
           margin: 0;
           padding: 0;
-          .el-checkbox-group {
-            width: 100%;
-            display: flex;
-            .el-checkbox-button {
-              flex: 1;
-              .el-checkbox-button__inner {
-                width: 100%;
-              }
-            }
-          }
         }
-        .el-link--primary {
-          .el-link--inner {
-            font-size: 16px;
-            padding: 2px;
+        .el-radio-group{
+          height: 40px;
+          flex: 1;
+          display: flex;
+          .el-radio-button{
+            flex: 1;
+            .el-radio-button__inner{
+              width: 100%;
+            }
           }
         }
       }

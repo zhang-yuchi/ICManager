@@ -18,7 +18,7 @@
           <div v-for="item in funModule" :key="item.path">
             <el-menu-item :index="item.path">
               <i :class="item.icon"></i>
-              <span slot="title">{{item.name}}</span>
+              <span slot="title">{{ item.name }}</span>
             </el-menu-item>
           </div>
         </el-menu>
@@ -55,9 +55,10 @@ export default {
   watch: {},
   //方法集合
   methods: {
-    logout(){
-      this.$router.push('/')
-    }
+    logout() {
+      this.$router.push("/");
+      sessionStorage.removeItem("ICtoken");
+    },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {},
@@ -80,7 +81,7 @@ export default {
   deactivated() {}, //如果有keep-alive缓存功能,当该页面撤销使这个函数会触发
 };
 </script>
-<style lang='less'>
+<style lang="less">
 @headerHeight: 90px;
 .user-page {
   height: 100%;
