@@ -102,10 +102,10 @@ export default {
         // { type: "checkbox", prop: "hobit", label: "爱好", required: false },
       ],
       rules: {
-        // name: [
-        //   { required: true, message: "请输入活动名称", trigger: "blur" },
-        //   { min: 3, max: 5, message: "长度为3-5", trigger: "blur" },
-        // ],
+        name: [
+          { required: true, message: "请输入活动名称", trigger: "blur" },
+          { min: 3, max: 5, message: "长度为3-5", trigger: "blur" },
+        ],
         // unit: [],
         // job: [],
         // country: [],
