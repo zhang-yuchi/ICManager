@@ -54,8 +54,9 @@ export default {
 };
 </script>
 <style lang='less'>
-#app,html,body{
+#app,body,html{
   height: 100%;
   min-width: 1200px;
 }
+
 </style>

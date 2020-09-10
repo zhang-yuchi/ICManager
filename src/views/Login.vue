@@ -137,14 +137,19 @@ export default {
 .login-page {
   height: 100%;
   background-color: #f9f8f5;
+  .logo{
+    margin: 0 auto;
+    display: block;
+  }
   .content {
     // margin-top: -25px;
     height: 100%;
-    display: flex;
+    // display: flex;
     flex-direction: column;
     align-items: center;
     // justify-content: center;
     .login-box {
+      margin: 0 auto;
       width: 680px;
       height: 440px;
       box-sizing: border-box;
