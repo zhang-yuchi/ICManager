@@ -1,7 +1,7 @@
 <!--  -->
 <template>
   <div class>
-    <unityList title='国合机构列表' ></unityList>
+    <unityList title="国合机构列表"></unityList>
   </div>
 </template>
 
@@ -11,7 +11,7 @@
 import unityList from "components/unityList";
 export default {
   //import引入的组件需要注入到对象中才能使用
-  components: {unityList},
+  components: { unityList },
   data() {
     //这里存放数据
     return {};
@@ -34,6 +34,7 @@ export default {
   destroyed() {}, //生命周期 - 销毁完成
   activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
   deactivated() {}, //如果有keep-alive缓存功能,当该页面撤销使这个函数会触发
+ 
 };
 </script>
 <style lang='less'>

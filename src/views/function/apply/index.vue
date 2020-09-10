@@ -87,7 +87,7 @@ export default {
     pageChange(page) {
       this.currentPage = page;
       this.getData();
-      console.log(this.tableData);
+      // console.log(this.tableData);
     },
     getData() {
       this.tableData = this.tableAllData.slice(
@@ -100,7 +100,7 @@ export default {
   created() {},
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {
-    console.log(this.applyModule);
+    // console.log(this.applyModule);
     this.getData();
   },
   beforeCreate() {}, //生命周期 - 创建之前

@@ -21,7 +21,7 @@
         <!-- 操作组件 -->
         <el-pagination
           @current-change="handleCurrentChange"
-          :current-page="1"
+          :current-page="currentPage"
           :page-size="pageSize"
           layout="prev, pager, next, jumper"
           :total="total"
@@ -29,32 +29,29 @@
       </div>
     </div>
     <el-table :data="tableData" stripe style="width: 100%">
-      <el-table-column
-        v-for="(item,index) in tableColumn"
-        :key="item[columnKey]"
-        :prop="item.prop"
-        :label="item.name"
-        :width="index<tableColumn.length-1?item.width?item.width:180:0"
-      >
-        <template slot-scope="scope">
-          <div v-if="item.prop!=='operator'">{{scope.row[item.prop]}}</div>
-          <div v-else>
-            <el-button
-              @click="handleCheck(scope.row,btn.emit)"
-              type="text"
-              size="small"
-              v-for="btn in item.button"
-              :key="btn.btnName"
-            >{{btn.btnName}}</el-button>
-          </div>
-        </template>
-      </el-table-column>
-      <!-- <el-table-column prop="name" label="申报登记项目" width="180"></el-table-column>
-      <el-table-column  label="操作">
-        <template slot-scope="scope">
-          <el-button @click="handleCheckk(scope.row)" type="text" size="small">查看</el-button>
-        </template>
-      </el-table-column>-->
+
+        <el-table-column
+          v-for="(item,index) in tableColumn"
+          :key="item[columnKey]"
+          :prop="item.prop"
+          :label="item.name"
+          :width="index<tableColumn.length-1?item.width?item.width:180:item.width?item.width:0"
+          :fixed="index==0?'left':index<tableColumn.length-1?false:'right'"
+        >
+          <template slot-scope="scope">
+            <div v-if="item.prop!=='operator'">{{scope.row[item.prop]?scope.row[item.prop]:'暂无'}}</div>
+            <div v-else>
+              <el-button
+                @click="handleCheck(scope.row,btn.emit)"
+                type="text"
+                size="small"
+                v-for="btn in item.button"
+                :key="btn.btnName"
+              >{{btn.btnName}}</el-button>
+            </div>
+          </template>
+        </el-table-column>
+
     </el-table>
   </div>
 </template>
@@ -72,10 +69,14 @@ export default {
       type: Number,
       default: 9,
     },
-    tableData: { type: Array, default: [] },
+    tableData: { type: Array, default: () => [] },
     tableColumn: {
       type: Array,
-      default: [],
+      default: () => [],
+    },
+    currentPage: {
+      type: Number,
+      default: 1,
     },
   },
   components: {},
@@ -84,7 +85,7 @@ export default {
     return {
       querystr: "",
       queryField: "",
-      columnKey:""
+      columnKey: "",
     };
   },
   //监听属性 类似于data概念
@@ -95,14 +96,14 @@ export default {
     queryOption() {
       let arr = [];
       this.tableColumn.map((item) => {
-        if (!item.noQuery) {
+        if (!item.noQuery && item.prop !== "operator") {
           arr.push({
             label: item.name,
             value: item.prop,
           });
         }
       });
-      return arr
+      return arr;
     },
   },
   //监控data中的数据变化
@@ -118,10 +119,10 @@ export default {
     query(e) {
       if (e.code === "Enter") {
         console.log("搜索");
-        this.$emit('query',{
-          prop:this.queryField,
-          str:this.querystr
-        })
+        this.$emit("query", {
+          prop: this.queryField,
+          str: this.querystr,
+        });
       }
     },
   },
@@ -129,7 +130,10 @@ export default {
   created() {},
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {
-    this.columnKey = this.tableColumn[0].prop
+    this.$nextTick(() => {
+      this.columnKey = this.tableColumn[0].prop;
+      // console.log(this.tableColumn);
+    });
   },
   beforeCreate() {}, //生命周期 - 创建之前
   beforeMount() {}, //生命周期 - 挂载之前
