@@ -151,9 +151,9 @@ export default {
     .login-box {
       margin: 0 auto;
       width: 680px;
-      height: 440px;
+      // height: 440px;
       box-sizing: border-box;
-      padding: 10px 60px 0;
+      padding: 35px 60px 0px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -162,9 +162,11 @@ export default {
       border-radius: 0 8px 8px 0;
       .title {
         font-size: 22px;
+        margin-bottom: 32px;
         color: rgb(0, 183, 158);
       }
       .form-line {
+        margin-bottom: 32px;
         width: 100%;
         display: flex;
         justify-content: center;
