@@ -59,7 +59,7 @@ export default {
   min-width: 1200px;
 }
 html{
-  min-height: 700px;
+  min-height: 720px;
 }
 
 </style>
