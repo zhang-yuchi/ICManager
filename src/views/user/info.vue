@@ -2,6 +2,13 @@
 <template>
   <div class="user-info-page">
     <div class="title">个人信息</div>
+    <div class="">
+      <el-card>
+        <div class="card-name">姓名</div>
+        <div class="card-name">机构</div>
+        <div class="card-name">xxx</div>
+      </el-card>
+    </div>
   </div>
 </template>
 
@@ -37,6 +44,12 @@ export default {
 </script>
 <style lang="less">
 .user-info-page{
+  .card-name{
+    margin-bottom: 18px;
+    &:last-of-type{
+      margin-bottom: 0;
+    }
+  }
   .title{
     font-size: 18px;
     color: #333;

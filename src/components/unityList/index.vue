@@ -2,14 +2,14 @@
 <template>
   <div class>
     <ovlist
-      :title="title"
+      :title="Intitle"
       @pageChange="pageChange"
       :tableData="tableData"
       :currentPage="currentPage"
       :total="total"
       :tableColumn="tableDef.column"
       @query="queryKey"
-      @handleCheck='handleCheck'
+      @handleCheck="handleCheck"
     ></ovlist>
   </div>
 </template>
@@ -28,7 +28,6 @@ export default {
       type: Object, //get/put/delete/post
       default: () => {},
     },
-    currentPage: 1,
   },
   components: { ovlist },
   data() {
@@ -36,43 +35,69 @@ export default {
     return {
       tableData: [],
       total: 0,
+      Intitle: "",
       tableDef: {
         column: [],
       },
+      pageSize: 9,
+      currentPage: 1,
     };
   },
   //监听属性 类似于data概念
   computed: {},
   //监控data中的数据变化
-  watch: {
-
-  },
+  watch: {},
   //方法集合
   methods: {
-    getData() {
-      service.get("/endpoint/icorg/list").then((res) => {
-        let result = res.page;
-        this.tableData = result.list;
-        this.total = result.totalCount;
-      });
+    getData(params) {
+      service
+        .get(this.reqOpt.get, {
+          params,
+        })
+        .then((res) => {
+          console.log(res);
+          let result = res.page;
+          this.tableData = result.list;
+          this.total = result.totalCount;
+        });
     },
     pageChange(page) {
       this.currentPage = page;
     },
     queryKey(val) {
       console.log(val);
+      let { prop, str } = val;
+      if (!prop) {
+        return;
+      }
+      let obj = {};
+      obj[prop] = str;
+      this.currentPage = 1;
       if (val) {
         //开始搜素
+        this.getData(
+          Object.assign(
+            {},
+            {
+              limit: this.pageSize,
+              page: this.currentPage,
+            },
+            obj
+          )
+        );
+      } else {
+        this.getData({
+          limit: this.pageSize,
+          page: this.currentPage,
+        });
       }
     },
     changeModule() {
       let module = "";
       let router = this.$route.path;
       let icReg = /\/user\/icCheck/;
-      let apply = /\/user\/icCheck/;
-      let statistics = /\/user\/icCheck/;
-      console.log(router);
-      console.log(icReg.test(router));
+      let apply = /\/user\/apply/;
+      let statistics = /\/user\/statistics/;
       if (icReg.test(router)) {
         module = "icCheck";
       } else if (apply.test(router)) {
@@ -80,19 +105,28 @@ export default {
       } else {
         module = "statistics";
       }
+      console.log(module);
       let params = this.$route.params.router;
       this.tableDef = tableRule[module][params];
+      if (this.tableDef.title) {
+        this.Intitle = this.tableDef.title;
+      } else {
+        this.Intitle = this.title;
+      }
     },
-    handleCheck(val){
+    handleCheck(val) {
       console.log(val);
-    }
+    },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {},
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {
     this.changeModule();
-    this.getData();
+    this.getData({
+      limit: this.pageSize,
+      page: this.currentPage,
+    });
   },
   beforeCreate() {}, //生命周期 - 创建之前
   beforeMount() {}, //生命周期 - 挂载之前

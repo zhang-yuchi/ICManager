@@ -13,6 +13,7 @@
           ></el-option>
         </el-select>
         <el-input
+          :disabled="!queryField"
           v-model="querystr"
           class="query-input"
           @keydown.native="query"
@@ -29,29 +30,28 @@
       </div>
     </div>
     <el-table :data="tableData" stripe style="width: 100%">
-
-        <el-table-column
-          v-for="(item,index) in tableColumn"
-          :key="item[columnKey]"
-          :prop="item.prop"
-          :label="item.name"
-          :width="index<tableColumn.length-1?item.width?item.width:180:item.width?item.width:0"
-          :fixed="index==0?'left':index<tableColumn.length-1?false:'right'"
-        >
-          <template slot-scope="scope">
-            <div v-if="item.prop!=='operator'">{{scope.row[item.prop]?scope.row[item.prop]:'暂无'}}</div>
-            <div v-else>
+      <el-table-column
+        v-for="(item,index) in tableColumn"
+        :key="item[columnKey]"
+        :prop="item.prop"
+        :label="item.name"
+        :width="index<tableColumn.length-1?item.width?item.width:180:item.width?item.width:0"
+        :fixed="index==0?'left':index<tableColumn.length-1?false:'right'"
+      >
+        <template slot-scope="scope">
+          <div v-if="item.prop!=='operator'">{{scope.row[item.prop]?scope.row[item.prop]:'暂无'}}</div>
+          <div v-else>
+            <div style="display:inline-block" v-for="btn in item.button" :key="btn.btnName">
               <el-button
                 @click="handleCheck(scope.row,btn.emit)"
                 type="text"
                 size="small"
-                v-for="btn in item.button"
-                :key="btn.btnName"
+                v-if="btn.auth?checkRole(btn.auth):true"
               >{{btn.btnName}}</el-button>
             </div>
-          </template>
-        </el-table-column>
-
+          </div>
+        </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>
@@ -59,7 +59,7 @@
 <script>
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 //例如：import 《组件名称》 from '《组件路径》';
-
+import { checkAuth } from "../../utils/index";
 export default {
   //import引入的组件需要注入到对象中才能使用
   props: {
@@ -125,6 +125,10 @@ export default {
         });
       }
     },
+    checkRole(auth) {
+      console.log(auth);
+      return checkAuth(auth, this.$store.state.role);
+    },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {},
@@ -132,7 +136,6 @@ export default {
   mounted() {
     this.$nextTick(() => {
       this.columnKey = this.tableColumn[0].prop;
-      // console.log(this.tableColumn);
     });
   },
   beforeCreate() {}, //生命周期 - 创建之前

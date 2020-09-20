@@ -1,7 +1,7 @@
 <!--  -->
 <template>
   <div class>
-    <unityList title="国合机构列表"></unityList>
+    <unityList :reqOpt="req" title="国合机构列表"></unityList>
   </div>
 </template>
 
@@ -14,7 +14,14 @@ export default {
   components: { unityList },
   data() {
     //这里存放数据
-    return {};
+    return {
+      req: {
+        get: "/endpoint/icorg/list2",//查询
+        put:"",//修改
+        delete:"",//删除
+        post:"",//增加
+      },
+    };
   },
   //监听属性 类似于data概念
   computed: {},
@@ -34,7 +41,6 @@ export default {
   destroyed() {}, //生命周期 - 销毁完成
   activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
   deactivated() {}, //如果有keep-alive缓存功能,当该页面撤销使这个函数会触发
- 
 };
 </script>
 <style lang='less'>
