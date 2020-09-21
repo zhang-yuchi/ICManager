@@ -1,7 +1,7 @@
 import {
   authMap
 } from '../map/index'
-console.log(authMap);
+// console.log(authMap);
 export const mergeFun = function (auth) {
   let authBox = []
   auth.map((authNum) => {
@@ -22,7 +22,7 @@ export const mergeFun = function (auth) {
           let objectModule = authBox.find(v => {
             return v.path === funModule.path
           })
-          console.log(objectModule);
+          // console.log(objectModule);
           objectModule.subMenu = _flat(objectModule['subMenu'], funModule.subMenu)
         }
       }

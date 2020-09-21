@@ -68,8 +68,8 @@ export default {
       type: "changeFunModule",
       module: mergeFun(this.role),
     });
-    console.log(this.funModule);
-    console.log(this.$store.state);
+    // console.log(this.funModule);
+    // console.log(this.$store.state);
   },
   beforeCreate() {}, //生命周期 - 创建之前
   beforeMount() {}, //生命周期 - 挂载之前
@@ -79,6 +79,7 @@ export default {
   destroyed() {}, //生命周期 - 销毁完成
   activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
   deactivated() {}, //如果有keep-alive缓存功能,当该页面撤销使这个函数会触发
+  
 };
 </script>
 <style lang="less">

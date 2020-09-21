@@ -1,8 +1,15 @@
 <!--  -->
 <template>
-<div class=''>
-  
-</div>
+  <div class="user-info-page">
+    <div class="title">个人信息</div>
+    <div class="">
+      <el-card>
+        <div class="card-name">姓名</div>
+        <div class="card-name">机构</div>
+        <div class="card-name">xxx</div>
+      </el-card>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -10,7 +17,7 @@
 //例如：import 《组件名称》 from '《组件路径》';
 export default {
   //import引入的组件需要注入到对象中才能使用
-  components: {  },
+  components: {},
   data() {
     //这里存放数据
     return {};
@@ -35,4 +42,19 @@ export default {
   deactivated() {}, //如果有keep-alive缓存功能,当该页面撤销使这个函数会触发
 };
 </script>
-<style lang="less"></style>
+<style lang="less">
+.user-info-page{
+  .card-name{
+    margin-bottom: 18px;
+    &:last-of-type{
+      margin-bottom: 0;
+    }
+  }
+  .title{
+    font-size: 18px;
+    color: #333;
+    padding: 10px 0;
+    line-height: 40px;
+  }
+}
+</style>

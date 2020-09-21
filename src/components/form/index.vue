@@ -12,6 +12,7 @@
         v-for="(item, index) in config"
         :key="index"
         :label="item.label"
+        :prop='item.prop'
         :required="item.required || item.required == undefined ? true : false"
       >
         <template v-if="item.type == 'input'">
