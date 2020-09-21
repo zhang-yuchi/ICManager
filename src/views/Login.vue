@@ -63,6 +63,7 @@ import { login } from "network/public";
 export default {
   //import引入的组件需要注入到对象中才能使用
   components: {},
+  name: "Login",
   data() {
     //这里存放数据
     return {
@@ -104,31 +105,48 @@ export default {
         login(obj).then((res) => {
           console.log(res);
           if (res.code === 0) {
-            sessionStorage.setItem('ICtoken',res.token)
+            sessionStorage.setItem("ICtoken", res.token);
             console.log(res.token);
             this.$router.push("/user");
           } else {
             this.$message.error(res.msg);
           }
         });
-        
       }
     },
     subRegister() {
       console.log("提交注册");
       register = {};
     },
+    enterKey(event) {
+      const componentName = this.$options.name;
+      // console.log(componentName);
+      if (componentName == "Login") {
+        const code = event.keyCode
+          ? event.keyCode
+          : event.which
+          ? event.which
+          : event.charCode;
+        if (code === 13) {
+          this.to();
+        }
+      }
+    },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {},
   //生命周期 - 挂载完成（可以访问DOM元素）
-  mounted() {},
+  mounted() {
+    document.addEventListener("keyup", this.enterKey);
+  },
   beforeCreate() {}, //生命周期 - 创建之前
   beforeMount() {}, //生命周期 - 挂载之前
   beforeUpdate() {}, //生命周期 - 更新之前
   updated() {}, //生命周期 - 更新之后
   beforeDestroy() {}, //生命周期 - 销毁之前
-  destroyed() {}, //生命周期 - 销毁完成
+  destroyed() {
+    document.removeEventListener("keyup", this.enterKey);
+  }, //生命周期 - 销毁完成
   activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
   deactivated() {}, //如果有keep-alive缓存功能,当该页面撤销使这个函数会触发
 };
@@ -185,13 +203,13 @@ export default {
           margin: 0;
           padding: 0;
         }
-        .el-radio-group{
+        .el-radio-group {
           height: 40px;
           flex: 1;
           display: flex;
-          .el-radio-button{
+          .el-radio-button {
             flex: 1;
-            .el-radio-button__inner{
+            .el-radio-button__inner {
               width: 100%;
             }
           }

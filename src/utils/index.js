@@ -30,17 +30,18 @@ export const mergeFun = function (auth) {
   })
   return authBox
 }
-export const checkAuth = function(auth,role){
+export const checkAuth = function (auth, role) {
   let flag = false
-  auth.map(au=>{
-    role.map(item=>{
-      if(au==item){
+  auth.map(au => {
+    role.map(item => {
+      if (au == item) {
         flag = true
       }
     })
   })
   return flag
 }
+
 function _flat(obj, src) {
   const len = obj.length
   src.map(item => {
@@ -58,3 +59,12 @@ function _flat(obj, src) {
   }
   return result
 }
+
+// export const strHump = (str) => {
+//   let arr = str.split('-')
+//   let _str = arr[0]
+//   for (let i = 1; i < arr.length; i++) {
+//     _str += arr[i].replace(arr[i][0],arr[i][0].toUpperCase())
+//   }
+//   return _str
+// }

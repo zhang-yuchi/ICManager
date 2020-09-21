@@ -1,6 +1,10 @@
 import apply from './apply'
-import statistics from './statistics'
+
+
+creatFormConfig(role){
+  
+}
+
 module.exports = {
   apply,
-  statistics
 }

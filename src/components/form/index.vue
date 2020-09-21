@@ -1,5 +1,6 @@
 <template>
   <div id="elform">
+    <div class="form-title">{{ title }}</div>
     <el-form
       :model="form"
       ref="elform"
@@ -17,11 +18,12 @@
           <el-input
             v-model="form[item.prop]"
             :placeholder="item.placeholder"
+            :disabled="item.disabled"
           ></el-input>
         </template>
 
         <template v-else-if="item.type == 'radio'">
-          <el-radio-group v-model="form[item.prop]">
+          <el-radio-group v-model="form[item.prop]" :disabled="item.disabled">
             <el-radio
               v-for="(option, indey) in item.options"
               :key="indey"
@@ -36,11 +38,16 @@
             :placeholder="item.placeholder"
             v-model="form[item.prop]"
             style="width: 100%;"
+            :disabled="item.disabled"
           ></el-date-picker>
         </template>
 
         <template v-else-if="item.type == 'select'">
-          <el-select v-model="form[item.prop]" :placeholder="item.placeholder">
+          <el-select
+            v-model="form[item.prop]"
+            :placeholder="item.placeholder"
+            :disabled="item.disabled"
+          >
             <el-option
               v-for="(option, indey) in item.options"
               :label="option.label"
@@ -56,6 +63,7 @@
             v-model="form[item.prop]"
             :show-word-limit="!!item.maxlength"
             :maxlength="item.maxlength"
+            :disabled="item.disabled"
           ></el-input>
         </template>
 
@@ -67,12 +75,15 @@
             :before-remove="beforeRemove"
             :multiple="item.limit > 1"
             :limit="item.limit"
+            :disabled="item.disabled"
             :on-exceed="
               (files, fileList) => handleExceed(files, fileList, item.limit)
             "
             :file-list="form.fileList"
           >
-            <el-button size="small" type="primary">点击上传</el-button>
+            <el-button size="small" type="primary" :disabled="item.disabled"
+              >点击上传</el-button
+            >
             <div slot="tip" class="el-upload__tip">
               {{ item.tip }}
             </div>
@@ -86,7 +97,7 @@
 
       <el-form-item>
         <el-button type="primary" @click="onSubmit">立即创建</el-button>
-        <el-button>取消</el-button>
+        <el-button @click="onCancel">取消</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -94,6 +105,10 @@
 <script>
 export default {
   props: {
+    title: {
+      type: String,
+      default: "",
+    },
     config: {
       type: Array,
       default: [],
@@ -112,12 +127,15 @@ export default {
     onSubmit() {
       this.$refs.elform.validate((valid) => {
         if (valid) {
-          console.log(valid, "success form");
+          this.$emit("submit", this.form);
         } else {
-          console.log("error");
           return false;
         }
       });
+    },
+    onCancel() {
+      this.$message;
+      this.$emit("cancel");
     },
     handleRemove(file, fileList) {
       console.log(file, fileList);
@@ -141,5 +159,9 @@ export default {
 };
 </script>
 <style lang="less">
-
+#elform{
+  .form-title{
+    text-align: center;
+  }
+}
 </style>

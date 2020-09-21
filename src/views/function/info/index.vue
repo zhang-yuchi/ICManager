@@ -1,6 +1,6 @@
 <!-- 表单 -->
 <template>
-  <div class=""><elform :config="config" :rules="rules"></elform></div>
+  <div class=""><elform :title='title' :config="config" :rules="rules" @submit="submit"></elform></div>
 </template>
 
 <script>
@@ -16,12 +16,14 @@ export default {
     //这里存放数据
     return {
       // 1.教师出国交流
+      title:'教师出国（境）交流',
       config: [
         {
           type: "input",
           prop: "name",
           label: "姓名",
           required: true, // 默认为true
+          disabled:false, // 默认false
           placeholder: "请输入",
         },
         {
@@ -125,7 +127,11 @@ export default {
   //监控data中的数据变化
   watch: {},
   //方法集合
-  methods: {},
+  methods: {
+    submit(){
+      console.log('提交');
+    }
+  },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {},
   //生命周期 - 挂载完成（可以访问DOM元素）
