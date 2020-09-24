@@ -12,7 +12,7 @@
         v-for="(item, index) in config"
         :key="index"
         :label="item.label"
-        :prop='item.prop'
+        :prop="item.prop"
         :required="item.required || item.required == undefined ? true : false"
       >
         <template v-if="item.type == 'input'">
@@ -35,7 +35,7 @@
 
         <template v-else-if="item.type == 'date'">
           <el-date-picker
-            type="date"
+            :type="item.subType || 'date'"
             :placeholder="item.placeholder"
             v-model="form[item.prop]"
             style="width: 100%;"
@@ -91,8 +91,25 @@
           </el-upload>
         </template>
 
-        <template v-else-if="item.type == 'checkbox'">
-          checkbox
+        <template v-else-if="item.type == 'addInput'">
+          <div v-for="(input, indey) in item.prop" :key="indey">
+            <div>
+              <el-input v-model="item.prop[indey]"></el-input
+              ><el-button
+                type="primary"
+                v-if="indey == 0"
+                icon="el-icon-circle-plus-outline"
+                @click.prevent="addInput(item.prop, indey)"
+                >增加</el-button
+              >
+              <el-button
+                type="primary"
+                v-else
+                icon="el-icon-delete"
+                @click.prevent="delInput(item.prop, indey)"
+              >删除</el-button>
+            </div>
+          </div>
         </template>
       </el-form-item>
 
@@ -125,6 +142,12 @@ export default {
     };
   },
   methods: {
+    addInput(prop, index) {
+      this.form[prop].push("");
+    },
+    delInput(prop, index) {
+      this.form[prop].splice(index, 1);
+    },
     onSubmit() {
       this.$refs.elform.validate((valid) => {
         if (valid) {
@@ -156,12 +179,18 @@ export default {
     },
   },
   created() {},
-  mounted() {},
+  mounted() {
+    for (let item in this.config) {
+      if (item.type === "addInput") {
+        this.item[prop] = [""];
+      }
+    }
+  },
 };
 </script>
 <style lang="less">
-#elform{
-  .form-title{
+#elform {
+  .form-title {
     text-align: center;
   }
 }

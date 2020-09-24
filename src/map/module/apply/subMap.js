@@ -75,5 +75,8 @@ module.exports = {
     name: "国际联盟发起,联合成立",
     path: "interation-ally"
   },
-
+  '19': {
+    name: "国际学生及港澳台学生教育",
+    path: "interation-education"
+  },
 }
