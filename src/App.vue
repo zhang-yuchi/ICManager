@@ -38,7 +38,9 @@ export default {
     },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
-  created() {},
+  created() {
+    // document.title = '国际化办学管理服务系统';
+  },
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {
     this.vuexStorage()
