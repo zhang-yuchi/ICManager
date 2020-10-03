@@ -54,7 +54,11 @@
       >
         <template slot-scope="scope">
           <div v-if="item.prop !== 'operator'">
-            {{ scope.row[item.prop] ? item.type=='time'?moment(scope.row[item.prop]).format('YYYY-MM-DD'):scope.row[item.prop] : "暂无" }}
+            {{
+              scope.row[item.prop]
+                ? typeCast(scope.row[item.prop], item)
+                : "暂无"
+            }}
           </div>
           <div v-else>
             <div
@@ -81,7 +85,7 @@
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 //例如：import 《组件名称》 from '《组件路径》';
 import { checkAuth } from "../../utils/index";
-import moment from 'moment'
+import moment from "moment";
 export default {
   //import引入的组件需要注入到对象中才能使用
   props: {
@@ -108,7 +112,7 @@ export default {
       querystr: "",
       queryField: "",
       columnKey: "",
-      moment:moment
+      moment: moment,
     };
   },
   //监听属性 类似于data概念
@@ -147,6 +151,18 @@ export default {
           str: this.querystr,
         });
       }
+    },
+    typeCast(item, rule) {
+      if (rule.type == "time") {
+        item = moment(item).format("YYYY-MM-DD");
+      } else if (rule.type == "boolean") {
+        if (item == 1) {
+          item = "是";
+        } else if (item == 0) {
+          item = "否";
+        }
+      }
+      return item;
     },
     checkRole(auth) {
       console.log(auth);
