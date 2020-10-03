@@ -2,9 +2,13 @@
 <template>
   <div class="ov-table">
     <div class="ov-table-title">
-      <div class="title-text">{{title}}</div>
+      <div class="title-text">{{ title }}</div>
       <div class="ov-operation-list">
-        <el-select v-model="queryField" class="select-input" placeholder="请选择">
+        <el-select
+          v-model="queryField"
+          class="select-input"
+          placeholder="请选择"
+        >
           <el-option
             v-for="item in queryOption"
             :key="item.value"
@@ -31,23 +35,40 @@
     </div>
     <el-table :data="tableData" stripe style="width: 100%">
       <el-table-column
-        v-for="(item,index) in tableColumn"
+        v-for="(item, index) in tableColumn"
         :key="item[columnKey]"
         :prop="item.prop"
         :label="item.name"
-        :width="index<tableColumn.length-1?item.width?item.width:180:item.width?item.width:0"
-        :fixed="index==0?'left':index<tableColumn.length-1?false:'right'"
+        :width="
+          index < tableColumn.length - 1
+            ? item.width
+              ? item.width
+              : 180
+            : item.width
+            ? item.width
+            : 0
+        "
+        :fixed="
+          index == 0 ? 'left' : index < tableColumn.length - 1 ? false : 'right'
+        "
       >
         <template slot-scope="scope">
-          <div v-if="item.prop!=='operator'">{{scope.row[item.prop]?scope.row[item.prop]:'暂无'}}</div>
+          <div v-if="item.prop !== 'operator'">
+            {{ scope.row[item.prop] ? item.type=='time'?moment(scope.row[item.prop]).format('YYYY-MM-DD'):scope.row[item.prop] : "暂无" }}
+          </div>
           <div v-else>
-            <div style="display:inline-block" v-for="btn in item.button" :key="btn.btnName">
+            <div
+              style="display: inline-block"
+              v-for="btn in item.button"
+              :key="btn.btnName"
+            >
               <el-button
-                @click="handleCheck(scope.row,btn.emit)"
+                @click="handleCheck(scope.row, btn.emit)"
                 type="text"
                 size="small"
-                v-if="btn.auth?checkRole(btn.auth):true"
-              >{{btn.btnName}}</el-button>
+                v-if="btn.auth ? checkRole(btn.auth) : true"
+                >{{ btn.btnName }}</el-button
+              >
             </div>
           </div>
         </template>
@@ -60,6 +81,7 @@
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 //例如：import 《组件名称》 from '《组件路径》';
 import { checkAuth } from "../../utils/index";
+import moment from 'moment'
 export default {
   //import引入的组件需要注入到对象中才能使用
   props: {
@@ -86,6 +108,7 @@ export default {
       querystr: "",
       queryField: "",
       columnKey: "",
+      moment:moment
     };
   },
   //监听属性 类似于data概念

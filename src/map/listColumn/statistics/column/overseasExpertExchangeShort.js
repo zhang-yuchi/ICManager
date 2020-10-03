@@ -1,13 +1,14 @@
 module.exports = {
-  title: "国外专家来校交流汇总(长期)",
+  title: "国外专家来校交流汇总(短期)",
   reqOpt: {
-    get: "/endpoint/longtermexpert/list2",
+    get: "/endpoint/shorttermexpert/list2",
     getOne: (id) => { //获取详情 or 跳转?
       return "/endpoint/teacherexchange/info/" + id
     }
   },
   column: [{
       prop: "userId",
+      width: 120,
       name: "登记人id"
     },
     {
@@ -44,11 +45,35 @@ module.exports = {
     },
     {
       prop: "period",
-      name: "聘期起止日期"
+      name: "来访起止日期"
     },
     {
       prop: "isTutor",
       name: "是否导师"
+    },
+    {
+      prop: "purpose",
+      name: "来访目的"
+    },
+    {
+      prop: "reportTopics",
+      name: "报告/讲课题目"
+    },
+    {
+      prop: "reportNum",
+      name: "报告场数",
+      width:200
+    },
+    {
+      prop: "isAgreement",
+      name: "是否依托校际协议",
+      noQuery:true
+    },
+    {
+      prop: "isProjected",
+      width:250,
+      name: "是否依托引智及外国专家等项目",
+      noQuery:true
     },
     {
       prop: "reason",
@@ -61,7 +86,7 @@ module.exports = {
       noQuery:true
     },
     {
-      prop: "intro",
+      prop: "isProjected",
       name: "简介",
       noQuery:true
     },

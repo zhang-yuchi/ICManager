@@ -1,69 +1,65 @@
 module.exports = {
-  title: "国外专家来校交流汇总(长期)",
+  title: "国外专家兼职汇总",
   reqOpt: {
-    get: "/endpoint/longtermexpert/list2",
+    get: "/endpoint/expertjob/list2",
     getOne: (id) => { //获取详情 or 跳转?
       return "/endpoint/teacherexchange/info/" + id
     }
   },
   column: [{
+      name: "登记人id",
       prop: "userId",
-      name: "登记人id"
+      width: 120,
     },
     {
+      name: "登记单位id",
       prop: "orgId",
-      name: "登记单位id"
+
     },
     {
+      name: "登记人姓名",
       prop: "username",
-      name: "登记人姓名"
+
     },
     {
+      name: "登记单位",
       prop: "userOrg",
-      name: "登记单位"
+
     },
     {
+      name: "姓名",
       prop: "fullName",
-      name: "护照姓名"
+
     },
     {
-      prop: "gender",
-      name: "性别"
-    },
-    {
+      name: "国别地区",
       prop: "country",
-      name: "国籍"
+
     },
     {
+      name: "机构",
       prop: "enterprise",
-      name: "所在单位"
+
     },
     {
-      prop: "academicRank",
-      name: "学衔"
+      name: "受聘荣誉",
+      prop: "hired",
+
     },
     {
+      name: "受聘时间",
       prop: "period",
-      name: "聘期起止日期"
+
     },
     {
-      prop: "isTutor",
-      name: "是否导师"
-    },
-    {
-      prop: "reason",
-      name: "事由",
-      noQuery:true
-    },
-    {
-      prop: "files",
       name: "附件",
-      noQuery:true
+      prop: "files",
+
     },
     {
-      prop: "intro",
       name: "简介",
-      noQuery:true
+      prop: "intro",
+
     },
     {
       prop: "operator",
