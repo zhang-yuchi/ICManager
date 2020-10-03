@@ -15,9 +15,7 @@ export default {
   data() {
     //这里存放数据
     return {
-      req: {
-        get: "/endpoint/icorg/list",
-      },
+      
     };
   },
   //监听属性 类似于data概念

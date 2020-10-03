@@ -24,10 +24,6 @@ export default {
   //import引入的组件需要注入到对象中才能使用
   props: {
     title: String,
-    reqOpt: {
-      type: Object, //get/put/delete/post
-      default: () => {},
-    },
   },
   components: { ovlist },
   data() {
@@ -51,7 +47,7 @@ export default {
   methods: {
     getData(params) {
       service
-        .get(this.reqOpt.get, {
+        .get(this.tableDef.reqOpt.get, {
           params,
         })
         .then((res) => {
@@ -113,6 +109,7 @@ export default {
       } else {
         this.Intitle = this.title;
       }
+      console.log(this.tableDef);
     },
     handleCheck(val) {
       console.log(val);

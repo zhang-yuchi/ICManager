@@ -4,8 +4,12 @@ module.exports = {
     path: "teacher-board"
   },
   '1': {
-    name: "国外专家来校交流汇总",
+    name: "国外专家来校交流汇总(长期)",
     path: "overseas-expert-exchange"
+  },
+  '20': {
+    name: "国外专家来校交流汇总(短期))",
+    path: "overseas-expert-exchange-short"
   },
   '2': {
     name: "国际组织 刊物任职汇总",

@@ -12,8 +12,12 @@ module.exports = {
     path: "student-board"
   },
   '3': {
-    name: "国外专家来校交流申请",
+    name: "国外专家来校交流申请(长期)",
     path: "overseas-expert-exchange"
+  },
+  '20':{
+    name: "国外专家来校交流申请(短期)",
+    path: "overseas-expert-exchange-short"
   },
   '4': {
     name: "添加海外学历教师",
