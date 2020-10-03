@@ -10,6 +10,7 @@
       :tableColumn="tableDef.column"
       @query="queryKey"
       @handleCheck="handleCheck"
+      :isLoading="loading"
     ></ovlist>
   </div>
 </template>
@@ -37,6 +38,7 @@ export default {
       },
       pageSize: 9,
       currentPage: 1,
+      loading: false,
     };
   },
   //监听属性 类似于data概念
@@ -46,6 +48,7 @@ export default {
   //方法集合
   methods: {
     getData(params) {
+      this.loading = true;
       service
         .get(this.tableDef.reqOpt.get, {
           params,
@@ -55,6 +58,9 @@ export default {
           let result = res.page;
           this.tableData = result.list;
           this.total = result.totalCount;
+        })
+        .finally(() => {
+          this.loading = false;
         });
     },
     pageChange(page) {

@@ -17,6 +17,7 @@ const advancedProjectImport = require('./column/advancedProjectImport')
 const internationResearchMeeting = require('./column/internationResearchMeeting')
 const internationGuarantee = require('./column/internationGuarantee')
 const overseasTreaty = require('./column/overseasTreaty')
+const interationAlly = require('./column/interationAlly')
 module.exports = {
   'teacher-board': fixColumn(teacherBoard),//教师出国交流信息汇总
   'overseas-expert-exchange':fixColumn(overseasExpertExchange),//国外专家来校交流汇总 长期
@@ -36,7 +37,8 @@ module.exports = {
   'advanced-project-import':fixColumn(advancedProjectImport),
   'internation-research-meeting':fixColumn(internationResearchMeeting),
   'internation-guarantee':fixColumn(internationGuarantee),
-  'overseas-treaty':fixColumn(overseasTreaty)
+  'overseas-treaty':fixColumn(overseasTreaty),
+  'interation-ally':fixColumn(interationAlly)
 }
 function fixColumn(columns){
   let column = columns.column

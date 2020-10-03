@@ -33,7 +33,7 @@
         ></el-pagination>
       </div>
     </div>
-    <el-table :data="tableData" stripe style="width: 100%">
+    <el-table :data="tableData" stripe style="width: 100%" v-loading='isLoading'>
       <el-table-column
         v-for="(item, index) in tableColumn"
         :key="item[columnKey]"
@@ -95,6 +95,7 @@ export default {
       type: Number,
       default: 9,
     },
+    isLoading:{type:Boolean,default:false},
     tableData: { type: Array, default: () => [] },
     tableColumn: {
       type: Array,
@@ -113,6 +114,7 @@ export default {
       queryField: "",
       columnKey: "",
       moment: moment,
+      // isLoading:true
     };
   },
   //监听属性 类似于data概念
