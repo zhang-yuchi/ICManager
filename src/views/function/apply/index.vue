@@ -76,13 +76,7 @@ export default {
       let isList = checkAuth(this.applyModule.listAuth, this.role);
       const index = val.num - 1;
       const routerName = this.applySubFun[index].path;
-      if (isList) {
-        //去list
-        this.$router.push("/user/apply/" + routerName + "/list");
-      } else {
-        //去info
-        this.$router.push("/user/apply/" + routerName + "/info");
-      }
+      this.$router.push("/user/apply/" + routerName + "/info");
     },
     pageChange(page) {
       this.currentPage = page;
