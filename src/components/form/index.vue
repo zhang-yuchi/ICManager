@@ -1,11 +1,11 @@
 <template>
-  <div id="elform">
+  <div id="elformCom">
     <div class="form-title">{{ title }}</div>
     <el-form
       :model="form"
       ref="elform"
       :rules="rules"
-      label-width="100px"
+      label-width="200px"
       @submit.native.prevent
     >
       <el-form-item
@@ -13,7 +13,6 @@
         :key="index"
         :label="item.label"
         :prop="item.prop"
-        :required="item.required || item.required == undefined ? true : false"
       >
         <template v-if="item.type == 'input'">
           <el-input
@@ -28,8 +27,8 @@
             <el-radio
               v-for="(option, indey) in item.options"
               :key="indey"
-              :label="option"
-            ></el-radio>
+              :label="option.value"
+            >{{option.label}}</el-radio>
           </el-radio-group>
         </template>
 
@@ -71,8 +70,11 @@
         <template v-else-if="item.type == 'file'">
           <el-upload
             :action="item.action"
+            :headers="myHeaders"
             :on-preview="handlePreview"
             :on-remove="handleRemove"
+            :on-success="upFileSuccess"
+            :on-error="upFileError"
             :before-remove="beforeRemove"
             :multiple="item.limit > 1"
             :limit="item.limit"
@@ -107,15 +109,19 @@
                 v-else
                 icon="el-icon-delete"
                 @click.prevent="delInput(item.prop, indey)"
-              >删除</el-button>
+                >删除</el-button
+              >
             </div>
           </div>
         </template>
+        <div class="el-upload__tip" v-if="item.extraInfo">
+          {{ item.extraInfo }}
+        </div>
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">立即创建</el-button>
-        <el-button @click="onCancel">取消</el-button>
+        <el-button type="primary" @click="onSubmit">提交</el-button>
+        <el-button @click="onCancel">返回</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -139,9 +145,25 @@ export default {
   data() {
     return {
       form: {},
+      myHeaders: {},
     };
   },
   methods: {
+    upFileError(err) {
+      this.$message.error("文件上传服务器失败，原因：" + err);
+      console.log(this.form.fileList.splice(this.form.fileList.length - 1, 1),this.form.fileList);
+    },
+    upFileSuccess(response, file, fileList) {
+      this.form.fileList = fileList;
+      console.log(response);
+      if (response.code != 200) {
+        this.upFileError(response.msg);
+        return false;
+      } else {
+        // 一个附件
+        this.form.files = response.msg;
+      }
+    },
     addInput(prop, index) {
       this.form[prop].push("");
     },
@@ -151,6 +173,8 @@ export default {
     onSubmit() {
       this.$refs.elform.validate((valid) => {
         if (valid) {
+          // 文件上传完成后的地址
+          
           this.$emit("submit", this.form);
         } else {
           return false;
@@ -158,11 +182,11 @@ export default {
       });
     },
     onCancel() {
-      this.$message;
+      this.$router.go(-1);
       this.$emit("cancel");
     },
     handleRemove(file, fileList) {
-      console.log(file, fileList);
+      // console.log(file, fileList);
     },
     handlePreview(file) {
       console.log(file);
@@ -185,13 +209,24 @@ export default {
         this.item[prop] = [""];
       }
     }
+    let token = sessionStorage.getItem("ICtoken");
+    console.log(token);
+    this.myHeaders = { token };
   },
 };
 </script>
 <style lang="less">
-#elform {
+#elformCom {
   .form-title {
     text-align: center;
+    padding: 15px 0;
+    font-size: 20px;
+    font-weight: 500;
+  }
+  .el-form-item{
+    label{
+      
+    }
   }
 }
 </style>
