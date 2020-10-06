@@ -8,6 +8,7 @@
       @pageChange="pageChange"
       :tableData="tableData"
       @handleCheck="handleCheck"
+      @query='query'
     ></list>
   </div>
 </template>
@@ -24,6 +25,7 @@ export default {
     //这里存放数据
     return {
       tableData: [],
+      tableAllData:[],
       tableColumn: [
         { prop: "num", name: "序号" },
         { prop: "name", name: "申报登记项目", width: 400 },
@@ -41,6 +43,7 @@ export default {
       ],
       currentPage: 1,
       pageSize: 9,
+      entitySet:null,
     };
   },
   //监听属性 类似于data概念
@@ -56,14 +59,7 @@ export default {
     applySubFun() {
       return this.applyModule.subMenu;
     },
-    tableAllData() {
-      return this.applySubFun.map((item, index) => {
-        return {
-          num: index + 1,
-          name: item.name,
-        };
-      });
-    },
+
     role() {
       return this.$store.state.role;
     },
@@ -84,10 +80,26 @@ export default {
       // console.log(this.tableData);
     },
     getData() {
+      if (this.entitySet&&this.entitySet.str) {
+        this.tableAllData = this.tableAllData.filter((item) => {
+          return String(item[this.entitySet.prop]).indexOf(this.entitySet.str) !== -1;
+        });
+      } else {
+        this.tableAllData = this.applySubFun.map((item, index) => {
+          return {
+            num: index + 1,
+            name: item.name,
+          };
+        });
+      }
       this.tableData = this.tableAllData.slice(
         (this.currentPage - 1) * this.pageSize,
         (this.currentPage - 1) * this.pageSize + this.pageSize
       );
+    },
+    query(entitySet) {
+      this.entitySet = entitySet;
+      this.getData();
     },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
