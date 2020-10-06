@@ -1,5 +1,8 @@
 module.exports = {
   'IC': {
+    reqOpt:{
+      get:"/endpoint/icorg/list2"
+    },
     column: [{
         prop: "orgCode",
         name: "国合机构码",
