@@ -4,6 +4,7 @@ const tip = "";
 module.exports = {
   "teacher-board": {
     // 教师出国交流申请
+    request:"teacherexchange",
     title: "教师出国（境）交流",
     config: [
       {
@@ -87,6 +88,7 @@ module.exports = {
   },
   "internation-publication": {
     // 国际组织刊物任职（个人填报、单位汇总）
+    request:"publicationjob",
     title: "国际组织、刊物任职",
     config: [
       {
@@ -149,6 +151,7 @@ module.exports = {
   },
   "student-board": {
     // 在校生出国交流申请
+    request:"studentexchange",
     title: "在校生出国（境）交流",
     config: [
       {
@@ -241,6 +244,7 @@ module.exports = {
   },
   "overseas-expert-exchange": {
     // 国外专家来校交流申请
+    request:"longtermexpert",
     title: "长期国（境）外专家来校交流(3个月（含）以上）",
     config: [
       {
@@ -315,9 +319,8 @@ module.exports = {
       },
       {
         type: "textarea",
-        prop: "files",
-        label: "intro",
-        placeholder: "请输入",
+        prop: "intro",
+        label: "简介",
         required: false,
         // maxlength: 50
       },
@@ -325,6 +328,7 @@ module.exports = {
   },
   "overseas-expert-exchange-short": {
     // 国外专家来校交流申请
+    request:"shorttermexpert",
     title: "短期国（境）外专家来校交流（3个月以下）",
     config: [
       {
@@ -419,13 +423,15 @@ module.exports = {
         type: "textarea",
         prop: "intro",
         label: "简介",
+        required: false,
         // maxlength: 50
       },
     ],
   },
   "overseas-teacher": {
     // 添加海外学历教师
-    title: "新增具有海外学历的教师人数",
+    request:"overseasteacher",
+    title: "新增具有海外学历的教师",
     config: [
       {
         type: "input",
@@ -472,6 +478,7 @@ module.exports = {
   },
   "overseas-expert-part-time": {
     // 国外专家兼职登记
+    request:"expertjob",
     title: "国（境）外专家担任兼职教授、客座教授和荣誉教授",
     config: [
       {
@@ -529,6 +536,7 @@ module.exports = {
   },
   "overseas-expert-prize": {
     // 国外专家获奖登记
+    request:"expertaward",
     title: "国（境）外专家担任兼职教授、客座教授和荣誉教授",
     config: [
       {
@@ -596,6 +604,7 @@ module.exports = {
   },
   "interation-education": {
     // 国际学生及港澳台学生教育
+    request:"iternationalstudentedu",
     title: "国际学生及港澳台学生教育",
     config: [
       {
@@ -653,6 +662,7 @@ module.exports = {
 
   "open-internation-course": {
     // 开设国际化课程
+    request:"itcourse",
     title: "国际化课程",
     config: [
       {
@@ -708,13 +718,14 @@ module.exports = {
       {
         type: "addInput",
         prop: "courseList",
-        label: "本年度该专业已开设全英文课程数及课程名称",
+        label: "本年度该专业已开设全英文课程名称",
       },
     ],
   },
 
   "cooperation-education": {
     // 中外合作办学登记
+    request:"cooperativeeducation",
     title: "国际化课程",
     config: [
       {
@@ -816,6 +827,7 @@ module.exports = {
   },
   "student-exchange": {
     // 学生交流项目登记
+    request:"stuexchangeproject",
     title: "学生交流项目",
     config: [
       {
@@ -932,6 +944,7 @@ module.exports = {
   },
   "internation-research": {
     // 国际联合科研平台填报
+    request:"itresearchplatform",
     title: "国际联合科研平台",
     config: [
       {
@@ -1011,6 +1024,7 @@ module.exports = {
   },
   "interation-result-change": {
     // 国际成果转化或人才培训平台
+    request:"itachievementtrainingplatform",
     title: "国际成果转化或人才培训平台",
     config: [
       {
@@ -1085,6 +1099,7 @@ module.exports = {
   },
   "interation-area-research": {
     // 国别与区域研究中心登记
+    request:"nationalregionalcenter",
     title: "国别与区域研究中心",
     config: [
       {
@@ -1164,7 +1179,8 @@ module.exports = {
   },
   "advanced-expert-import": {
     // 高端专家引进计划登记
-    title: "国别与区域研究中心",
+    request:"expertintroplan",
+    title: "高端专家引进计划",
     config: [
       {
         type: "input",
@@ -1263,6 +1279,7 @@ module.exports = {
   },
   "advanced-project-import": {
     // 引智平台项目登记
+    request:"introwiseproject",
     title: "引智平台项目(包括“111计划”等)",
     config: [
       {
@@ -1372,6 +1389,7 @@ module.exports = {
   },
   "interation-meeting-login": {
     // 国际会议负责人登记
+    request:"itmeeting",
     title: "举办国际学术会议",
     config: [
       {
@@ -1461,6 +1479,7 @@ module.exports = {
 
   "interation-guarantee": {
     // 国际化保障及办学特色
+    request:"itguaranteefeature",
     title: "国际化保障及办学特色",
     config: [
       {
@@ -1600,6 +1619,7 @@ module.exports = {
 
   "overseas-treaty": {
     // 与海外院校新签署协议并有实质性交流合作
+    request:"exchangecooperation",
     title: "与海外院校新签署协议并有实质性交流合作",
     config: [
       {
@@ -1660,6 +1680,7 @@ module.exports = {
 
   "interation-ally": {
     // 国际联盟发起,联合成立
+    request:"leaguenations",
     title: "国际联盟",
     config: [
       {

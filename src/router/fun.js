@@ -28,8 +28,11 @@ module.exports = [{
     component: () => import('views/function/apply'),
   },
   {
-    // path: "apply/:router/info/:id",
     path: "apply/:router/info",
+    component: () => import('views/function/info')
+  },
+  {
+    path: "apply/:router/info/:id",
     component: () => import('views/function/info')
   },
   {

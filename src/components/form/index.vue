@@ -28,7 +28,8 @@
               v-for="(option, indey) in item.options"
               :key="indey"
               :label="option.value"
-            >{{option.label}}</el-radio>
+              >{{ option.label }}</el-radio
+            >
           </el-radio-group>
         </template>
 
@@ -94,24 +95,26 @@
         </template>
 
         <template v-else-if="item.type == 'addInput'">
-          <div v-for="(input, indey) in item.prop" :key="indey">
-            <div>
-              <el-input v-model="item.prop[indey]"></el-input
-              ><el-button
-                type="primary"
-                v-if="indey == 0"
-                icon="el-icon-circle-plus-outline"
-                @click.prevent="addInput(item.prop, indey)"
-                >增加</el-button
-              >
-              <el-button
-                type="primary"
-                v-else
-                icon="el-icon-delete"
-                @click.prevent="delInput(item.prop, indey)"
-                >删除</el-button
-              >
-            </div>
+          <div
+            class="add-input-line"
+            v-for="(input, indey) in form[item.prop]"
+            :key="indey"
+          >
+            <el-input class="add-input-item" v-model="form[item.prop][indey]"></el-input
+            ><el-button
+              type="primary"
+              v-if="indey == 0"
+              icon="el-icon-circle-plus-outline"
+              @click.prevent="addInput(item.prop, indey)"
+              >增加</el-button
+            >
+            <el-button
+              type="primary"
+              v-else
+              icon="el-icon-delete"
+              @click.prevent="delInput(item.prop, indey)"
+              >删除</el-button
+            >
           </div>
         </template>
         <div class="el-upload__tip" v-if="item.extraInfo">
@@ -151,7 +154,10 @@ export default {
   methods: {
     upFileError(err) {
       this.$message.error("文件上传服务器失败，原因：" + err);
-      console.log(this.form.fileList.splice(this.form.fileList.length - 1, 1),this.form.fileList);
+      console.log(
+        this.form.fileList.splice(this.form.fileList.length - 1, 1),
+        this.form.fileList
+      );
     },
     upFileSuccess(response, file, fileList) {
       this.form.fileList = fileList;
@@ -165,7 +171,7 @@ export default {
       }
     },
     addInput(prop, index) {
-      this.form[prop].push("");
+      this.$set(this.form[prop], this.form[prop].length, "");
     },
     delInput(prop, index) {
       this.form[prop].splice(index, 1);
@@ -174,7 +180,7 @@ export default {
       this.$refs.elform.validate((valid) => {
         if (valid) {
           // 文件上传完成后的地址
-          
+
           this.$emit("submit", this.form);
         } else {
           return false;
@@ -202,17 +208,19 @@ export default {
       return this.$confirm(`确定移除 ${file.name}？`);
     },
   },
-  created() {},
-  mounted() {
-    for (let item in this.config) {
+  created() {
+    for (let item of this.config) {
       if (item.type === "addInput") {
-        this.item[prop] = [""];
+        this.$set(this.form, item.prop, []);
+        this.$set(this.form[item.prop], this.form[item.prop].length, "");
       }
     }
     let token = sessionStorage.getItem("ICtoken");
     console.log(token);
     this.myHeaders = { token };
+    console.log(this.form);
   },
+  mounted() {},
 };
 </script>
 <style lang="less">
@@ -223,9 +231,13 @@ export default {
     font-size: 20px;
     font-weight: 500;
   }
-  .el-form-item{
-    label{
-      
+  .el-form-item {
+    .add-input-line {
+      display: flex;
+      margin: 10px 0;
+      .add-input-item{
+        margin-right: 20px;
+      }
     }
   }
 }

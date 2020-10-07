@@ -23,6 +23,7 @@
 import elform from "components/form";
 import creatFormConfig from "@/map/function/index.js";
 
+import * as service from "network/applyApplication";
 export default {
   //import引入的组件需要注入到对象中才能使用
   components: { elform },
@@ -40,6 +41,11 @@ export default {
   methods: {
     submit(form) {
       console.log(form);
+      service[this.data.request](form).then((result) => {
+        console.log(result);
+      }).catch((err) => {
+        console.log(err);
+      });
     },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
@@ -47,6 +53,11 @@ export default {
     let routeArr = this.$route.path.split("/");
     console.log(routeArr[routeArr.length - 2]);
     this.data = creatFormConfig(routeArr[routeArr.length - 2]);
+    if (this.$route.params.id) {
+      // 秘书查看填报情况
+    } else {
+      // 个人填报
+    }
   },
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {},
