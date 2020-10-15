@@ -1,5 +1,6 @@
 import fun from "../../router/fun";
 import apply from "./apply";
+import statics from './statics/map'
 
 export const creatFormConfig = (role) => {
   console.log(apply[role]);
@@ -24,7 +25,7 @@ export const creatFormConfig = (role) => {
 };
 
 export const createStaticFormInfo = (role) => {
-  let formConfig = Object.assign({}, apply[role]);
+  let formConfig = Object.assign({}, apply[statics[role]]);
   console.log(apply[role]);
   for (let item of formConfig.config) {
     item.disabled = true;
