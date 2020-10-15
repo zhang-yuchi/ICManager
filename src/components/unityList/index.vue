@@ -54,7 +54,13 @@ export default {
           params,
         })
         .then((res) => {
-          console.log(res);
+          if (res.code !== 0) {
+            this.$message({
+              message: res.msg,
+              type: "error",
+            });
+            this.$router.push("/");
+          }
           let result = res.page;
           this.tableData = result.list;
           this.total = result.totalCount;

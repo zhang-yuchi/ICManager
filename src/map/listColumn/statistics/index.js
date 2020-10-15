@@ -27,7 +27,7 @@ module.exports = {
   'overseas-expert-prize':fixColumn(overseasExpertPrize),
   'student-board':fixColumn(sutdentBoard),
   'internation-student-education':fixColumn(internationStudentEducation),
-  'internation-course':fixColumn(internationCourse),
+  'open-internation-course':fixColumn(internationCourse),
   'overseas-education':fixColumn(overseasEducation),
   'student-exchange':fixColumn(studentExchange),
   'internation-research':fixColumn(internationResearch),
