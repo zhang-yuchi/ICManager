@@ -33,7 +33,7 @@ module.exports = {
   },
   '7': {
     name: "国际化课程汇总",
-    path: "internation-course"
+    path: "open-internation-course"
   },
   '8': {
     name: "中外合作办学汇总",
