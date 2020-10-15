@@ -3,7 +3,7 @@
   <div class>
     <list
       :total="tableAllData.length"
-      title="申报登记列表"
+      title="统计汇总列表"
       :tableColumn="tableColumn"
       @pageChange="pageChange"
       :tableData="tableData"
@@ -71,13 +71,7 @@ export default {
       let isList = checkAuth(this.applyModule.listAuth, this.role);
       const index = val.num - 1;
       const routerName = this.applySubFun[index].path;
-      if (isList) {
-        //去list
-        this.$router.push("/user/statistics/" + routerName + "/list");
-      } else {
-        //去info
-        this.$router.push("/user/statistics/" + routerName + "/info");
-      }
+      this.$router.push("/user/statistics/" + routerName + "/list");
     },
     pageChange(page) {
       this.currentPage = page;
@@ -85,9 +79,11 @@ export default {
       // console.log(this.tableData);
     },
     getData() {
-      if (this.entitySet&&this.entitySet.str) {
+      if (this.entitySet && this.entitySet.str) {
         this.tableAllData = this.tableAllData.filter((item) => {
-          return String(item[this.entitySet.prop]).indexOf(this.entitySet.str) !== -1;
+          return (
+            String(item[this.entitySet.prop]).indexOf(this.entitySet.str) !== -1
+          );
         });
       } else {
         this.tableAllData = this.applySubFun.map((item, index) => {
@@ -103,7 +99,7 @@ export default {
       );
     },
     query(entitySet) {
-      this.entitySet = entitySet
+      this.entitySet = entitySet;
       this.getData();
     },
   },
@@ -124,5 +120,4 @@ export default {
   deactivated() {}, //如果有keep-alive缓存功能,当该页面撤销使这个函数会触发
 };
 </script>
-<style lang='less'>
-</style>
+<style lang="less"></style>

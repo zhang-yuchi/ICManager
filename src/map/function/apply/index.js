@@ -130,6 +130,7 @@ module.exports = {
         type: "input",
         prop: "period",
         label: "任职起止日期",
+        extraInfo:"格式为 xxxx/xx/xx-xxxx/xx/xx",
       },
       {
         type: "file",

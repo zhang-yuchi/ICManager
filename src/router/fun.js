@@ -32,10 +32,6 @@ module.exports = [{
     component: () => import('views/function/info')
   },
   {
-    path: "apply/:router/info/:id",
-    component: () => import('views/function/info')
-  },
-  {
     path: "apply/:router/list",
     component: () => import('views/function/list')
   },
@@ -51,5 +47,9 @@ module.exports = [{
   {
     path: "statistics/:router/list",
     component: () => import('views/function/list')
+  },
+  {
+    path: "statistics/:router/list/:id",
+    component: () => import('views/function/info/listInfo')
   },
 ]
