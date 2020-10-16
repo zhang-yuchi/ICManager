@@ -7,11 +7,11 @@
         <div class="title">登陆/LOGIN</div>
         <div class="form-line">
           <img class="icon" src="~assets/image/user.svg" alt="" />
-          <el-input v-model="account" placeholder="账号"></el-input>
+          <el-input v-model="account" :placeholder="$t('account')"></el-input>
         </div>
         <div class="form-line">
           <img class="icon" src="~assets/image/psd.svg" alt="" />
-          <el-input v-model="pwd" type="password" placeholder="密码"></el-input>
+          <el-input v-model="pwd" type="password" :placeholder="$t('password')"></el-input>
         </div>
         <div class="form-line">
           <img class="icon" src="~assets/image/quanxian.svg" alt="" />
@@ -25,11 +25,11 @@
           </el-radio-group>
         </div>
         <div class="form-line">
-          <el-button type="primary" @click="to">登 录</el-button>
+          <el-button type="primary" @click="to">{{$t('login')}}</el-button>
         </div>
         <div class="form-line">
           <el-link type="primary" @click="dialogFormVisible = true"
-            >注 册</el-link
+            >{{$t('register')}}</el-link
           >
         </div>
       </div>
@@ -70,12 +70,12 @@ export default {
       account: "",
       pwd: "",
       roles: [
-        { role: "学生", index: 5 },
-        { role: "教职工", index: 4 },
-        { role: "秘书", index: 3 },
-        { role: "工作人员", index: 2 },
-        { role: "校领导", index: 1 },
-        { role: "管理员", index: 0 },
+        { role: this.$t('student'), index: 5 },
+        { role: this.$t('teacher'), index: 4 },
+        { role: this.$t('secretary'), index: 3 },
+        { role: this.$t('staff'), index: 2 },
+        { role: this.$t('schoolLeader'), index: 1 },
+        { role: this.$t('admin'), index: 0 },
       ],
       role: "",
       dialogFormVisible: false,

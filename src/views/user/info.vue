@@ -1,7 +1,7 @@
 <!--  -->
 <template>
   <div class="user-info-page">
-    <div class="title">个人信息</div>
+    <div class="title">{{$t('personalInformation')}}</div>
     <div class="">
       <el-card>
         <div class="card-name">姓名</div>
