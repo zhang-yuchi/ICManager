@@ -3,7 +3,7 @@
   <div class>
     <list
       :total="tableAllData.length"
-      title="统计汇总列表"
+      :title="$t('统计汇总列表')"
       :tableColumn="tableColumn"
       @pageChange="pageChange"
       :tableData="tableData"

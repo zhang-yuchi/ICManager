@@ -33,7 +33,7 @@
           <div v-for="item in funModule" :key="item.path">
             <el-menu-item :index="item.path">
               <i :class="item.icon"></i>
-              <span slot="title">{{ item.name }}</span>
+              <span slot="title">{{ $t(item.name) }}</span>
             </el-menu-item>
           </div>
         </el-menu>
