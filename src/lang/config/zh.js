@@ -1,5 +1,6 @@
 // 中文
-module.exports = {
+import zhLocal from 'element-ui/lib/locale/lang/zh-CN'
+const zh = {
   "学生":"学生",
   "教职工":"教职工",
   "秘书":"秘书",
@@ -40,10 +41,13 @@ module.exports = {
   "申报登记项目":"申报登记项目",
   "登记":"登记",
   "请输入搜索内容":"请输入搜索内容",
-  'el.pagination.goto':"前往",
-  'el.pagination.pageClassifier':"页",
-  'el.table.emptyText':'无数据',
-  'el.select.placeholder':"请选择",
+  // 'el.pagination.goto':"前往",
+  // 'el.pagination.pageClassifier':"页",
+  // 'el.table.emptyText':'无数据',
+  // 'el.select.placeholder':"请选择",
+  // 'el.upload.deleteTip':'',
+  // 'el.messagebox.cancel':'取消',
+  // 'el.messagebox.confirm':"确认",
   "暂无":"暂无",
   "登记":"登记",
   "查看":"查看",
@@ -52,5 +56,7 @@ module.exports = {
   "统计汇总":"统计汇总",
   "统计汇总列表":"统计汇总列表",
 
-  
+  ...zhLocal
 }
+
+export default zh;

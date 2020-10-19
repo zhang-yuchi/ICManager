@@ -1,5 +1,5 @@
-let zh = require("./config/zh");
-let en = require("./config/en");
+import zh from './config/zh';
+import en from './config/en';
 
 export default {
   zh,

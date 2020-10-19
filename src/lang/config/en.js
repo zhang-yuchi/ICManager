@@ -1,5 +1,6 @@
 // 英文
-module.exports = {
+import enLocal from 'element-ui/lib/locale/lang/en'
+const en = {
   "学生":"student",
   "教职工":"teacher",
   "秘书":"secretary",
@@ -39,10 +40,13 @@ module.exports = {
   "序号":"Number",
   "申报登记项目":"Apply Item",
   "请输入搜索内容":"search content",
-  'el.pagination.goto':"goto",
-  'el.pagination.pageClassifier':"page",
-  'el.table.emptyText':"none",
-  'el.select.placeholder':"",
+  // 'el.pagination.goto':"goto",
+  // 'el.pagination.pageClassifier':"page",
+  // 'el.table.emptyText':"none",
+  // 'el.select.placeholder':"请选择",
+  // 'el.upload.deleteTip':'',
+  // 'el.messagebox.cancel':'取消',
+  // 'el.messagebox.confirm':"确认",
   "暂无":"none",
   "登记":"register",
   "查看":"check",
@@ -51,5 +55,8 @@ module.exports = {
   "统计汇总":"Statistical Summary",
   "统计汇总列表":"Statistical Summary List",
 
+  ...enLocal
   
 }
+
+export default en;

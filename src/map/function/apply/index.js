@@ -1001,7 +1001,7 @@ module.exports = {
       {
         type: "date",
         // subType: 'year',
-        prop: "coopOrgName",
+        prop: "passTime",
         label: "批准时间",
         placeholder: "请选择日期",
       },
