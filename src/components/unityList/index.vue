@@ -115,7 +115,9 @@ export default {
       }
       console.log(module);
       let params = this.$route.params.router;
+      console.log(params);
       this.tableDef = tableRule[module][params];
+      console.log(this.tableDef);
       if (this.tableDef.title) {
         this.Intitle = this.tableDef.title;
       } else {
