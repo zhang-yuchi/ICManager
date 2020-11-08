@@ -130,6 +130,7 @@ module.exports = {
         type: "input",
         prop: "period",
         label: "任职起止日期",
+        extraInfo:"格式为 xxxx/xx/xx-xxxx/xx/xx",
       },
       {
         type: "file",
@@ -1000,7 +1001,7 @@ module.exports = {
       {
         type: "date",
         // subType: 'year',
-        prop: "coopOrgName",
+        prop: "passTime",
         label: "批准时间",
         placeholder: "请选择日期",
       },
@@ -1737,4 +1738,6 @@ module.exports = {
       },
     ],
   },
+
+  // todo
 };

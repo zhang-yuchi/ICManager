@@ -2,17 +2,17 @@
 <template>
   <div class="ov-table">
     <div class="ov-table-title">
-      <div class="title-text">{{ title }}</div>
+      <div class="title-text">{{ $t(title) }}</div>
       <div class="ov-operation-list">
         <el-select
           v-model="queryField"
           class="select-input"
-          placeholder="请选择"
+          :placeholder="$t('请选择')"
         >
           <el-option
             v-for="item in queryOption"
             :key="item.value"
-            :label="item.label"
+            :label="$t(item.label)"
             :value="item.value"
           ></el-option>
         </el-select>
@@ -21,7 +21,7 @@
           v-model="querystr"
           class="query-input"
           @keydown.native="query"
-          placeholder="请输入搜素内容"
+          :placeholder="$t('请输入搜索内容')"
         ></el-input>
         <!-- 操作组件 -->
         <el-pagination
@@ -38,7 +38,7 @@
         v-for="(item, index) in tableColumn"
         :key="item[columnKey]"
         :prop="item.prop"
-        :label="item.name"
+        :label="$t(item.name)"
         :width="
           index < tableColumn.length - 1
             ? item.width
@@ -57,7 +57,7 @@
             {{
               scope.row[item.prop]
                 ? typeCast(scope.row[item.prop], item)
-                : "暂无"
+                : '暂无'
             }}
           </div>
           <div v-else>
@@ -71,7 +71,7 @@
                 type="text"
                 size="small"
                 v-if="btn.auth ? checkRole(btn.auth) : true"
-                >{{ btn.btnName }}</el-button
+                >{{ $t(btn.btnName) }}</el-button
               >
             </div>
           </div>

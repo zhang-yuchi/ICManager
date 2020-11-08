@@ -1,0 +1,23 @@
+export default {
+  'teacher-board':'teacher-board',
+  "overseas-expert-exchange":"overseas-expert-exchange",
+  "overseas-expert-exchange-short":"overseas-expert-exchange-short",
+  "internation-publication":"internation-publication",
+  "overseas-expert-part-time":"overseas-expert-part-time",
+  "overseas-expert-prize":"overseas-expert-prize",
+  "student-board":"student-board",
+  "internation-student-education":"interation-education",
+  "open-internation-course":"open-internation-course",
+  "overseas-education":"cooperation-education",
+  "student-exchange":"student-exchange",
+  "internation-research":"internation-research",
+  "internation-result":"interation-result-change",
+  "internation-area":"interation-area-research",
+  "advanced-expert":"advanced-expert-import",
+  "advanced-project-import":"advanced-project-import",
+  "internation-research-meeting":"interation-meeting-login",
+  "internation-guarantee":"interation-guarantee",
+  "overseas-treaty":"overseas-treaty",
+  "interation-ally":"interation-ally",
+  "grade-administration":"grade-administration" // todo
+}

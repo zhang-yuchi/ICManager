@@ -21,7 +21,7 @@
 //例如：import 《组件名称》 from '《组件路径》';
 
 import elform from "components/form";
-import {creatFormConfig } from "@/map/function/index.js";
+import {createStaticFormInfo} from "@/map/function/index.js";
 
 import * as service from "network/applyApplication";
 export default {
@@ -53,15 +53,9 @@ export default {
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {
     let routeArr = this.$route.path.split("/");
-    console.log(routeArr[routeArr.length - 2]);
-    if (this.$route.params.id) {
-      // 秘书查看填报
-      console.log("秘书查看");
-      this.data = creatFormConfig(routeArr[routeArr.length - 3]);
-    } else {
-      // 个人填报
-      this.data = creatFormConfig(routeArr[routeArr.length - 2]);
-    }
+    console.log(routeArr[routeArr.length - 3]);
+    this.data = createStaticFormInfo(routeArr[routeArr.length - 3]);
+    console.log(this.data);
   },
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {},

@@ -4,14 +4,36 @@
     <div class="content">
       <img class="logo" src="~assets/image/logo.png" alt="" />
       <div class="login-box">
-        <div class="title">登陆/LOGIN</div>
+        <div class="title">
+          登陆/LOGIN
+          <div class="lang">
+            <el-dropdown @command="handleCommand">
+              <span class="el-dropdown-link">
+                <img
+                  class="lang-img"
+                  src="~/assets/image/yuyan.svg"
+                  alt="language"
+                />
+                language
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item command="zh">中文（简体）</el-dropdown-item>
+                <el-dropdown-item command="en">English</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </div>
+        </div>
         <div class="form-line">
           <img class="icon" src="~assets/image/user.svg" alt="" />
-          <el-input v-model="account" placeholder="账号"></el-input>
+          <el-input v-model="account" :placeholder="$t('account')"></el-input>
         </div>
         <div class="form-line">
           <img class="icon" src="~assets/image/psd.svg" alt="" />
-          <el-input v-model="pwd" type="password" placeholder="密码"></el-input>
+          <el-input
+            v-model="pwd"
+            type="password"
+            :placeholder="$t('password')"
+          ></el-input>
         </div>
         <div class="form-line">
           <img class="icon" src="~assets/image/quanxian.svg" alt="" />
@@ -20,17 +42,17 @@
               v-for="item in roles"
               :key="item.index"
               :label="item.index"
-              >{{ item.role }}</el-radio-button
+              >{{ $t(item.role) }}</el-radio-button
             >
           </el-radio-group>
         </div>
         <div class="form-line">
-          <el-button type="primary" @click="to">登 录</el-button>
+          <el-button type="primary" @click="to">{{ $t("login") }}</el-button>
         </div>
         <div class="form-line">
-          <el-link type="primary" @click="dialogFormVisible = true"
-            >注 册</el-link
-          >
+          <el-link type="primary" @click="dialogFormVisible = true">{{
+            $t("register")
+          }}</el-link>
         </div>
       </div>
     </div>
@@ -88,6 +110,10 @@ export default {
   watch: {},
   //方法集合
   methods: {
+    handleCommand(command) {
+      // 切换语言
+      this.$i18n.locale = command;
+    },
     to() {
       if (!this.account || !this.pwd) {
         this.$message.error("请输入账号或密码");
@@ -155,7 +181,7 @@ export default {
 .login-page {
   height: 100%;
   background-color: #f9f8f5;
-  .logo{
+  .logo {
     margin: 0 auto;
     display: block;
   }
@@ -179,9 +205,25 @@ export default {
       background-color: #ffffff;
       border-radius: 0 8px 8px 0;
       .title {
+        width: 100%;
+        text-align: center;
         font-size: 22px;
         margin-bottom: 32px;
         color: rgb(0, 183, 158);
+        position: relative;
+        .lang {
+          position: absolute;
+          top: 0;
+          right: 0px;
+          .el-dropdown-link {
+            cursor: pointer;
+            font-size: 16px;
+            height: 16px;
+            .lang-img {
+              height: 16px;
+            }
+          }
+        }
       }
       .form-line {
         margin-bottom: 32px;

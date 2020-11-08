@@ -3,6 +3,21 @@
   <div class="user-page">
     <div class="user-header">
       <img src="../../assets/image/logo.png" height="100%" alt />
+      <div class="lang">
+        <el-dropdown @command="handleCommand">
+          <span class="el-dropdown-link">
+            <img
+              class="lang-img"
+              src="~/assets/image/yuyan.svg"
+              alt="language"
+            />
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="zh">中文（简体）</el-dropdown-item>
+            <el-dropdown-item command="en">English</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
       <i class="el-icon-switch-button" @click="logout"></i>
     </div>
     <div class="user-content">
@@ -18,7 +33,7 @@
           <div v-for="item in funModule" :key="item.path">
             <el-menu-item :index="item.path">
               <i :class="item.icon"></i>
-              <span slot="title">{{ item.name }}</span>
+              <span slot="title">{{ $t(item.name) }}</span>
             </el-menu-item>
           </div>
         </el-menu>
@@ -55,6 +70,10 @@ export default {
   watch: {},
   //方法集合
   methods: {
+    handleCommand(command) {
+      // 切换语言
+      this.$i18n.locale = command;
+    },
     logout() {
       this.$router.push("/");
       sessionStorage.removeItem("ICtoken");
@@ -79,7 +98,6 @@ export default {
   destroyed() {}, //生命周期 - 销毁完成
   activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
   deactivated() {}, //如果有keep-alive缓存功能,当该页面撤销使这个函数会触发
-  
 };
 </script>
 <style lang="less">
@@ -95,6 +113,22 @@ export default {
     // width:100%
     border-bottom: solid 1px #e6e6e6;
     box-sizing: border-box;
+    .lang {
+      height: 18px;
+      position: absolute;
+      right: 80px;
+      top: 50%;
+      cursor: pointer;
+      transform: translateY(-50%);
+      .lang-img {
+        height: 18px;
+      }
+      .el-dropdown-menu__item {
+        height: 20px;
+        line-height: 20px;
+        font-size: 2px;
+      }
+    }
     .el-icon-switch-button {
       color: #9e9c9c;
       font-size: 18px;

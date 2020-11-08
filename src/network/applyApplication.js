@@ -10,32 +10,42 @@ function strFileList(fileList) {
 
 export const publicationjob = (obj) => {
   // 国际组织刊物任职填报
-  obj.files = obj.fileList.join(",");
+  if(obj.fileList){
+    obj.files = obj.fileList.join();
+  }
   return service.post("/endpoint/publicationjob/application", obj);
 };
 
 export const studentexchange = (obj) => {
   // 在校生出国交流申请
-  obj.files = obj.fileList.join(",");
+  if(obj.fileList){
+    obj.files = obj.fileList.join();
+  }
   return service.post("/endpoint/studentexchange/application", obj);
 };
 
 // todo
 export const teacherexchange = (obj) => {
   // 教师出国交流申请
-  obj.files = obj.fileList.join(",");
+  if(obj.fileList){
+    obj.files = obj.fileList.join();
+  }
   return service.post("/endpoint/teacherexchange/application", obj);
 };
 
 export const longtermexpert = (obj) => {
   // 长期国外专家交流申请
-  obj.files = obj.fileList.join(",");
+  if(obj.fileList){
+    obj.files = obj.fileList.join();
+  }
   return service.post("/endpoint/longtermexpert/application", obj);
 };
 
 export const shorttermexpert = (obj) => {
   // 短期国外专家交流申请
-  obj.files = obj.fileList.join(",");
+  if(obj.fileList){
+    obj.files = obj.fileList.join();
+  }
   obj.reportNum = Number(obj.reportNum);
   return service.post("/endpoint/shorttermexpert/application", obj);
 };
