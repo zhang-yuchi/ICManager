@@ -3,11 +3,18 @@ import checkIC from './module/user/checkIC'
 import apply from './module/apply/index'
 import statistics from './module/statistics/index'
 import deduction from './module/deduction/index'
+import params from './module/params'
+import userAdmin from './module/userAdmin'
+import globalParams from './module/global'
 export const authMap = {
   "0": [
     // info,
-    statistics([0,1,20,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]),
-    deduction()
+    userAdmin(),
+    globalParams(),
+    params(),//参数管理
+    statistics([0,1,20,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]),//统计模块
+    deduction(),//扣分项
+    
   ],
   "1": [
     info,

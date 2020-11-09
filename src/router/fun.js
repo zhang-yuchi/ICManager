@@ -70,5 +70,13 @@ module.exports = [{
   {
     path:"params",
     component:()=>import("views/function/params")
+  },
+  {
+    path:"useradmin",
+    component:()=>import("views/function/useradmin")
+  },
+  {
+    path:"global",
+    component:()=>import("views/function/global")
   }
 ]

@@ -131,18 +131,21 @@ export default {
       let icReg = /\/user\/icCheck/;
       let apply = /\/user\/apply/;
       let statistics = /\/user\/statistics/;
+      let useradmin = /\/user\/useradmin/;
       if (icReg.test(router)) {
         module = "icCheck";
       } else if (apply.test(router)) {
         module = "apply";
-      } else {
+      } else if(statistics.test(router)){
         module = "statistics";
+      }else if(useradmin.test(router)){
+        module = "useradmin"
       }
       // console.log(module);
       let params = this.$route.params.router;
       // console.log(params);
       this.tableDef = tableRule[module][params];
-      console.log(this.tableDef);
+      // console.log(this.tableDef);
       if (this.tableDef.title) {
         this.Intitle = this.tableDef.title;
       } else {

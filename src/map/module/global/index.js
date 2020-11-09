@@ -1,8 +1,8 @@
 export default function () {
   let modules = {
-    "name": "参数管理",
-    "path": "/user/params",
-    "icon": "el-icon-tickets",
+    "name": "全局参数",
+    "path": "/user/global",
+    "icon": "el-icon-setting",
     listAuth:[0],
     subMenu:[]
   }
