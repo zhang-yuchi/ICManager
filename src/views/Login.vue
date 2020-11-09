@@ -132,15 +132,13 @@ export default {
           console.log(res);
           if (res.code === 0) {
             sessionStorage.setItem("ICtoken", res.token);
-            // console.log(res.token);
             this.$store.commit({
               type: "changeFunModule",
               module: mergeFun(this.$store.state.role),
             });
-            console.log(this.$store.state.funModule);
             this.$router.push(
               this.$store.state.funModule[0].hasSub
-                ? this.$store.state.funModule[0].subMenu[0].path
+                ? this.$store.state.funModule[0].path+"/"+this.$store.state.funModule[0].subMenu[0].path
                 : this.$store.state.funModule[0].path
             );
           } else {
