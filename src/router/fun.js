@@ -54,11 +54,13 @@ module.exports = [{
   },
   {
     path:"deduction/fill",
-    component:()=>import("views/function/deduction/fill")
+    component:()=>import("views/function/deduction/fill"),
+    name:"扣分项填写"
   },
   {
     path:"deduction/check",
-    component:()=>import("views/function/deduction/check")
+    component:()=>import("views/function/deduction/check"),
+    name:"扣分项查看"
   },
   {
     path:"deduction/detail/:id",
