@@ -52,4 +52,12 @@ module.exports = [{
     path: "statistics/:router/list/:id",
     component: () => import('views/function/info/listInfo')
   },
+  {
+    path:"deduction/fill",
+    component:()=>import("views/function/deduction/fill")
+  },
+  {
+    path:"deduction/check",
+    component:()=>import("views/function/deduction/check")
+  },
 ]

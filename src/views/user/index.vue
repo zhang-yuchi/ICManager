@@ -31,10 +31,21 @@
           :router="true"
         >
           <div v-for="item in funModule" :key="item.path">
-            <el-menu-item :index="item.path">
+            <el-menu-item v-if="!item.hasSub" :index="item.path">
               <i :class="item.icon"></i>
               <span slot="title">{{ $t(item.name) }}</span>
             </el-menu-item>
+            <el-submenu v-else :index="item.path">
+              <template slot="title" >
+                <i :class="item.icon"></i>
+                <span>{{ $t(item.name) }}</span>
+              </template>
+              <el-menu-item-group>
+                <el-menu-item v-for="i in item.subMenu" :index="item.path+'/'+i.path" :key="i.path">
+                  {{ i.name }}
+                </el-menu-item>
+              </el-menu-item-group>
+            </el-submenu>
           </div>
         </el-menu>
       </div>
@@ -87,7 +98,7 @@ export default {
       type: "changeFunModule",
       module: mergeFun(this.role),
     });
-    // console.log(this.funModule);
+    console.log(this.funModule);
     // console.log(this.$store.state);
   },
   beforeCreate() {}, //生命周期 - 创建之前
