@@ -40,7 +40,7 @@ export default {
   //方法集合
   methods: {
     submit(form) {
-      console.log(form);
+      // console.log(form);
       service[this.data.request](form)
         .then((result) => {
           console.log(result);
@@ -55,7 +55,7 @@ export default {
     let routeArr = this.$route.path.split("/");
     console.log(routeArr[routeArr.length - 3]);
     this.data = createStaticFormInfo(routeArr[routeArr.length - 3]);
-    console.log(this.data);
+    // console.log(this.data);
   },
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {},

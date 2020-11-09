@@ -129,7 +129,7 @@ export default {
           icRole: this.role,
         };
         login(obj).then((res) => {
-          console.log(res);
+          // console.log(res);
           if (res.code === 0) {
             sessionStorage.setItem("ICtoken", res.token);
             this.$store.commit({
@@ -148,7 +148,7 @@ export default {
       }
     },
     subRegister() {
-      console.log("提交注册");
+      // console.log("提交注册");
       register = {};
     },
     enterKey(event) {

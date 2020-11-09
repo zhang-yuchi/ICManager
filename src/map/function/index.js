@@ -4,7 +4,7 @@ import statics from './statics/map'
 import deduction from './deduction/index'
 
 export const creatFormConfig = (role) => {
-  console.log(apply[role]);
+  // console.log(apply[role]);
   let formConfig = Object.assign({}, apply[role]);
   formConfig.rules = {};
   for (let item of formConfig.config) {
@@ -21,19 +21,19 @@ export const creatFormConfig = (role) => {
       formConfig.rules[item.prop].push({ required: false });
     }
   }
-  console.log(formConfig);
+  // console.log(formConfig);
   return formConfig;
 };
 
 export const createStaticFormInfo = (role) => {
   let formConfig = Object.assign({}, apply[statics[role]]);
-  console.log(apply[role]);
+  // console.log(apply[role]);
   for (let item of formConfig.config) {
     item.disabled = true;
     item.required = false;
   }
   formConfig.rules = {};
-  console.log(formConfig);
+  // console.log(formConfig);
   return formConfig;
 };
 
@@ -54,6 +54,6 @@ export const createDeduction = (role)=>{  // fill、detail、check
       formConfig.rules[item.prop].push({ required: false });
     }
   }
-  console.log(formConfig);
+  // console.log(formConfig);
   return formConfig;
 }

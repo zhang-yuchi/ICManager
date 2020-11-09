@@ -40,13 +40,13 @@ export default {
   //方法集合
   methods: {
     submit(form) {
-      console.log(form);
+      // console.log(form);
       service[this.data.request](form)
         .then((result) => {
-          console.log(result);
+          // console.log(result);
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
         });
     },
   },
@@ -56,7 +56,7 @@ export default {
     console.log(routeArr[routeArr.length - 2]);
     if (this.$route.params.id) {
       // 秘书查看填报
-      console.log("秘书查看");
+      // console.log("秘书查看");
       this.data = creatFormConfig(routeArr[routeArr.length - 3]);
     } else {
       // 个人填报

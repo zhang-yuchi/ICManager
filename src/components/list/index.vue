@@ -180,7 +180,7 @@ export default {
     },
     query(e) {
       if (e.code === "Enter") {
-        console.log("搜索");
+        // console.log("搜索");
         this.$emit("query", {
           prop: this.queryField,
           str: this.querystr,

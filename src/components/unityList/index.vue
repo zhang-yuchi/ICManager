@@ -96,7 +96,7 @@ export default {
       );
     },
     queryKey(val) {
-      console.log(val);
+      // console.log(val);
       let { prop, str } = val;
       if (!prop) {
         return;
@@ -151,7 +151,7 @@ export default {
       } else {
         this.Intitle = this.title;
       }
-      console.log(this.tableDef);
+      // console.log(this.tableDef);
     },
     handleCheck(val) {
       // console.log(val);

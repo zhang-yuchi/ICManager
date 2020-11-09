@@ -31,7 +31,7 @@ export default {
   //方法集合
   methods: {
     emitSelect() {
-      console.log('111222');
+      // console.log('111222');
       this.$emit("checkboxselect")
     },
     outputData(){

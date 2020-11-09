@@ -20,7 +20,7 @@ const overseasTreaty = require('./column/overseasTreaty')
 const interationAlly = require('./column/interationAlly')
 //------
 const tableSechma = require('../../../schema/table')
-
+const columnSechma = require("../../../schema/column")
 let table = {
   'teacher-board': fixColumn(teacherBoard),//教师出国交流信息汇总
   'overseas-expert-exchange':fixColumn(overseasExpertExchange),//国外专家来校交流汇总 长期
@@ -58,12 +58,14 @@ function schemaReflect(table){
 //增强每列属性
 function fixColumn(columns){
   let column = columns.column
-  const noQueryArr = ['files','intro','period','reason','lastTime','passTime']
+  const noQueryArr = ['files','intro','period','reason','lastTime','passTime'] 
   const timeArr = ['passTime','createTime','time']
   column = columns.column
-  // console.log(column);
   column.map(item=>{
-    // console.log(item);
+    if(columnSechma[item.prop]){
+      //若存在相应映射关系则改变该字段为Oracle映射字段
+      item.prop = columnSechma[item.prop]
+    }
     if(noQueryArr.findIndex(elem=>{
       return item.prop==elem
     })!==-1){
