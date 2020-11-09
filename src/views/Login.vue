@@ -81,7 +81,7 @@
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 //例如：import 《组件名称》 from '《组件路径》';
 import { login } from "network/public";
-
+import { mergeFun } from "../utils";
 export default {
   //import引入的组件需要注入到对象中才能使用
   components: {},
@@ -122,7 +122,7 @@ export default {
         return 0;
       } else {
         this.$store.commit("setRole", [this.role]);
-        console.log(this.$store.state.role);
+        // console.log(this.$store.state.role);
         let obj = {
           username: this.account,
           password: this.pwd,
@@ -132,8 +132,17 @@ export default {
           console.log(res);
           if (res.code === 0) {
             sessionStorage.setItem("ICtoken", res.token);
-            console.log(res.token);
-            this.$router.push("/user");
+            // console.log(res.token);
+            this.$store.commit({
+              type: "changeFunModule",
+              module: mergeFun(this.$store.state.role),
+            });
+            console.log(this.$store.state.funModule);
+            this.$router.push(
+              this.$store.state.funModule[0].hasSub
+                ? this.$store.state.funModule[0].subMenu[0].path
+                : this.$store.state.funModule[0].path
+            );
           } else {
             this.$message.error(res.msg);
           }
