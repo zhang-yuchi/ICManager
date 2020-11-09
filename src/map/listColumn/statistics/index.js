@@ -18,28 +18,44 @@ const internationResearchMeeting = require('./column/internationResearchMeeting'
 const internationGuarantee = require('./column/internationGuarantee')
 const overseasTreaty = require('./column/overseasTreaty')
 const interationAlly = require('./column/interationAlly')
-module.exports = {
+//------
+const tableSechma = require('../../../schema/table')
+
+let table = {
   'teacher-board': fixColumn(teacherBoard),//教师出国交流信息汇总
   'overseas-expert-exchange':fixColumn(overseasExpertExchange),//国外专家来校交流汇总 长期
   'overseas-expert-exchange-short':fixColumn(overseasExpertExchangeShort),//国外专家来校交流汇总 短期
-  'internation-publication':fixColumn(internationPublication),
-  'overseas-expert-part-time':fixColumn(overseasExpertPartTime),
-  'overseas-expert-prize':fixColumn(overseasExpertPrize),
-  'student-board':fixColumn(sutdentBoard),
-  'internation-student-education':fixColumn(internationStudentEducation),
-  'open-internation-course':fixColumn(internationCourse),
-  'overseas-education':fixColumn(overseasEducation),
-  'student-exchange':fixColumn(studentExchange),
-  'internation-research':fixColumn(internationResearch),
-  'internation-result':fixColumn(internationResult),
-  'internation-area':fixColumn(internationArea),
-  'advanced-expert':fixColumn(advancedExpert),
-  'advanced-project-import':fixColumn(advancedProjectImport),
-  'internation-research-meeting':fixColumn(internationResearchMeeting),
-  'internation-guarantee':fixColumn(internationGuarantee),
-  'overseas-treaty':fixColumn(overseasTreaty),
-  'interation-ally':fixColumn(interationAlly)
+  'internation-publication':fixColumn(internationPublication),//国际组织刊物任职汇总
+  'overseas-expert-part-time':fixColumn(overseasExpertPartTime),//国外专家兼职汇总
+  'overseas-expert-prize':fixColumn(overseasExpertPrize),//国外专家获奖汇总
+  'student-board':fixColumn(sutdentBoard),//在校生出国交流汇总
+  'internation-student-education':fixColumn(internationStudentEducation),//国际学生及港澳台学生教育汇总
+  'open-internation-course':fixColumn(internationCourse),//国际化课程汇总
+  'overseas-education':fixColumn(overseasEducation),//中外合作办学汇总
+  'student-exchange':fixColumn(studentExchange),//学生交流项目汇总
+  'internation-research':fixColumn(internationResearch),//国际联合科研平台汇总
+  'internation-result':fixColumn(internationResult),//国际联合科研平台汇总
+  'internation-area':fixColumn(internationArea),//国别与区域研究中心汇总
+  'advanced-expert':fixColumn(advancedExpert),//高端专家引进计划汇总
+  'advanced-project-import':fixColumn(advancedProjectImport),//引智平台项目汇总
+  'internation-research-meeting':fixColumn(internationResearchMeeting),//国际组织刊物任职汇总
+  'internation-guarantee':fixColumn(internationGuarantee),//国际化保障及办学特色汇总
+  'overseas-treaty':fixColumn(overseasTreaty),//交流合作汇总
+  'interation-ally':fixColumn(interationAlly),//国际联盟汇总
 }
+//对table进行增强
+function tableProxy(table){
+  table = schemaReflect(table)
+  return table
+}
+//增加后端字段映射
+function schemaReflect(table){
+  Object.keys(table).map(item=>{
+    table[item].backendTableName = tableSechma[item]
+  })
+  return table
+}
+//增强每列属性
 function fixColumn(columns){
   let column = columns.column
   const noQueryArr = ['files','intro','period','reason','lastTime','passTime']
@@ -47,7 +63,7 @@ function fixColumn(columns){
   column = columns.column
   // console.log(column);
   column.map(item=>{
-    console.log(item);
+    // console.log(item);
     if(noQueryArr.findIndex(elem=>{
       return item.prop==elem
     })!==-1){
@@ -62,3 +78,4 @@ function fixColumn(columns){
   })
   return columns
 }
+module.exports = tableProxy(table)

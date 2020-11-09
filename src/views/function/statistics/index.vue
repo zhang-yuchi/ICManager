@@ -9,6 +9,7 @@
       :tableData="tableData"
       @handleCheck="handleCheck"
       @query="query"
+      @pagesizechange="handlePageChange"
     ></list>
   </div>
 </template>
@@ -72,6 +73,10 @@ export default {
       const index = val.num - 1;
       const routerName = this.applySubFun[index].path;
       this.$router.push("/user/statistics/" + routerName + "/list");
+    },
+    handlePageChange(val) {
+      this.pageSize = val;
+      this.getData();
     },
     pageChange(page) {
       this.currentPage = page;

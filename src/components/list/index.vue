@@ -3,6 +3,12 @@
   <div class="ov-table">
     <div class="ov-table-title">
       <div class="title-text">{{ title }}</div>
+      <dataOutPut
+        v-if="importData"
+        @checkboxselect="handleCheckBox"
+        @checkboxclear="handleClearCheckBox"
+        :isSelect="isCheckBoxSelect"
+      ></dataOutPut>
       <div class="ov-operation-list">
         <el-select
           v-model="queryField"
@@ -26,14 +32,26 @@
         <!-- 操作组件 -->
         <el-pagination
           @current-change="handleCurrentChange"
+          @size-change="handlePageSizeChange"
           :current-page="currentPage"
+          :page-sizes="[9, 10, 20, 30]"
+          :small="true"
           :page-size="pageSize"
-          layout="prev, pager, next, jumper"
+          layout="sizes, prev, pager, next, jumper"
           :total="total"
         ></el-pagination>
       </div>
     </div>
-    <el-table :data="tableData" stripe style="width: 100%" v-loading='isLoading'>
+    <el-table
+      :data="tableData"
+      stripe
+      style="width: 100%"
+      v-loading="isLoading"
+      @selection-change="handleSelectionChange"
+      ref="multipleTable"
+    >
+      <el-table-column type="selection" width="55" v-if="isCheckBoxSelect">
+      </el-table-column>
       <el-table-column
         v-for="(item, index) in tableColumn"
         :key="item[columnKey]"
@@ -57,7 +75,7 @@
             {{
               scope.row[item.prop]
                 ? typeCast(scope.row[item.prop], item)
-                : '暂无'
+                : "暂无"
             }}
           </div>
           <div v-else>
@@ -86,16 +104,18 @@
 //例如：import 《组件名称》 from '《组件路径》';
 import { checkAuth } from "../../utils/index";
 import moment from "moment";
+import dataOutPut from "../dataOutput";
 export default {
   //import引入的组件需要注入到对象中才能使用
   props: {
+    importData: Boolean,
     title: String,
     total: Number,
     pageSize: {
       type: Number,
       default: 9,
     },
-    isLoading:{type:Boolean,default:false},
+    isLoading: { type: Boolean, default: false },
     tableData: { type: Array, default: () => [] },
     tableColumn: {
       type: Array,
@@ -106,7 +126,9 @@ export default {
       default: 1,
     },
   },
-  components: {},
+  components: {
+    dataOutPut,
+  },
   data() {
     //这里存放数据
     return {
@@ -114,6 +136,9 @@ export default {
       queryField: "",
       columnKey: "",
       moment: moment,
+      isCheckBoxSelect: false,
+      multipleSelection: [],
+      dataOutPutList:[]
       // isLoading:true
     };
   },
@@ -145,6 +170,14 @@ export default {
     handleCheck(val, emitName) {
       this.$emit(emitName, val);
     },
+    handlePageSizeChange(val) {
+      this.handleClearCheckBox()
+      this.$emit("pagesizechange", val);
+      // console.log("发射");
+    },
+    handleSelectionChange(val){
+      console.log(val);
+    },
     query(e) {
       if (e.code === "Enter") {
         console.log("搜索");
@@ -167,9 +200,16 @@ export default {
       return item;
     },
     checkRole(auth) {
-      console.log(auth);
       return checkAuth(auth, this.$store.state.role);
     },
+    handleCheckBox() {
+      this.isCheckBoxSelect = !this.isCheckBoxSelect;
+    },
+    handleClearCheckBox(){
+      this.$refs.multipleTable.clearSelection();
+      this.multipleSelection = []
+      this.dataOutPut = []
+    }
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {},

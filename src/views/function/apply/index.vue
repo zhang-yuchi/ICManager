@@ -9,6 +9,7 @@
       :tableData="tableData"
       @handleCheck="handleCheck"
       @query='query'
+      @pagesizechange="handlePageChange"
     ></list>
   </div>
 </template>
@@ -78,6 +79,10 @@ export default {
       this.currentPage = page;
       this.getData();
       // console.log(this.tableData);
+    },
+    handlePageChange(val){
+      this.pageSize = val
+      this.getData()
     },
     getData() {
       if (this.entitySet&&this.entitySet.str) {

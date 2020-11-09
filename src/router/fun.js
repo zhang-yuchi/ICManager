@@ -66,4 +66,9 @@ module.exports = [{
     path:"deduction/detail/:id",
     component:()=>import("views/function/deduction/check")
   },
+
+  {
+    path:"params",
+    component:()=>import("views/function/params")
+  }
 ]

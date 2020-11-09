@@ -10,7 +10,9 @@
       :tableColumn="tableDef.column"
       @query="queryKey"
       @handleCheck="handleCheck"
+      @pagesizechange="handlePageChange"
       :isLoading="loading"
+      :importData=true
     ></ovlist>
   </div>
 </template>
@@ -39,6 +41,10 @@ export default {
       pageSize: 9,
       currentPage: 1,
       loading: false,
+      query: {
+        prop: "",
+        str: "",
+      },
     };
   },
   //监听属性 类似于data概念
@@ -59,7 +65,7 @@ export default {
               message: res.msg,
               type: "error",
             });
-            this.$router.push("/");
+            this.$router.push("/"); //权限错误
           }
           let result = res.page;
           this.tableData = result.list;
@@ -71,6 +77,23 @@ export default {
     },
     pageChange(page) {
       this.currentPage = page;
+      this.commondQuery()
+    },
+    handlePageChange(val) {
+      this.pageSize = val;
+      this.commondQuery()
+    },
+    commondQuery() {
+      this.getData(
+        Object.assign(
+          {},
+          {
+            limit: this.pageSize,
+            page: this.currentPage,
+          },
+          this.query
+        )
+      );
     },
     queryKey(val) {
       console.log(val);
@@ -78,7 +101,9 @@ export default {
       if (!prop) {
         return;
       }
-      let obj = {};
+      this.query.prop = prop;
+      this.query.str = str;
+      let obj = this.query;
       obj[prop] = str;
       this.currentPage = 1;
       if (val) {
@@ -113,9 +138,9 @@ export default {
       } else {
         module = "statistics";
       }
-      console.log(module);
+      // console.log(module);
       let params = this.$route.params.router;
-      console.log(params);
+      // console.log(params);
       this.tableDef = tableRule[module][params];
       console.log(this.tableDef);
       if (this.tableDef.title) {
@@ -126,7 +151,7 @@ export default {
       console.log(this.tableDef);
     },
     handleCheck(val) {
-      console.log(val);
+      // console.log(val);
       this.$router.push(`${this.$route.path}/${val.id}`);
     },
   },
