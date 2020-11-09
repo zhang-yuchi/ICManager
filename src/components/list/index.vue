@@ -2,7 +2,7 @@
 <template>
   <div class="ov-table">
     <div class="ov-table-title">
-      <div class="title-text">{{ $t(title) }}</div>
+      <div class="title-text">{{ title }}</div>
       <div class="ov-operation-list">
         <el-select
           v-model="queryField"
@@ -12,7 +12,7 @@
           <el-option
             v-for="item in queryOption"
             :key="item.value"
-            :label="$t(item.label)"
+            :label="item.label"
             :value="item.value"
           ></el-option>
         </el-select>
@@ -38,7 +38,7 @@
         v-for="(item, index) in tableColumn"
         :key="item[columnKey]"
         :prop="item.prop"
-        :label="$t(item.name)"
+        :label="item.name"
         :width="
           index < tableColumn.length - 1
             ? item.width
@@ -71,7 +71,7 @@
                 type="text"
                 size="small"
                 v-if="btn.auth ? checkRole(btn.auth) : true"
-                >{{ $t(btn.btnName) }}</el-button
+                >{{ btn.btnName }}</el-button
               >
             </div>
           </div>

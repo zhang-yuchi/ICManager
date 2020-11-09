@@ -55,6 +55,10 @@ const en = {
   "统计汇总":"Statistical Summary",
   "统计汇总列表":"Statistical Summary List",
 
+  // 扣分项目
+  "扣分项目":"Deductions",
+  "扣分项填写":"Fill Deductions",
+  "扣分项查看":"Check Deductions",
   ...enLocal
   
 }

@@ -76,10 +76,4 @@ export default {
 };
 </script>
 <style lang="less">
-.fun-info-page {
-  .box-card {
-    width: 80%;
-    margin: 0 auto 30px auto;
-  }
-}
 </style>

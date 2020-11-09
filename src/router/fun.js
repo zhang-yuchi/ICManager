@@ -60,4 +60,8 @@ module.exports = [{
     path:"deduction/check",
     component:()=>import("views/function/deduction/check")
   },
+  {
+    path:"deduction/detail/:id",
+    component:()=>import("views/function/deduction/check")
+  },
 ]

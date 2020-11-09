@@ -1,6 +1,7 @@
 import fun from "../../router/fun";
 import apply from "./apply";
 import statics from './statics/map'
+import deduction from './deduction/index'
 
 export const creatFormConfig = (role) => {
   console.log(apply[role]);
@@ -36,3 +37,23 @@ export const createStaticFormInfo = (role) => {
   return formConfig;
 };
 
+export const createDeduction = (role)=>{  // fill、detail、check
+  let formConfig = Object.assign({}, deduction[role]);
+  formConfig.rules = {};
+  for (let item of formConfig.config) {
+    formConfig.rules[item.prop] = [];
+    let obj = {};
+    if (typeof item.required === "undefined" || item.required) {
+      obj = {
+        required: true,
+        message: "请输入" + item.label,
+        trigger: "blur",
+      };
+      formConfig.rules[item.prop].push(obj);
+    } else {
+      formConfig.rules[item.prop].push({ required: false });
+    }
+  }
+  console.log(formConfig);
+  return formConfig;
+}

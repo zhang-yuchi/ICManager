@@ -42,7 +42,7 @@
               </template>
               <el-menu-item-group>
                 <el-menu-item v-for="i in item.subMenu" :index="item.path+'/'+i.path" :key="i.path">
-                  {{ i.name }}
+                  {{ $t(i.name) }}
                 </el-menu-item>
               </el-menu-item-group>
             </el-submenu>
@@ -180,6 +180,12 @@ export default {
         box-sizing: border-box;
       }
     }
+  }
+}
+.fun-info-page {
+  .box-card {
+    width: 80%;
+    margin: 0 auto 30px auto;
   }
 }
 </style>
