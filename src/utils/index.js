@@ -1,7 +1,7 @@
 import {
   authMap
 } from '../map/index'
-// console.log(authMap);
+
 export const mergeFun = function (auth) {
   let authBox = []
   auth.map((authNum) => {
@@ -41,7 +41,18 @@ export const checkAuth = function (auth, role) {
   })
   return flag
 }
-
+export const reflectSchema = function (columns, map) {
+  let column = columns.column
+  column = column.map(item=>{
+    if(map[item.prop]){
+      //若存在相应映射关系则改变该字段为Oracle映射字段
+      item.prop = map[item.prop]
+    }
+    return item
+  })
+  // console.log(column);
+  return column
+}
 function _flat(obj, src) {
   const len = obj.length
   src.map(item => {

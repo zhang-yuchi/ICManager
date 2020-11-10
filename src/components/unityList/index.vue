@@ -56,9 +56,7 @@ export default {
     getData(params) {
       this.loading = true;
       service
-        .get(this.tableDef.reqOpt.get, {
-          params,
-        })
+        .get(this.tableDef.reqOpt.get, params)
         .then((res) => {
           if (res.code !== 0) {
             this.$message({
@@ -88,8 +86,8 @@ export default {
         Object.assign(
           {},
           {
-            limit: this.pageSize,
-            page: this.currentPage,
+            pageSize: this.pageSize,
+            currentPage: this.currentPage,
           },
           this.query
         )
@@ -113,7 +111,7 @@ export default {
             {},
             {
               limit: this.pageSize,
-              page: this.currentPage,
+              currentPage: this.currentPage,
             },
             obj
           )
@@ -121,7 +119,7 @@ export default {
       } else {
         this.getData({
           limit: this.pageSize,
-          page: this.currentPage,
+          currentPage: this.currentPage,
         });
       }
     },
@@ -165,7 +163,7 @@ export default {
     this.changeModule();
     this.getData({
       limit: this.pageSize,
-      page: this.currentPage,
+      currentPage: this.currentPage,
     });
   },
   beforeCreate() {}, //生命周期 - 创建之前
