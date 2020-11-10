@@ -4,10 +4,11 @@
     <div class="ov-table-title">
       <div class="title-text">{{ title }}</div>
       <dataOutPut
-        v-if="importData"
+        v-if="isImportData"
         @checkboxselect="handleCheckBox"
         @checkboxclear="handleClearCheckBox"
         :isSelect="isCheckBoxSelect"
+        :importData="dataOutPutList"
       ></dataOutPut>
       <div class="ov-operation-list">
         <el-select
@@ -34,7 +35,7 @@
           @current-change="handleCurrentChange"
           @size-change="handlePageSizeChange"
           :current-page="currentPage"
-          :page-sizes="[9, 10, 20, 30]"
+          :page-sizes="[9, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]"
           :small="true"
           :page-size="pageSize"
           layout="sizes, prev, pager, next, jumper"
@@ -108,7 +109,7 @@ import dataOutPut from "../dataOutput";
 export default {
   //import引入的组件需要注入到对象中才能使用
   props: {
-    importData: Boolean,
+    isImportData: Boolean,
     title: String,
     total: Number,
     pageSize: {
@@ -138,7 +139,8 @@ export default {
       moment: moment,
       isCheckBoxSelect: false,
       multipleSelection: [],
-      dataOutPutList:[]
+      dataOutPutList: {},
+      isPageChange: false,
       // isLoading:true
     };
   },
@@ -161,7 +163,31 @@ export default {
     },
   },
   //监控data中的数据变化
-  watch: {},
+  watch: {
+    currentPage() {
+      // console.log("page change");
+      this.isPageChange = true; //检测到page发生变化
+    },
+    tableData() {
+      //data发生变化,需要修改当前output的状态
+      if (this.isCheckBoxSelect) {
+        this.$nextTick(() => {
+          if (this.dataOutPutList[this.currentPage]) {
+            this.dataOutPutList[this.currentPage].map((item) => {
+              this.tableData.map((row, index) => {
+                if (row.id == item.id) {
+                  this.$refs.multipleTable.toggleRowSelection(
+                    this.tableData[index],
+                    true
+                  );
+                }
+              });
+            });
+          }
+        });
+      }
+    },
+  },
   //方法集合
   methods: {
     handleCurrentChange(val) {
@@ -171,12 +197,16 @@ export default {
       this.$emit(emitName, val);
     },
     handlePageSizeChange(val) {
-      this.handleClearCheckBox()
+      this.handleClearCheckBox();
       this.$emit("pagesizechange", val);
-      // console.log("发射");
     },
-    handleSelectionChange(val){
-      console.log(val);
+    handleSelectionChange(val) {
+      // this.multipleSelection = this.dataOutPutList[this.currentPage]?[]:this.dataOutPutList[this.currentPage]
+      if (!this.isPageChange || val.length > 0) {
+        // console.log(val);
+        this.dataOutPutList[this.currentPage] = val;
+        this.isPageChange = false;
+      }
     },
     query(e) {
       if (e.code === "Enter") {
@@ -186,6 +216,7 @@ export default {
           str: this.querystr,
         });
       }
+      this.handleClearCheckBox();
     },
     typeCast(item, rule) {
       if (rule.type == "time") {
@@ -205,11 +236,11 @@ export default {
     handleCheckBox() {
       this.isCheckBoxSelect = !this.isCheckBoxSelect;
     },
-    handleClearCheckBox(){
+    handleClearCheckBox() {
       this.$refs.multipleTable.clearSelection();
-      this.multipleSelection = []
-      this.dataOutPut = []
-    }
+      this.multipleSelection = [];
+      this.dataOutPutList = {};
+    },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {},

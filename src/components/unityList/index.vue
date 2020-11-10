@@ -12,7 +12,7 @@
       @handleCheck="handleCheck"
       @pagesizechange="handlePageChange"
       :isLoading="loading"
-      :importData=true
+      :isImportData="needImport"
     ></ovlist>
   </div>
 </template>
@@ -23,6 +23,7 @@
 import ovlist from "../list";
 import service from "network";
 import tableRule from "../../map/listColumn";
+import { getCurModule } from '../../utils/index'
 export default {
   //import引入的组件需要注入到对象中才能使用
   props: {
@@ -38,6 +39,7 @@ export default {
       tableDef: {
         column: [],
       },
+      needImport:false,
       pageSize: 9,
       currentPage: 1,
       loading: false,
@@ -53,10 +55,13 @@ export default {
   watch: {},
   //方法集合
   methods: {
+    //获取数据
     getData(params) {
       this.loading = true;
       service
-        .get(this.tableDef.reqOpt.get, params)
+        .get(this.tableDef.reqOpt.get, {
+          params,
+        })
         .then((res) => {
           if (res.code !== 0) {
             this.$message({
@@ -73,14 +78,17 @@ export default {
           this.loading = false;
         });
     },
+    //页数改变
     pageChange(page) {
       this.currentPage = page;
-      this.commondQuery()
+      this.commondQuery();
     },
+    //页数大小改变
     handlePageChange(val) {
       this.pageSize = val;
-      this.commondQuery()
+      this.commondQuery();
     },
+    //封装一次普通查询
     commondQuery() {
       this.getData(
         Object.assign(
@@ -93,6 +101,7 @@ export default {
         )
       );
     },
+    //按键值方式查询
     queryKey(val) {
       // console.log(val);
       let { prop, str } = val;
@@ -102,7 +111,7 @@ export default {
       this.query.prop = prop;
       this.query.str = str;
       let obj = this.query;
-      obj[prop] = str;
+      obj[prop] = str;//查询体
       this.currentPage = 1;
       if (val) {
         //开始搜素
@@ -110,7 +119,7 @@ export default {
           Object.assign(
             {},
             {
-              limit: this.pageSize,
+              pageSize: this.pageSize,
               currentPage: this.currentPage,
             },
             obj
@@ -118,32 +127,14 @@ export default {
         );
       } else {
         this.getData({
-          limit: this.pageSize,
+          pageSize: this.pageSize,
           currentPage: this.currentPage,
         });
       }
     },
+    //修改模块
     changeModule() {
-      let module = "";
-      let router = this.$route.path;
-      let icReg = /\/user\/icCheck/;
-      let apply = /\/user\/apply/;
-      let statistics = /\/user\/statistics/;
-      let useradmin = /\/user\/useradmin/;
-      if (icReg.test(router)) {
-        module = "icCheck";
-      } else if (apply.test(router)) {
-        module = "apply";
-      } else if(statistics.test(router)){
-        module = "statistics";
-      }else if(useradmin.test(router)){
-        module = "useradmin"
-      }
-      // console.log(module);
-      let params = this.$route.params.router;
-      // console.log(params);
-      this.tableDef = tableRule[module][params];
-      // console.log(this.tableDef);
+      this.tableDef = getCurModule(this,tableRule)
       if (this.tableDef.title) {
         this.Intitle = this.tableDef.title;
       } else {
@@ -151,6 +142,7 @@ export default {
       }
       // console.log(this.tableDef);
     },
+    //详情页
     handleCheck(val) {
       // console.log(val);
       this.$router.push(`${this.$route.path}/${val.id}`);
@@ -161,10 +153,7 @@ export default {
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {
     this.changeModule();
-    this.getData({
-      limit: this.pageSize,
-      currentPage: this.currentPage,
-    });
+    this.commondQuery()
   },
   beforeCreate() {}, //生命周期 - 创建之前
   beforeMount() {}, //生命周期 - 挂载之前
