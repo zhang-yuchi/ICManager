@@ -13,6 +13,7 @@
       @pagesizechange="handlePageChange"
       :isLoading="loading"
       :isImportData="needImport"
+      :mixQuery="true"
     ></ovlist>
   </div>
 </template>
@@ -43,10 +44,6 @@ export default {
       pageSize: 9,
       currentPage: 1,
       loading: false,
-      query: {
-        prop: "",
-        str: "",
-      },
     };
   },
   //监听属性 类似于data概念
@@ -102,18 +99,9 @@ export default {
       );
     },
     //按键值方式查询
-    queryKey(val) {
-      // console.log(val);
-      let { prop, str } = val;
-      if (!prop) {
-        return;
-      }
-      this.query.prop = prop;
-      this.query.str = str;
-      let obj = this.query;
-      obj[prop] = str;//查询体
+    queryKey(obj) {
       this.currentPage = 1;
-      if (val) {
+      if (Object.keys(obj).length>0) {
         //开始搜素
         this.getData(
           Object.assign(

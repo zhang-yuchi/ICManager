@@ -2,34 +2,46 @@
 <template>
   <div class="ov-table">
     <div class="ov-table-title">
-      <div class="title-text">{{ title }}</div>
-      <dataOutPut
-        v-if="isImportData"
-        @checkboxselect="handleCheckBox"
-        @checkboxclear="handleClearCheckBox"
-        :isSelect="isCheckBoxSelect"
-        :importData="dataOutPutList"
-      ></dataOutPut>
+      <div class="title-text">
+        {{ title }}
+        <dataOutPut
+          v-if="isImportData"
+          @checkboxselect="handleCheckBox"
+          @checkboxclear="handleClearCheckBox"
+          :isSelect="isCheckBoxSelect"
+          :importData="dataOutPutList"
+        ></dataOutPut>
+      </div>
       <div class="ov-operation-list">
-        <el-select
-          v-model="queryField"
-          class="select-input"
-          :placeholder="$t('请选择')"
-        >
-          <el-option
-            v-for="item in queryOption"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
-        <el-input
-          :disabled="!queryField"
-          v-model="querystr"
-          class="query-input"
-          @keydown.native="query"
-          :placeholder="$t('请输入搜索内容')"
-        ></el-input>
+        <!-- <div v-if="!mixQuery">
+          <el-select
+            v-model="queryField"
+            class="select-input"
+            :placeholder="$t('请选择')"
+          >
+            <el-option
+              v-for="item in queryOption"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+          <el-input
+            :disabled="!queryField"
+            v-model="querystr"
+            class="query-input"
+            @keydown.native="query"
+            :placeholder="$t('请输入搜索内容')"
+          ></el-input>
+        </div>
+        <div v-if="mixQuery">
+          <mixQuery :mixQuery="mixQuery"></mixQuery>
+        </div> -->
+        <mixQuery
+          :mixQuery="mixQuery"
+          :queryOption="queryOption"
+          @query="query"
+        ></mixQuery>
         <!-- 操作组件 -->
         <el-pagination
           @current-change="handleCurrentChange"
@@ -106,6 +118,7 @@
 import { checkAuth } from "../../utils/index";
 import moment from "moment";
 import dataOutPut from "../dataOutput";
+import mixQuery from "../mixQuery";
 export default {
   //import引入的组件需要注入到对象中才能使用
   props: {
@@ -126,9 +139,15 @@ export default {
       type: Number,
       default: 1,
     },
+    mixQuery: {
+      //是否支持混查
+      type: Boolean,
+      default: false,
+    },
   },
   components: {
     dataOutPut,
+    mixQuery,
   },
   data() {
     //这里存放数据
@@ -141,7 +160,6 @@ export default {
       multipleSelection: [],
       dataOutPutList: {},
       isPageChange: false,
-      // isLoading:true
     };
   },
   //监听属性 类似于data概念
@@ -152,11 +170,11 @@ export default {
     queryOption() {
       let arr = [];
       this.tableColumn.map((item) => {
+        console.log(item);
         if (!item.noQuery && item.prop !== "operator") {
-          arr.push({
-            label: item.name,
-            value: item.prop,
-          });
+          item["label"] = item.name
+          item["value"] = item.prop
+          arr.push(item);
         }
       });
       return arr;
@@ -201,21 +219,15 @@ export default {
       this.$emit("pagesizechange", val);
     },
     handleSelectionChange(val) {
-      // this.multipleSelection = this.dataOutPutList[this.currentPage]?[]:this.dataOutPutList[this.currentPage]
       if (!this.isPageChange || val.length > 0) {
         // console.log(val);
         this.dataOutPutList[this.currentPage] = val;
         this.isPageChange = false;
       }
     },
-    query(e) {
-      if (e.code === "Enter") {
-        // console.log("搜索");
-        this.$emit("query", {
-          prop: this.queryField,
-          str: this.querystr,
-        });
-      }
+    query(queryObj) {
+      // console.log("搜索");
+      this.$emit("query", queryObj);
       this.handleClearCheckBox();
     },
     typeCast(item, rule) {

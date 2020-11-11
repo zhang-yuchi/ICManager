@@ -10,26 +10,14 @@
     <el-button v-if="isSelect" size="small" @click="emitClear"
       >清除选择</el-button
     >
-    <!-- <form
-      ref="outputAction"
-      :action="`${baseUrl}/excel/download?clazzName=${form.clazzName}`"
-      method="post"
-    >
-    <table>
-      <tr v-for="item in form.jsonList" :key="item.id">
-        <td>
-          <input v-for="keys in Object.keys(item)" :key="keys" type="hidden" :name="keys" :value="item[keys]" />
-        </td>
-      </tr>
-    </table>
-    </form> -->
+    <a ref="download" display="none" :href="`${baseUrl}/file?fileName=${fileName}`"></a>
   </div>
 </template>
 
 <script>
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 //例如：import 《组件名称》 from '《组件路径》';
-import { excelDownload,downloadFile } from "network/table";
+import { excelDownload, downloadFile } from "network/table";
 import tableRule from "../../map/listColumn";
 import { getCurModule } from "../../utils/index";
 import config from "../../network/config";
@@ -54,6 +42,7 @@ export default {
         jsonList: [],
       },
       baseUrl: "",
+      fileName:"",
     };
   },
   //监听属性 类似于data概念
@@ -78,17 +67,13 @@ export default {
       // this.$refs['outputAction'].submit()
       // console.log(importJson);
       excelDownload(this.form.clazzName, this.form.jsonList).then((res) => {
-        downloadFile(res).then(resp=>{
-          console.log(resp);
-        });
-      });
-      
+        this.fileName = res
+      }).then(()=>{
+        this.$refs['download'].click()
+      })
     },
     emitClear() {
       this.$emit("checkboxclear");
-    },
-    createFormPost() {
-      //制造一个表单提交
     },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
@@ -96,6 +81,7 @@ export default {
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {
     this.baseUrl = config.baseUrl;
+    
   },
   beforeCreate() {}, //生命周期 - 创建之前
   beforeMount() {}, //生命周期 - 挂载之前
@@ -110,5 +96,7 @@ export default {
 <style lang='less'>
 .data-out-put-cmp {
   width: 260px;
+  display:inline-block;
+  margin-left: 30px;
 }
 </style>

@@ -77,7 +77,7 @@ function fixColumn(columns){
     return item
   })
   columns.column = reflectSchema(columns,columnSechma)//修改字段映射关系 
-  console.log(columns);
+  // console.log(columns);
   return columns
 }
 module.exports = tableProxy(table)

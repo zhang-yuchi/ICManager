@@ -6,6 +6,10 @@ export const downloadFile = function(fileName){
   return service.get('/file',{
     params:{
       fileName
+    },
+    responseType:"blob",
+    Headers:{
+      'Content-Type':"application/json;charset=utf-8"
     }
   })
 }
