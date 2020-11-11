@@ -43,17 +43,31 @@
             v-model="mixQueryForm[keys]['value']"
           ></el-input>
           <div v-if="mixQueryForm[keys]['type'] == 'time'">
-            <el-input
+            <el-date-picker
+              v-model="mixQueryForm[keys]['value']"
+              type="date"
+              placeholder="起始日期"
+              style="width: 140px"
+            >
+            </el-date-picker>
+            <!-- <el-input
               placeholder="这是时间"
               style="width: 140px"
               v-model="mixQueryForm[keys]['value']"
-            ></el-input>
+            ></el-input> -->
             -
-            <el-input
+            <!-- <el-input
               placeholder="这是时间"
               style="width: 140px"
               v-model="mixQueryForm[keys]['value']"
-            ></el-input>
+            ></el-input> -->
+            <el-date-picker
+              v-model="mixQueryForm[keys]['value']"
+              type="date"
+              placeholder="结束日期"
+              style="width: 140px"
+            >
+            </el-date-picker>
           </div>
 
           <!-- {{mixQueryForm[keys]}} -->
