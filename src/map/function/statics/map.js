@@ -19,5 +19,4 @@ export default {
   "internation-guarantee":"interation-guarantee",
   "overseas-treaty":"overseas-treaty",
   "interation-ally":"interation-ally",
-  "grade-administration":"grade-administration" // todo
 }
