@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-  <div class="" style="display: inline-block">
+  <div class="" style="display: inline-block;margin-left:36px">
     <el-button size="small" @click="emitSelect" type="danger">{{
       isSelect ? "取消" : "批量删除"
     }}</el-button>

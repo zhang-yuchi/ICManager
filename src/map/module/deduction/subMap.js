@@ -6,7 +6,7 @@ module.exports = {
   },
   "1":{
     name:"扣分项查看",
-    path:"check",
+    path:"check/list",
     subMenu:true
   }
 }

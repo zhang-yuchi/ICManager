@@ -61,7 +61,7 @@ export default {
         column: [],
       },
       bulkySelect: {},
-      needImport: true,
+      needImport: false,
       needDelete:true,
       pageSize: 9,
       currentPage: 1,

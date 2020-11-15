@@ -76,7 +76,7 @@ module.exports = [{
     name:"扣分项填写"
   },
   {
-    path:"deduction/check",
+    path:"deduction/:router/list",
     component:()=>import("views/function/deduction/check"),
     name:"扣分项查看"
   },

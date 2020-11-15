@@ -60,6 +60,7 @@ export const getCurModule = (that, tableRule) => {
   let apply = /\/user\/apply/;
   let statistics = /\/user\/statistics/;
   let useradmin = /\/user\/useradmin/;
+  let deduction = /\user\/deduction/;
   if (icReg.test(router)) {
     module = "icCheck";
   } else if (apply.test(router)) {
@@ -69,10 +70,12 @@ export const getCurModule = (that, tableRule) => {
     that.needImport = true
   } else if (useradmin.test(router)) {
     module = "useradmin";
+  } else if (deduction.test(router)) {
+    module = "deduction"
   }
-  // console.log(module);
+  console.log(module);
   let params = that.$route.params.router;
-  // console.log(params);
+  console.log(params);
   return tableRule[module][params];
 
 }
