@@ -324,9 +324,6 @@ export default {
       let obj = {}
       obj.ids = arr
       let promise = null;
-      console.log(obj);
-      // console.log(uploadEntity);
-      console.log(service.delete);
       if (typeof this.tableDef["reqOpt"]["delete"] == "string") {
         promise = service.delete(this.tableDef["reqOpt"]['delete'],obj);
       } else if (typeof this.tableDef["reqOpt"]["delete"] == "object") {
