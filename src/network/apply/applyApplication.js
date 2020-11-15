@@ -29,7 +29,6 @@ export const shorttermexpert = (obj) => {
 
 export const itcourse = (obj) => {
   // 开设国际化课程申请
-  // obj.courseList = obj.courseList.join();
   return service.post("/endpoint/itcourse/application", obj);
 };
 

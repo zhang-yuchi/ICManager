@@ -128,8 +128,9 @@ export default {
           password: this.pwd,
           icRole: this.role,
         };
+        console.log(this.role);
         login(obj).then((res) => {
-          // console.log(res);
+          console.log(res);
           if (res.code === 0) {
             sessionStorage.setItem("ICtoken", res.token);
             this.$store.commit({
