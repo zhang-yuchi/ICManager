@@ -135,7 +135,6 @@
   </div>
 </template>
 <script>
-import courseListVue from '../../../../../VueCli/VueCli3/chengji/src/views/teacher/courseList.vue';
 export default {
   props: {
     title: {
@@ -187,8 +186,8 @@ export default {
       let routeArr = this.$route.path.split("/");
       console.log(routeArr[routeArr.length - 2]);
       console.log(this.form,this.rules);
-      if(this.form.courseList){
-        
+      if(this.form.courseList && this.form.courseList.length){
+        this.form.couse = this.form.courseList.join(',')
       }
       this.$refs.elform.validate((valid) => {
         if (valid) {
