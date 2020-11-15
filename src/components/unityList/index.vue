@@ -9,7 +9,8 @@
       :tableColumn="tableDef.column"
       :queryOption="queryOption"
       :isLoading="loading"
-      :isImportData="needImport"
+      :needImport="needImport"
+      :needDelete="needDelete"
       :mixQuery="true"
       :bulkySelect="bulkySelect"
       @pageChange="pageChange"
@@ -19,6 +20,7 @@
       @pagesizechange="handlePageChange"
       @addBulkySelect="handleBulkySelect"
       @clearBulkySelect="handleClearBulkySelect"
+      @bulkyDelete="handleBulkyDelete"
     ></ovlist>
     <ovDialog
       v-if="operatorAdmit.update"
@@ -37,6 +39,7 @@
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 //例如：import 《组件名称》 from '《组件路径》';
 import ovlist from "../list";
+import moment from 'moment'
 import ovDialog from "components/ovDialog";
 import service from "network";
 import tableRule from "../../map/listColumn";
@@ -57,8 +60,9 @@ export default {
       tableDef: {
         column: [],
       },
-      bulkySelect:{},
-      needImport: false,
+      bulkySelect: {},
+      needImport: true,
+      needDelete:true,
       pageSize: 9,
       currentPage: 1,
       loading: false,
@@ -87,7 +91,6 @@ export default {
           item["value"] = item.prop;
           arr.push(item);
         }
-
       });
       return arr;
     },
@@ -165,22 +168,39 @@ export default {
         )
       );
     },
+    getParams(obj) {
+      let queryField = {};
+      Object.keys(obj).map((k) => {
+        if (!!obj[k].value && obj[k].type !== "time") {
+          queryField[k] = obj[k]["value"];
+        }
+        if (obj[k].type == "time" && (obj[k].startTime||obj[k].endTime)) {
+          queryField.timeType = k;
+          
+          queryField.startTime = this.timeFormat(obj[k]["startTime"]);
+          queryField.endTime = this.timeFormat(obj[k]["endTime"]);
+          queryField[k]=queryField.startTime
+        }
+      });
+      return queryField;
+    },
     //按键值方式查询
     queryKey(obj) {
       this.currentPage = 1;
-      console.log(obj);
-      let queryField = {}
-      Object.keys(obj).map(k=>{
-        if(!!obj[k].value&&obj[k].type!=='time'){
-          queryField[k] = obj[k]['value']
-        }
-        if(obj[k].type=='time'){
-          queryField.timeType = k
-          queryField.startTime = obj[k]['startTime']
-          queryField.endTime = obj[k]['endTime']
-        }
-      })
-      console.log(queryField);
+      // console.log(obj);
+      // let queryField = {};
+      // Object.keys(obj).map((k) => {
+      //   if (!!obj[k].value && obj[k].type !== "time") {
+      //     queryField[k] = obj[k]["value"];
+      //   }
+      //   if (obj[k].type == "time") {
+      //     queryField.timeType = k;
+      //     queryField.startTime = obj[k]["startTime"];
+      //     queryField.endTime = obj[k]["endTime"];
+      //   }
+      // });
+      let queryField = this.getParams(obj)
+      // console.log(queryField);
       if (Object.keys(obj).length > 0) {
         //开始搜素
         this.getData(
@@ -213,12 +233,15 @@ export default {
     //详情页
     handleCheck(val) {
       // console.log(val);
-      this.$router.push({path:`${this.$route.path}/${val.id}`,query:{id:val.id}});
+      this.$router.push({
+        path: `${this.$route.path}/${val.id}`,
+        query: { id: val.id },
+      });
     },
     //更新
     handleUpdate(val) {
       this.updateEntity = val;
-      this.updateEntity.id = val.id //传入主键 否则将被过滤
+      this.updateEntity.id = val.id; //传入主键 否则将被过滤
       this.isUpdateShow = true;
     },
     //对话框响应
@@ -236,7 +259,7 @@ export default {
       let promise = null;
       // console.log(uploadEntity);
       if (typeof this.tableDef["reqOpt"]["update"] == "string") {
-        promise = service.put(this.tableDef["reqOpt"], uploadEntity);
+        promise = service.put(this.tableDef["reqOpt"]['update'], uploadEntity);
       } else if (typeof this.tableDef["reqOpt"]["update"] == "object") {
         promise = service[this.tableDef["reqOpt"]["update"]["method"]](
           this.tableDef["reqOpt"]["update"]["url"],
@@ -244,7 +267,7 @@ export default {
         );
       }
       //传入保存的id
-      uploadEntity.id = this.updateEntity.id
+      uploadEntity.id = this.updateEntity.id;
       promise
         .then((res) => {
           // console.log(res);
@@ -275,16 +298,45 @@ export default {
       return obj;
     },
     //获取多选框数据
-    handleBulkySelect(page,val){
-      this.bulkySelect[page] = val
+    handleBulkySelect(page, val) {
+      this.bulkySelect[page] = val;
     },
     //清除多选框数据
-    handleClearBulkySelect(){
-      this.bulkySelect = {}
+    handleClearBulkySelect() {
+      this.bulkySelect = {};
     },
     //获取bulkySelect的id数组
-    getBulkySelectId(){
-      
+    getBulkySelectId(data) {
+      let arr = []
+      Object.keys(data).map(key=>{
+        data[key].map(item=>{
+          arr.push(item.id)
+        })
+      })
+      return arr
+    },
+    timeFormat(date){
+      return moment(date).format("YYYY-MM-DD HH:mm:ss")
+    },
+    handleBulkyDelete(data){
+      // console.log(data);
+      let arr = this.getBulkySelectId(data)
+      let obj = {}
+      obj.ids = arr
+      let promise = null;
+      console.log(obj);
+      // console.log(uploadEntity);
+      console.log(service.delete);
+      if (typeof this.tableDef["reqOpt"]["delete"] == "string") {
+        promise = service.delete(this.tableDef["reqOpt"]['delete'],obj);
+      } else if (typeof this.tableDef["reqOpt"]["delete"] == "object") {
+        promise = service[this.tableDef["reqOpt"]["delete"]["method"]](
+          this.tableDef["reqOpt"]["delete"]["url"],obj
+        );
+      }
+      promise.then(res=>{
+        console.log(res);
+      })
     }
   },
   //生命周期 - 创建完成（可以访问当前this实例）

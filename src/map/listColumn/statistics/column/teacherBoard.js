@@ -2,9 +2,7 @@ module.exports = {
   title: "教师出国交流信息汇总",
   reqOpt: {
     get: "/endpoint/teacherexchange/list2",
-    getOne: (id) => { //获取详情 or 跳转?
-      return "/endpoint/teacherexchange/info/" + id
-    }
+    delete:"/endpoint/teacherexchange/delete"
   },
   column: [{
       prop: "userId",

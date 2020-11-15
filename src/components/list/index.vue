@@ -5,12 +5,21 @@
       <div class="title-text">
         {{ title }}
         <dataOutPut
-          v-if="isImportData"
+          v-if="needImport"
           @checkboxselect="handleCheckBox"
           @checkboxclear="handleClearCheckBox"
           :isSelect="isCheckBoxSelect"
           :importData="bulkySelect"
         ></dataOutPut>
+        <dataDel
+          v-if="needDelete"
+          :DeleteData="bulkySelect"
+          :isSelect="isBatchDeleteBoxSelect"
+          bulkyDeleteRequest
+          @bulkyDeleteRequest="emitDelete"
+          @checkboxselect="handleBatchDeleteBox"
+          @checkboxclear="handleClearCheckBox"
+        ></dataDel>
       </div>
       <div class="ov-operation-list">
         <mixQuery
@@ -39,7 +48,11 @@
       @selection-change="handleSelectionChange"
       ref="multipleTable"
     >
-      <el-table-column type="selection" width="55" v-if="isCheckBoxSelect">
+      <el-table-column
+        type="selection"
+        width="55"
+        v-if="isCheckBoxSelect || isBatchDeleteBoxSelect"
+      >
       </el-table-column>
       <el-table-column
         v-for="(item, index) in tableColumn"
@@ -81,7 +94,6 @@
         </template>
       </el-table-column>
     </el-table>
-    
   </div>
 </template>
 
@@ -91,18 +103,20 @@
 import { checkAuth } from "../../utils/index";
 import moment from "moment";
 import dataOutPut from "../dataOutput";
+import dataDel from "../dataDel";
 import mixQuery from "../mixQuery";
 import ovDialog from "components/ovDialog";
 export default {
   //import引入的组件需要注入到对象中才能使用
   props: {
-    bulkySelect:{
-      type:Object,
-      default:()=>{}
+    bulkySelect: {
+      type: Object,
+      default: () => {},
     },
-    isImportData: Boolean,//是否需要导入数据
-    isBatchDelete:Boolean,//是否批量删除
-    title: String,//标题
+    needDelete: Boolean,
+    needImport: Boolean, //是否需要导入数据
+    isBatchDelete: Boolean, //是否批量删除
+    title: String, //标题
     total: Number,
     pageSize: {
       type: Number,
@@ -114,9 +128,9 @@ export default {
       type: Array,
       default: () => [],
     },
-    queryOption:{
-      type:Array,
-      default:()=>[]
+    queryOption: {
+      type: Array,
+      default: () => [],
     },
     currentPage: {
       type: Number,
@@ -132,6 +146,7 @@ export default {
     dataOutPut,
     mixQuery,
     ovDialog,
+    dataDel,
   },
   data() {
     //这里存放数据
@@ -143,6 +158,7 @@ export default {
       isCheckBoxSelect: false,
       multipleSelection: [],
       isPageChange: false,
+      isBatchDeleteBoxSelect: false,
     };
   },
   //监听属性 类似于data概念
@@ -158,7 +174,7 @@ export default {
     },
     tableData() {
       //data发生变化,需要修改当前output的状态
-      if (this.isCheckBoxSelect) {
+      if (this.isCheckBoxSelect || this.isBatchDeleteBoxSelect) {
         this.$nextTick(() => {
           if (this.bulkySelect[this.currentPage]) {
             this.bulkySelect[this.currentPage].map((item) => {
@@ -191,7 +207,7 @@ export default {
     handleSelectionChange(val) {
       if (!this.isPageChange || val.length > 0) {
         // console.log(val);
-        this.$emit("addBulkySelect",this.currentPage,val)
+        this.$emit("addBulkySelect", this.currentPage, val);
         // this.bulkySelect[this.currentPage] = val;
         this.isPageChange = false;
       }
@@ -202,7 +218,6 @@ export default {
       this.handleClearCheckBox();
     },
     typeCast(item, rule) {
-      
       if (rule.type == "time") {
         item = moment(item).format("YYYY-MM-DD");
       } else if (rule.type == "boolean") {
@@ -229,12 +244,19 @@ export default {
     handleCheckBox() {
       this.isCheckBoxSelect = !this.isCheckBoxSelect;
     },
+    handleBatchDeleteBox() {
+      this.isBatchDeleteBoxSelect = !this.isBatchDeleteBoxSelect;
+    },
     handleClearCheckBox() {
       this.$refs.multipleTable.clearSelection();
       this.multipleSelection = [];
       // this.bulkySelect = {};
-      this.$emit("clearBulkySelect")
+      this.$emit("clearBulkySelect");
     },
+    emitDelete(data){
+      // console.log(data);
+      this.$emit("bulkyDelete",data)
+    }
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {},
