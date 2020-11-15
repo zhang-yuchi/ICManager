@@ -36,12 +36,16 @@
               <span slot="title">{{ $t(item.name) }}</span>
             </el-menu-item>
             <el-submenu v-else :index="item.path">
-              <template slot="title" >
+              <template slot="title">
                 <i :class="item.icon"></i>
                 <span>{{ $t(item.name) }}</span>
               </template>
               <el-menu-item-group>
-                <el-menu-item v-for="i in item.subMenu" :index="item.path+'/'+i.path" :key="i.path">
+                <el-menu-item
+                  v-for="i in item.subMenu"
+                  :index="item.path + '/' + i.path"
+                  :key="i.path"
+                >
                   {{ $t(i.name) }}
                 </el-menu-item>
               </el-menu-item-group>
@@ -50,7 +54,10 @@
         </el-menu>
       </div>
       <div class="user-wrap">
-        <router-view></router-view>
+        <keep-alive>
+          <router-view v-if="$route.meta.keepAlive"></router-view>
+        </keep-alive>
+        <router-view v-if="!$route.meta.keepAlive"></router-view>
       </div>
     </div>
   </div>
@@ -92,9 +99,7 @@ export default {
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {},
   //生命周期 - 挂载完成（可以访问DOM元素）
-  mounted() {
-
-  },
+  mounted() {},
   beforeCreate() {}, //生命周期 - 创建之前
   beforeMount() {}, //生命周期 - 挂载之前
   beforeUpdate() {}, //生命周期 - 更新之前

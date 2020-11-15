@@ -1,6 +1,7 @@
 import axios from 'axios'
+import config from './config'
 const service = axios.create({
-  baseURL: 'http://39.107.24.47:8080',
+  baseURL: config.baseUrl,
 })
 //请求处理
 service.interceptors.request.use((config) => {

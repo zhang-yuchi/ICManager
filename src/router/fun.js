@@ -5,27 +5,42 @@ module.exports = [{
   {
     path: "info",
     name: "个人信息",
-    component: () => import('views/user/info')
+    component: () => import('views/user/info'),
+    meta:{
+      keepAlive:false
+    }
   },
   {
     path: "icCheck",
     // name: "国合机构查看",
-    redirect:"icCheck/list"
+    redirect:"icCheck/list",
+    meta:{
+      keepAlive:false
+    }
   },
   {
     path: "icCheck/:router/list",
     name: "国合机构查看",
-    component: () => import('views/function/icCheck')
+    component: () => import('views/function/icCheck'),
+    meta:{
+      keepAlive:false
+    }
   },
   {
     path: "icCheck/:router/info/:id",
     name: "国合机构详情",
-    component: () => import('views/function/icCheck/info')
+    component: () => import('views/function/icCheck/info'),
+    meta:{
+      keepAlive:false
+    }
   },
   {
     path: "apply",
     name: "申请填写",
     component: () => import('views/function/apply'),
+    meta:{
+      keepAlive:true
+    }
   },
   {
     path: "apply/:router/info",
@@ -39,14 +54,23 @@ module.exports = [{
     path: "statistics",
     name: "统计汇总",
     component: () => import('views/function/statistics'),
+    meta:{
+      keepAlive:true
+    }
   },
   {
     path: "statistics/:router/info/:id",
-    component: () => import('views/function/info')
+    component: () => import('views/function/info'),
+    meta:{
+      keepAlive:false
+    }
   },
   {
     path: "statistics/:router/list",
-    component: () => import('views/function/list')
+    component: () => import('views/function/list'),
+    meta:{
+      keepAlive:false
+    }
   },
   {
     path: "statistics/:router/list/:id",
@@ -72,8 +96,9 @@ module.exports = [{
     component:()=>import("views/function/params")
   },
   {
-    path:"useradmin",
-    component:()=>import("views/function/useradmin")
+    path:"useradmin/:router/list",
+    component:()=>import("views/function/useradmin"),
+    name:"用户管理"
   },
   {
     path:"global",

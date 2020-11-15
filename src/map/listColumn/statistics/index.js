@@ -21,7 +21,8 @@ const interationAlly = require('./column/interationAlly')
 //------
 const tableSechma = require('../../../schema/table')
 const columnSechma = require("../../../schema/column")
-
+const timeField = require('../../../enum/time')
+const noQueryField = require("../../../enum/noQuery")
 const { reflectSchema } = require('../../../utils')
 let table = {
   'teacher-board': fixColumn(teacherBoard),//教师出国交流信息汇总
@@ -60,13 +61,9 @@ function schemaReflect(table){
 //增强每列属性
 function fixColumn(columns){
   let column = columns.column
-  const noQueryArr = ['files','intro','period','reason','lastTime','passTime'] 
-  const timeArr = ['passTime','createTime','time']
+  const noQueryArr = noQueryField
+  const timeArr = timeField
   columns.column = column.map(item=>{
-    // if(columnSechma[item.prop]){
-    //   //若存在相应映射关系则改变该字段为Oracle映射字段
-    //   item.prop = columnSechma[item.prop]
-    // }
     if(noQueryArr.findIndex(elem=>{
       return item.prop==elem
     })!==-1){
@@ -79,8 +76,7 @@ function fixColumn(columns){
     }
     return item
   })
-  columns.column = reflectSchema(columns,columnSechma)
-  console.log(columns);
+  columns.column = reflectSchema(columns,columnSechma)//修改字段映射关系 
   return columns
 }
 module.exports = tableProxy(table)

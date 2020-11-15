@@ -9,25 +9,15 @@
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 //例如：import 《组件名称》 from '《组件路径》';
 import unityList from "components/unityList";
+import ovlist from 'components/list'
+import adminColumn from 'map/listColumn/useradmin'
 export default {
   //import引入的组件需要注入到对象中才能使用
-  components: { unityList },
+  components: { unityList,ovlist },
   data() {
     //这里存放数据
     return {
-      tableData: [],
-      total: 0,
-      Intitle: "",
-      tableDef: {
-        column: [],
-      },
-      pageSize: 9,
-      currentPage: 1,
-      loading: false,
-      query: {
-        prop: "",
-        str: "",
-      },
+      
     };
   },
   //监听属性 类似于data概念

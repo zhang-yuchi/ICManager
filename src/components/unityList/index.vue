@@ -3,17 +3,33 @@
   <div class>
     <ovlist
       :title="Intitle"
-      @pageChange="pageChange"
       :tableData="tableData"
       :currentPage="currentPage"
       :total="total"
       :tableColumn="tableDef.column"
+      :queryOption="queryOption"
+      :isLoading="loading"
+      :isImportData="needImport"
+      :mixQuery="true"
+      :bulkySelect="bulkySelect"
+      @pageChange="pageChange"
       @query="queryKey"
       @handleCheck="handleCheck"
+      @handleUpdate="handleUpdate"
       @pagesizechange="handlePageChange"
-      :isLoading="loading"
-      :importData=true
+      @addBulkySelect="handleBulkySelect"
+      @clearBulkySelect="handleClearBulkySelect"
     ></ovlist>
+    <ovDialog
+      v-if="operatorAdmit.update"
+      :echo="isUpdateShow"
+      :fieldOption="updateOption"
+      :entity="updateEntity"
+      @echoShow="handleEchoShow"
+      @handleDialogCancel="updateCancel"
+      @handleDialogClick="updateRequest"
+      title="修改操作"
+    ></ovDialog>
   </div>
 </template>
 
@@ -21,14 +37,17 @@
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 //例如：import 《组件名称》 from '《组件路径》';
 import ovlist from "../list";
+import ovDialog from "components/ovDialog";
 import service from "network";
 import tableRule from "../../map/listColumn";
+import { getCurModule } from "../../utils/index";
+import { reqOpt } from "../../map/listColumn/statistics/column/teacherBoard";
 export default {
   //import引入的组件需要注入到对象中才能使用
   props: {
     title: String,
   },
-  components: { ovlist },
+  components: { ovlist, ovDialog },
   data() {
     //这里存放数据
     return {
@@ -38,26 +57,76 @@ export default {
       tableDef: {
         column: [],
       },
+      bulkySelect:{},
+      needImport: false,
       pageSize: 9,
       currentPage: 1,
       loading: false,
-      query: {
-        prop: "",
-        str: "",
-      },
+      isUpdateShow: false,
+      updateEntity: {},
     };
   },
   //监听属性 类似于data概念
-  computed: {},
+  computed: {
+    queryOption() {
+      let arr = [];
+      this.tableDef.column.map((item) => {
+        if (!item.noQuery && item.prop !== "operator") {
+          item["label"] = item.name;
+          item["value"] = item.prop;
+          arr.push(item);
+        }
+      });
+      return arr;
+    },
+    updateOption() {
+      let arr = [];
+      this.tableDef.column.map((item) => {
+        if (item.prop !== "operator" && !item.noUpdate) {
+          item["label"] = item.name;
+          item["value"] = item.prop;
+          arr.push(item);
+        }
+
+      });
+      return arr;
+    },
+    operatorAdmit() {
+      //判断是否具有增删改查功能
+      let obj = {
+        get: false,
+        update: false,
+        delete: false,
+      };
+      this.tableDef.column.map((item, index) => {
+        if (item.prop == "operator") {
+          item.button.map((btn) => {
+            if (btn.emit == "handleUpdate") {
+              obj.update = true;
+            } else if (btn.emit == "handleCheck") {
+              obj.get = true;
+            } else if (btn.emit == "handleDelete") {
+              obj.delete = true;
+            }
+          });
+        }
+      });
+      return obj;
+    },
+  },
   //监控data中的数据变化
   watch: {},
   //方法集合
   methods: {
+    //获取数据
     getData(params) {
       this.loading = true;
       service
-        .get(this.tableDef.reqOpt.get, params)
+        .get(this.tableDef.reqOpt.get, {
+          params,
+        })
         .then((res) => {
+          // console.log(res);
           if (res.code !== 0) {
             this.$message({
               message: res.msg,
@@ -73,14 +142,17 @@ export default {
           this.loading = false;
         });
     },
+    //页数改变
     pageChange(page) {
       this.currentPage = page;
-      this.commondQuery()
+      this.commondQuery();
     },
+    //页数大小改变
     handlePageChange(val) {
       this.pageSize = val;
-      this.commondQuery()
+      this.commondQuery();
     },
+    //封装一次普通查询
     commondQuery() {
       this.getData(
         Object.assign(
@@ -93,24 +165,16 @@ export default {
         )
       );
     },
-    queryKey(val) {
-      // console.log(val);
-      let { prop, str } = val;
-      if (!prop) {
-        return;
-      }
-      this.query.prop = prop;
-      this.query.str = str;
-      let obj = this.query;
-      obj[prop] = str;
+    //按键值方式查询
+    queryKey(obj) {
       this.currentPage = 1;
-      if (val) {
+      if (Object.keys(obj).length > 0) {
         //开始搜素
         this.getData(
           Object.assign(
             {},
             {
-              limit: this.pageSize,
+              pageSize: this.pageSize,
               currentPage: this.currentPage,
             },
             obj
@@ -118,32 +182,14 @@ export default {
         );
       } else {
         this.getData({
-          limit: this.pageSize,
+          pageSize: this.pageSize,
           currentPage: this.currentPage,
         });
       }
     },
+    //修改模块
     changeModule() {
-      let module = "";
-      let router = this.$route.path;
-      let icReg = /\/user\/icCheck/;
-      let apply = /\/user\/apply/;
-      let statistics = /\/user\/statistics/;
-      let useradmin = /\/user\/useradmin/;
-      if (icReg.test(router)) {
-        module = "icCheck";
-      } else if (apply.test(router)) {
-        module = "apply";
-      } else if(statistics.test(router)){
-        module = "statistics";
-      }else if(useradmin.test(router)){
-        module = "useradmin"
-      }
-      // console.log(module);
-      let params = this.$route.params.router;
-      // console.log(params);
-      this.tableDef = tableRule[module][params];
-      // console.log(this.tableDef);
+      this.tableDef = getCurModule(this, tableRule);
       if (this.tableDef.title) {
         this.Intitle = this.tableDef.title;
       } else {
@@ -151,20 +197,89 @@ export default {
       }
       // console.log(this.tableDef);
     },
+    //详情页
     handleCheck(val) {
       // console.log(val);
       this.$router.push({path:`${this.$route.path}/${val.id}`,query:{id:val.id}});
     },
+    //更新
+    handleUpdate(val) {
+      this.updateEntity = val;
+      this.updateEntity.id = val.id //传入主键 否则将被过滤
+      this.isUpdateShow = true;
+    },
+    //对话框响应
+    handleEchoShow(val) {
+      this.isUpdateShow = val;
+    },
+    //取消修改
+    updateCancel() {
+      this.isUpdateShow = false;
+    },
+    //修改请求
+    updateRequest(val) {
+      // console.log("提交请求");
+      let uploadEntity = this.createNewEntity(val);
+      let promise = null;
+      console.log(uploadEntity);
+      if (typeof this.tableDef["reqOpt"]["update"] == "string") {
+        promise = service.put(this.tableDef["reqOpt"], uploadEntity);
+      } else if (typeof this.tableDef["reqOpt"]["update"] == "object") {
+        promise = service[this.tableDef["reqOpt"]["update"]["method"]](
+          this.tableDef["reqOpt"]["update"]["url"],
+          uploadEntity
+        );
+      }
+      //传入保存的id
+      uploadEntity.id = this.updateEntity.id
+      promise
+        .then((res) => {
+          console.log(res);
+          if (res.msg == "success" && res.code == 0) {
+            this.$message({
+              type: "success",
+              message: "操作成功",
+            });
+          } else {
+            this.$message({
+              type: "error",
+              message: res.msg,
+            });
+          }
+        })
+        .finally(() => {
+          this.commondQuery();
+        });
+      // console.log(val);
+    },
+    //创建实体对象
+    createNewEntity(val) {
+      let obj = {};
+      console.log(val);
+      Object.keys(val).map((keys) => {
+        obj[keys] = val[keys].value;
+      });
+      return obj;
+    },
+    //获取多选框数据
+    handleBulkySelect(page,val){
+      this.bulkySelect[page] = val
+    },
+    //清除多选框数据
+    handleClearBulkySelect(){
+      this.bulkySelect = {}
+    },
+    //获取bulkySelect的id数组
+    getBulkySelectId(){
+      
+    }
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {},
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {
     this.changeModule();
-    this.getData({
-      limit: this.pageSize,
-      currentPage: this.currentPage,
-    });
+    this.commondQuery();
   },
   beforeCreate() {}, //生命周期 - 创建之前
   beforeMount() {}, //生命周期 - 挂载之前

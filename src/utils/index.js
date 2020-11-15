@@ -43,8 +43,8 @@ export const checkAuth = function (auth, role) {
 }
 export const reflectSchema = function (columns, map) {
   let column = columns.column
-  column = column.map(item=>{
-    if(map[item.prop]){
+  column = column.map(item => {
+    if (map[item.prop]) {
       //若存在相应映射关系则改变该字段为Oracle映射字段
       item.prop = map[item.prop]
     }
@@ -53,6 +53,30 @@ export const reflectSchema = function (columns, map) {
   // console.log(column);
   return column
 }
+export const getCurModule = (that, tableRule) => {
+  let module = "";
+  let router = that.$route.path;
+  let icReg = /\/user\/icCheck/;
+  let apply = /\/user\/apply/;
+  let statistics = /\/user\/statistics/;
+  let useradmin = /\/user\/useradmin/;
+  if (icReg.test(router)) {
+    module = "icCheck";
+  } else if (apply.test(router)) {
+    module = "apply";
+  } else if (statistics.test(router)) {
+    module = "statistics";
+    that.needImport = true
+  } else if (useradmin.test(router)) {
+    module = "useradmin";
+  }
+  // console.log(module);
+  let params = that.$route.params.router;
+  console.log(params);
+  return tableRule[module][params];
+
+}
+
 function _flat(obj, src) {
   const len = obj.length
   src.map(item => {
