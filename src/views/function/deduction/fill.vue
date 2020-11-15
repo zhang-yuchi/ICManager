@@ -22,6 +22,8 @@
 import elform from "components/form";
 import { createDeduction } from "@/map/function/index";
 
+import {deductionitem} from 'network/deduction/deduction'
+
 export default {
   //import引入的组件需要注入到对象中才能使用
   components: { elform },
@@ -37,7 +39,12 @@ export default {
   watch: {},
   //方法集合
   methods: {
-    submit() {},
+    submit(form) {
+      console.log(form);
+      deductionitem(form).then(res=>{
+        console.log(res);
+      })
+    },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {

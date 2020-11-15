@@ -86,6 +86,7 @@
             "
             :file-list="form.fileList"
             :auto-upload="false"
+            :on-change="fileChange"
           >
             <el-button size="small" type="primary" :disabled="item.disabled"
               >点击上传</el-button
@@ -154,22 +155,21 @@ export default {
     return {
       form: {},
       myHeaders: {},
+      fileList: [],
     };
   },
   methods: {
     upFileError(err) {
       this.$message.error("文件上传服务器失败，原因：" + err);
-      this.form.fileList.splice(this.form.fileList.length - 1, 1);
     },
     upFileSuccess(response, file, fileList) {
-      this.form.fileList = fileList;
       console.log(response);
       if (response.code != 0) {
         this.upFileError(response.msg);
         return false;
       } else {
-        console.log(this.form.fileList);
-        for (let item of this.form.fileList) {
+        console.log(this.fileList);
+        for (let item of this.fileList) {
           if (item.status != "success") return;
         }
         this.submit();
@@ -182,43 +182,46 @@ export default {
       this.form[prop].splice(index, 1);
     },
     onSubmit() {
+      console.log(this.fileList);
       let that = this;
       let routeArr = this.$route.path.split("/");
       console.log(routeArr[routeArr.length - 2]);
-      console.log(this.form,this.rules);
-      if(this.form.courseList && this.form.courseList.length){
-        this.form.couse = this.form.courseList.join(',')
-      }
+      console.log(this.form, this.rules);
       this.$refs.elform.validate((valid) => {
         if (valid) {
-          // 上传文件
-          that.$refs.upload[0].submit();
-          console.log('上传文件');
+          if (this.fileList.length) {
+            // 上传文件
+            that.$refs.upload[0].submit();
+          } else {
+            // 没有文件上传，直接提交表单
+            this.submit();
+          }
         } else {
-          console.log('验证失败');
           return false;
         }
       });
     },
     submit() {
-      // 文件上传完成后的地址
-      this.form.files = this.handleFileList(this.form.fileList);
-      this.$emit("submit", this.form);
-    },
-    handleFileList(fileList) {
-      if (fileList.length == 0 || !fileList) return "";
-      let arr = [];
-      for (let item of this.form.fileList) {
-        arr.push(item.response.msg);
+      if (this.fileList.length) {
+        // 文件上传完成后的地址
+        this.form.files = this.fileList.join();
       }
-      return arr.join();
+      let obj = Object.assign({}, this.form);
+      if (this.form.courseList) {
+        obj.courseList = obj.courseList.join();
+      }
+      this.$emit("submit", obj);
     },
     onCancel() {
       this.$router.go(-1);
       this.$emit("cancel");
     },
+    fileChange(file, fileList) {
+      this.fileList = fileList;
+    },
     handleRemove(file, fileList) {
       console.log(file, fileList);
+      this.fileList = fileList;
     },
     handlePreview(file) {
       console.log(file);
@@ -243,7 +246,7 @@ export default {
     }
     let token = sessionStorage.getItem("ICtoken");
     console.log(token);
-    this.myHeaders = { token };
+    this.myHeaders = { token, "Content-Type": "multipart/form-data" };
     console.log(this.form);
   },
   mounted() {},

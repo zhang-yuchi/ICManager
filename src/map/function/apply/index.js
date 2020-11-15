@@ -1,4 +1,4 @@
-const baseurl = "http://39.107.24.47:8080/file";
+const baseurl = "http://39.107.24.47:8080/file/upload";
 // const tip = '只能上传 doc，docx，pdf，png，jpg 文件，且不超过500kb'
 const tip = "";
 module.exports = {
