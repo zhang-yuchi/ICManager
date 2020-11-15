@@ -40,13 +40,6 @@ const en = {
   "序号":"Number",
   "申报登记项目":"Apply Item",
   "请输入搜索内容":"search content",
-  // 'el.pagination.goto':"goto",
-  // 'el.pagination.pageClassifier':"page",
-  // 'el.table.emptyText':"none",
-  // 'el.select.placeholder':"请选择",
-  // 'el.upload.deleteTip':'',
-  // 'el.messagebox.cancel':'取消',
-  // 'el.messagebox.confirm':"确认",
   "暂无":"none",
   "登记":"register",
   "查看":"check",
@@ -59,6 +52,12 @@ const en = {
   "扣分项目":"Deductions",
   "扣分项填写":"Fill Deductions",
   "扣分项查看":"Check Deductions",
+
+  // 管理员
+  用户管理:"User Management",
+  全局参数:"Global Parameter",
+  参数管理:"Parameter Management ",
+
   ...enLocal
   
 }

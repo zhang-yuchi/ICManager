@@ -213,7 +213,7 @@ export default {
     //详情页
     handleCheck(val) {
       // console.log(val);
-      this.$router.push(`${this.$route.path}/${val.id}`);
+      this.$router.push({path:`${this.$route.path}/${val.id}`,query:{id:val.id}});
     },
     //更新
     handleUpdate(val) {

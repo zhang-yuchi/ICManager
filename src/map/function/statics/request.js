@@ -1,0 +1,23 @@
+// 路由对应表单info、del请求函数名
+export default {
+  'teacher-board':'teacherexchange',
+  "overseas-expert-exchange":"longtermexpert",
+  "overseas-expert-exchange-short":"shorttermexpert",
+  "internation-publication":"publicationjob",
+  "overseas-expert-part-time":"expertjob",
+  "overseas-expert-prize":"expertaward",
+  "student-board":"studentexchange",
+  "internation-student-education":"iternationalstudentedu",
+  "open-internation-course":"itcourse",
+  "overseas-education":"cooperativeeducation",
+  "student-exchange":"stuexchangeproject",
+  "internation-research":"itresearchplatform",
+  "internation-result":"itachievementtrainingplatform",
+  "internation-area":"nationalregionalcenter",
+  "advanced-expert":"expertintroplan",
+  "advanced-project-import":"introwiseproject",
+  "internation-research-meeting":"itmeeting",
+  "internation-guarantee":"itguaranteefeature",
+  "overseas-treaty":"exchangecooperation",
+  "interation-ally":"leaguenations",
+}

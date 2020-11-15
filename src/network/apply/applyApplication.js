@@ -1,58 +1,35 @@
-import service from "./index";
-
-function strFileList(fileList) {
-  let str = "";
-  for (let item of fileList) {
-    // str += item;
-  }
-  return str;
-}
+import service from "../index";
 
 export const publicationjob = (obj) => {
   // 国际组织刊物任职填报
-  if(obj.fileList){
-    obj.files = obj.fileList.join();
-  }
   return service.post("/endpoint/publicationjob/application", obj);
 };
 
 export const studentexchange = (obj) => {
   // 在校生出国交流申请
-  if(obj.fileList){
-    obj.files = obj.fileList.join();
-  }
   return service.post("/endpoint/studentexchange/application", obj);
 };
 
 // todo
 export const teacherexchange = (obj) => {
   // 教师出国交流申请
-  if(obj.fileList){
-    obj.files = obj.fileList.join();
-  }
   return service.post("/endpoint/teacherexchange/application", obj);
 };
 
 export const longtermexpert = (obj) => {
   // 长期国外专家交流申请
-  if(obj.fileList){
-    obj.files = obj.fileList.join();
-  }
   return service.post("/endpoint/longtermexpert/application", obj);
 };
 
 export const shorttermexpert = (obj) => {
   // 短期国外专家交流申请
-  if(obj.fileList){
-    obj.files = obj.fileList.join();
-  }
   obj.reportNum = Number(obj.reportNum);
   return service.post("/endpoint/shorttermexpert/application", obj);
 };
 
 export const itcourse = (obj) => {
   // 开设国际化课程申请
-  obj.courseList = obj.courseList.join();
+  // obj.courseList = obj.courseList.join();
   return service.post("/endpoint/itcourse/application", obj);
 };
 
