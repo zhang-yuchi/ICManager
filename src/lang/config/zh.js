@@ -41,13 +41,6 @@ const zh = {
   "申报登记项目":"申报登记项目",
   "登记":"登记",
   "请输入搜索内容":"请输入搜索内容",
-  // 'el.pagination.goto':"前往",
-  // 'el.pagination.pageClassifier':"页",
-  // 'el.table.emptyText':'无数据',
-  // 'el.select.placeholder':"请选择",
-  // 'el.upload.deleteTip':'',
-  // 'el.messagebox.cancel':'取消',
-  // 'el.messagebox.confirm':"确认",
   "暂无":"暂无",
   "登记":"登记",
   "查看":"查看",
@@ -61,6 +54,10 @@ const zh = {
   "扣分项填写":"扣分项填写",
   "扣分项查看":"扣分项查看",
 
+  // 管理员
+  用户管理:"用户管理",
+  全局参数:"全局参数",
+  参数管理:"参数管理",
 
   ...zhLocal
 }

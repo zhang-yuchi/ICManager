@@ -4,7 +4,7 @@ const tip = "";
 module.exports = {
   "teacher-board": {
     // 教师出国交流申请
-    request:"teacherexchange",
+    request: "teacherexchange",
     title: "教师出国（境）交流",
     config: [
       {
@@ -71,7 +71,7 @@ module.exports = {
         type: "file",
         prop: "files",
         label: "附件",
-        limit: 1,
+        limit: 3,
         required: false,
         action: baseurl + "", // 上传地址
         // headers:{token:sessionStorage.getItem('ICtoken')},
@@ -88,7 +88,7 @@ module.exports = {
   },
   "internation-publication": {
     // 国际组织刊物任职（个人填报、单位汇总）
-    request:"publicationjob",
+    request: "publicationjob",
     title: "国际组织、刊物任职",
     config: [
       {
@@ -130,7 +130,7 @@ module.exports = {
         type: "input",
         prop: "period",
         label: "任职起止日期",
-        extraInfo:"格式为 xxxx/xx/xx-xxxx/xx/xx",
+        extraInfo: "格式为 xxxx/xx/xx-xxxx/xx/xx",
       },
       {
         type: "file",
@@ -152,18 +152,20 @@ module.exports = {
   },
   "student-board": {
     // 在校生出国交流申请
-    request:"studentexchange",
+    request: "studentexchange",
     title: "在校生出国（境）交流",
     config: [
       {
         type: "input",
         prop: "username",
         label: "登记人",
+        role: 3,
       },
       {
         type: "input",
         prop: "userOrg",
         label: "登记单位",
+        role: 3,
       },
       {
         type: "input",
@@ -245,18 +247,20 @@ module.exports = {
   },
   "overseas-expert-exchange": {
     // 国外专家来校交流申请
-    request:"longtermexpert",
+    request: "longtermexpert",
     title: "长期国（境）外专家来校交流(3个月（含）以上）",
     config: [
       {
         type: "input",
         prop: "username",
         label: "登记人",
+        role: 3,
       },
       {
         type: "input",
         prop: "userOrg",
         label: "登记单位",
+        role: 3,
       },
       {
         type: "input",
@@ -329,18 +333,20 @@ module.exports = {
   },
   "overseas-expert-exchange-short": {
     // 国外专家来校交流申请
-    request:"shorttermexpert",
+    request: "shorttermexpert",
     title: "短期国（境）外专家来校交流（3个月以下）",
     config: [
       {
         type: "input",
         prop: "username",
         label: "登记人",
+        role: 3,
       },
       {
         type: "input",
         prop: "userOrg",
         label: "登记单位",
+        role: 3,
       },
       {
         type: "input",
@@ -431,7 +437,7 @@ module.exports = {
   },
   "overseas-teacher": {
     // 添加海外学历教师
-    request:"overseasteacher",
+    request: "overseasteacher",
     title: "新增具有海外学历的教师",
     config: [
       {
@@ -479,18 +485,20 @@ module.exports = {
   },
   "overseas-expert-part-time": {
     // 国外专家兼职登记
-    request:"expertjob",
+    request: "expertjob",
     title: "国（境）外专家担任兼职教授、客座教授和荣誉教授",
     config: [
       {
         type: "input",
         prop: "username",
         label: "登记人",
+        role: 3,
       },
       {
         type: "input",
         prop: "userOrg",
         label: "登记单位",
+        role: 3,
       },
       {
         type: "input",
@@ -537,18 +545,20 @@ module.exports = {
   },
   "overseas-expert-prize": {
     // 国外专家获奖登记
-    request:"expertaward",
+    request: "expertaward",
     title: "国（境）外专家担任兼职教授、客座教授和荣誉教授",
     config: [
       {
         type: "input",
         prop: "username",
         label: "登记人",
+        role: 3,
       },
       {
         type: "input",
         prop: "userOrg",
         label: "登记单位",
+        role: 3,
       },
       {
         type: "input",
@@ -605,18 +615,20 @@ module.exports = {
   },
   "interation-education": {
     // 国际学生及港澳台学生教育
-    request:"iternationalstudentedu",
+    request: "iternationalstudentedu",
     title: "国际学生及港澳台学生教育",
     config: [
       {
         type: "input",
         prop: "username",
         label: "登记人",
+        role: 3,
       },
       {
         type: "input",
         prop: "userOrg",
         label: "登记单位",
+        role: 3,
       },
       {
         type: "select",
@@ -663,18 +675,20 @@ module.exports = {
 
   "open-internation-course": {
     // 开设国际化课程
-    request:"itcourse",
+    request: "itcourse",
     title: "国际化课程",
     config: [
       {
         type: "input",
         prop: "username",
         label: "登记人",
+        role: 3,
       },
       {
         type: "input",
         prop: "userOrg",
         label: "登记单位",
+        role: 3,
       },
       {
         type: "input",
@@ -726,18 +740,20 @@ module.exports = {
 
   "cooperation-education": {
     // 中外合作办学登记
-    request:"cooperativeeducation",
+    request: "cooperativeeducation",
     title: "国际化课程",
     config: [
       {
         type: "input",
         prop: "username",
         label: "登记人",
+        role: 3,
       },
       {
         type: "input",
         prop: "userOrg",
         label: "登记单位",
+        role: 3,
       },
       {
         type: "select",
@@ -828,18 +844,20 @@ module.exports = {
   },
   "student-exchange": {
     // 学生交流项目登记
-    request:"stuexchangeproject",
+    request: "stuexchangeproject",
     title: "学生交流项目",
     config: [
       {
         type: "input",
         prop: "username",
         label: "登记人",
+        role: 3,
       },
       {
         type: "input",
         prop: "userOrg",
         label: "登记单位",
+        role: 3,
       },
       {
         type: "select",
@@ -945,18 +963,20 @@ module.exports = {
   },
   "internation-research": {
     // 国际联合科研平台填报
-    request:"itresearchplatform",
+    request: "itresearchplatform",
     title: "国际联合科研平台",
     config: [
       {
         type: "input",
         prop: "username",
         label: "登记人",
+        role: 3,
       },
       {
         type: "input",
         prop: "userOrg",
         label: "登记单位",
+        role: 3,
       },
       {
         type: "select",
@@ -1025,18 +1045,20 @@ module.exports = {
   },
   "interation-result-change": {
     // 国际成果转化或人才培训平台
-    request:"itachievementtrainingplatform",
+    request: "itachievementtrainingplatform",
     title: "国际成果转化或人才培训平台",
     config: [
       {
         type: "input",
         prop: "username",
         label: "登记人",
+        role: 3,
       },
       {
         type: "input",
         prop: "userOrg",
         label: "登记单位",
+        role: 3,
       },
       {
         type: "select",
@@ -1100,18 +1122,20 @@ module.exports = {
   },
   "interation-area-research": {
     // 国别与区域研究中心登记
-    request:"nationalregionalcenter",
+    request: "nationalregionalcenter",
     title: "国别与区域研究中心",
     config: [
       {
         type: "input",
         prop: "username",
         label: "登记人",
+        role: 3,
       },
       {
         type: "input",
         prop: "userOrg",
         label: "登记单位",
+        role: 3,
       },
       {
         type: "select",
@@ -1180,18 +1204,20 @@ module.exports = {
   },
   "advanced-expert-import": {
     // 高端专家引进计划登记
-    request:"expertintroplan",
+    request: "expertintroplan",
     title: "高端专家引进计划",
     config: [
       {
         type: "input",
         prop: "username",
         label: "登记人",
+        role: 3,
       },
       {
         type: "input",
         prop: "userOrg",
         label: "登记单位",
+        role: 3,
       },
       {
         type: "select",
@@ -1280,18 +1306,20 @@ module.exports = {
   },
   "advanced-project-import": {
     // 引智平台项目登记
-    request:"introwiseproject",
+    request: "introwiseproject",
     title: "引智平台项目(包括“111计划”等)",
     config: [
       {
         type: "input",
         prop: "username",
         label: "登记人",
+        role: 3,
       },
       {
         type: "input",
         prop: "userOrg",
         label: "登记单位",
+        role: 3,
       },
       {
         type: "select",
@@ -1390,18 +1418,20 @@ module.exports = {
   },
   "interation-meeting-login": {
     // 国际会议负责人登记
-    request:"itmeeting",
+    request: "itmeeting",
     title: "举办国际学术会议",
     config: [
       {
         type: "input",
         prop: "username",
         label: "登记人",
+        role: 3,
       },
       {
         type: "input",
         prop: "userOrg",
         label: "登记单位",
+        role: 3,
       },
       {
         type: "input",
@@ -1480,18 +1510,20 @@ module.exports = {
 
   "interation-guarantee": {
     // 国际化保障及办学特色
-    request:"itguaranteefeature",
+    request: "itguaranteefeature",
     title: "国际化保障及办学特色",
     config: [
       {
         type: "input",
         prop: "username",
         label: "登记人",
+        role: 3,
       },
       {
         type: "input",
         prop: "userOrg",
         label: "登记单位",
+        role: 3,
       },
       {
         type: "select",
@@ -1620,18 +1652,20 @@ module.exports = {
 
   "overseas-treaty": {
     // 与海外院校新签署协议并有实质性交流合作
-    request:"exchangecooperation",
+    request: "exchangecooperation",
     title: "与海外院校新签署协议并有实质性交流合作",
     config: [
       {
         type: "input",
         prop: "username",
         label: "登记人",
+        role: 3,
       },
       {
         type: "input",
         prop: "userOrg",
         label: "登记单位",
+        role: 3,
       },
       {
         type: "input",
@@ -1681,18 +1715,20 @@ module.exports = {
 
   "interation-ally": {
     // 国际联盟发起,联合成立
-    request:"leaguenations",
+    request: "leaguenations",
     title: "国际联盟",
     config: [
       {
         type: "input",
         prop: "username",
         label: "登记人",
+        role: 3,
       },
       {
         type: "input",
         prop: "userOrg",
         label: "登记单位",
+        role: 3,
       },
       {
         type: "input",

@@ -70,12 +70,3 @@ function _flat(obj, src) {
   }
   return result
 }
-
-// export const strHump = (str) => {
-//   let arr = str.split('-')
-//   let _str = arr[0]
-//   for (let i = 1; i < arr.length; i++) {
-//     _str += arr[i].replace(arr[i][0],arr[i][0].toUpperCase())
-//   }
-//   return _str
-// }

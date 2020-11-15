@@ -153,7 +153,7 @@ export default {
     },
     handleCheck(val) {
       // console.log(val);
-      this.$router.push(`${this.$route.path}/${val.id}`);
+      this.$router.push({path:`${this.$route.path}/${val.id}`,query:{id:val.id}});
     },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
