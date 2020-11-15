@@ -1,6 +1,6 @@
 export default function () {
   let modules = {
-    "name": "参数管理",
+    "name": "在线考核",
     "path": "/user/params",
     "icon": "el-icon-tickets",
     listAuth:[0],
