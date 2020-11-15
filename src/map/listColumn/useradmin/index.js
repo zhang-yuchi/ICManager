@@ -2,7 +2,7 @@ module.exports = {
   user: {
     title: "用户管理",
     reqOpt: {
-      get: "/endpoint/icuser/list",
+      get: "/endpoint/icuser/list2",
       getOne: (id) => { //获取详情 or 跳转?
         return "/endpoint/teacherexchange/info/" + id
       },

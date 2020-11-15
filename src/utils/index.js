@@ -72,7 +72,7 @@ export const getCurModule = (that, tableRule) => {
   }
   // console.log(module);
   let params = that.$route.params.router;
-  console.log(params);
+  // console.log(params);
   return tableRule[module][params];
 
 }

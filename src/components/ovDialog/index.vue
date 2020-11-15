@@ -15,7 +15,7 @@
           ></el-input>
           <div v-if="mixQueryForm[keys]['type'] == 'time' && !isUpdate">
             <el-date-picker
-              v-model="mixQueryForm[keys]['value']"
+              v-model="mixQueryForm[keys]['startTime']"
               type="date"
               placeholder="起始日期"
               style="width: 140px"
@@ -23,7 +23,7 @@
             </el-date-picker>
             -
             <el-date-picker
-              v-model="mixQueryForm[keys]['value']"
+              v-model="mixQueryForm[keys]['endTime']"
               type="date"
               placeholder="结束日期"
               style="width: 140px"
@@ -68,7 +68,7 @@ export default {
     entity: {
       //传入entity说明是更新 不是筛选
       type: Object,
-      default: ()=>{},
+      default: () => {},
     },
   },
   components: {},
@@ -83,7 +83,7 @@ export default {
   //监听属性 类似于data概念
   computed: {
     isUpdate() {
-      return this.entity&&Object.keys(this.entity).length > 0;
+      return this.entity && Object.keys(this.entity).length > 0;
     },
   },
   //监控data中的数据变化
@@ -92,11 +92,9 @@ export default {
       if (Object.keys(this.entity).length > 0) {
         //当entity中含有值的时候,将entity中的值赋给mixQueryForm
         Object.keys(this.mixQueryForm).map((key) => {
-          // console.log(this.mixQueryForm[key]);
           this.mixQueryForm[key]["value"] = this.entity[key];
         });
       }
-      // console.log(this.entity);
     },
     echo(val) {
       this.isShow = val;
@@ -111,22 +109,23 @@ export default {
       this.$nextTick(() => {
         let tempForm = {};
         this.mixQueryList = this.fieldOption;
-        // console.log(this.mixQueryList);
         this.mixQueryList.map((op) => {
-          tempForm[op.prop] = {
-            label: op.label,
-            value: "",
-            type: op["type"],
-          };
+          if (op["type"] == "time") {
+            tempForm[op.prop] = {
+              label: op.label,
+              startTime: "",
+              endTime:"",
+              type: op["type"],
+            };
+          } else {
+            tempForm[op.prop] = {
+              label: op.label,
+              value: "",
+              type: op["type"],
+            };
+          }
         });
         this.mixQueryForm = { ...tempForm };
-        // if(Object.keys(this.entity).length>0){
-        //   //当entity中含有值的时候,将entity中的值赋给mixQueryForm
-        //   Object.keys(this.entity).map(obj=>{
-        //     console.log(obj);
-        //   })
-        // }
-        // console.log(this.entity);
       });
     },
     handleClick() {

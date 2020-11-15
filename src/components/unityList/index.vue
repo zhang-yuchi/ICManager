@@ -168,6 +168,19 @@ export default {
     //按键值方式查询
     queryKey(obj) {
       this.currentPage = 1;
+      console.log(obj);
+      let queryField = {}
+      Object.keys(obj).map(k=>{
+        if(!!obj[k].value&&obj[k].type!=='time'){
+          queryField[k] = obj[k]['value']
+        }
+        if(obj[k].type=='time'){
+          queryField.timeType = k
+          queryField.startTime = obj[k]['startTime']
+          queryField.endTime = obj[k]['endTime']
+        }
+      })
+      console.log(queryField);
       if (Object.keys(obj).length > 0) {
         //开始搜素
         this.getData(
@@ -177,7 +190,7 @@ export default {
               pageSize: this.pageSize,
               currentPage: this.currentPage,
             },
-            obj
+            queryField
           )
         );
       } else {
@@ -221,7 +234,7 @@ export default {
       // console.log("提交请求");
       let uploadEntity = this.createNewEntity(val);
       let promise = null;
-      console.log(uploadEntity);
+      // console.log(uploadEntity);
       if (typeof this.tableDef["reqOpt"]["update"] == "string") {
         promise = service.put(this.tableDef["reqOpt"], uploadEntity);
       } else if (typeof this.tableDef["reqOpt"]["update"] == "object") {
@@ -234,7 +247,7 @@ export default {
       uploadEntity.id = this.updateEntity.id
       promise
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           if (res.msg == "success" && res.code == 0) {
             this.$message({
               type: "success",
@@ -255,7 +268,7 @@ export default {
     //创建实体对象
     createNewEntity(val) {
       let obj = {};
-      console.log(val);
+      // console.log(val);
       Object.keys(val).map((keys) => {
         obj[keys] = val[keys].value;
       });

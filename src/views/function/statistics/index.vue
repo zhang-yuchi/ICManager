@@ -5,6 +5,7 @@
       :total="tableAllData.length"
       :title="$t('统计汇总列表')"
       :tableColumn="tableColumn"
+      :queryOption="queryOption"
       @pageChange="pageChange"
       :tableData="tableData"
       @handleCheck="handleCheck"
@@ -63,6 +64,17 @@ export default {
     role() {
       return this.$store.state.role;
     },
+    queryOption(){
+      let arr = [];
+      this.tableColumn.map((item) => {
+        if (!item.noQuery && item.prop !== "operator") {
+          item["label"] = item.name;
+          item["value"] = item.prop;
+          arr.push(item);
+        }
+      });
+      return arr;
+    }
   },
   //监控data中的数据变化
   watch: {},
@@ -84,14 +96,25 @@ export default {
       // console.log(this.tableData);
     },
     getData() {
-      console.log(this.entitySet);
-      if (Object.keys(this.entitySet).length > 0) {
+      // let hasVal = false
+      let queryVal = null
+      Object.keys(this.entitySet).map(ke=>{
+        queryVal=this.entitySet[ke]
+      })
+      // console.log(hasVal);
+      if (!!queryVal) {
         let keys = Object.keys(this.entitySet);
         let prop = keys[0];
+        // console.log(prop);
         this.tableAllData = this.tableAllData.filter((item) => {
+          console.log(item[prop]);
+          if(String(item[prop]).indexOf(this.entitySet[prop]) !== -1){
+            console.log(item[prop]);
+          }
           return String(item[prop]).indexOf(this.entitySet[prop]) !== -1;
         });
       } else {
+        console.log("重新加载一次");
         this.tableAllData = this.applySubFun.map((item, index) => {
           return {
             num: index + 1,
@@ -106,6 +129,7 @@ export default {
     },
     query(entitySet) {
       this.entitySet = entitySet;
+      console.log(this.entitySet);
       this.getData();
     },
   },

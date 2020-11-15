@@ -22,17 +22,11 @@ module.exports = [{
     path: "icCheck/:router/list",
     name: "国合机构查看",
     component: () => import('views/function/icCheck'),
-    meta:{
-      keepAlive:false
-    }
   },
   {
     path: "icCheck/:router/info/:id",
     name: "国合机构详情",
     component: () => import('views/function/icCheck/info'),
-    meta:{
-      keepAlive:false
-    }
   },
   {
     path: "apply",

@@ -1,16 +1,17 @@
 <!--  -->
 <template>
   <div class>
-      <list
-        :total="tableAllData.length"
-        title="申报登记列表"
-        :tableColumn="tableColumn"
-        @pageChange="pageChange"
-        :tableData="tableData"
-        @handleCheck="handleCheck"
-        @query="query"
-        @pagesizechange="handlePageChange"
-      ></list>
+    <list
+      :total="tableAllData.length"
+      title="申报登记列表"
+      :tableColumn="tableColumn"
+      :queryOption="queryOption"
+      @pageChange="pageChange"
+      :tableData="tableData"
+      @handleCheck="handleCheck"
+      @query="query"
+      @pagesizechange="handlePageChange"
+    ></list>
   </div>
 </template>
 
@@ -64,6 +65,17 @@ export default {
     role() {
       return this.$store.state.role;
     },
+    queryOption(){
+      let arr = [];
+      this.tableColumn.map((item) => {
+        if (!item.noQuery && item.prop !== "operator") {
+          item["label"] = item.name;
+          item["value"] = item.prop;
+          arr.push(item);
+        }
+      });
+      return arr;
+    }
   },
   //监控data中的数据变化
   watch: {},
@@ -85,7 +97,11 @@ export default {
       this.getData();
     },
     getData() {
-      if (Object.keys(this.entitySet).length > 0) {
+      let hasVal = false
+      Object.keys(this.entitySet).map(ke=>{
+        hasVal=!!this.entitySet[ke]
+      })
+      if (hasVal) {
         let keys = Object.keys(this.entitySet);
         let prop = keys[0];
         this.tableAllData = this.tableAllData.filter((item) => {
