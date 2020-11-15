@@ -44,7 +44,7 @@ export default {
       ],
       currentPage: 1,
       pageSize: 9,
-      entitySet: null,
+      entitySet: {},
     };
   },
   //监听属性 类似于data概念
@@ -84,11 +84,12 @@ export default {
       // console.log(this.tableData);
     },
     getData() {
-      if (this.entitySet && this.entitySet.str) {
+      console.log(this.entitySet);
+      if (Object.keys(this.entitySet).length > 0) {
+        let keys = Object.keys(this.entitySet);
+        let prop = keys[0];
         this.tableAllData = this.tableAllData.filter((item) => {
-          return (
-            String(item[this.entitySet.prop]).indexOf(this.entitySet.str) !== -1
-          );
+          return String(item[prop]).indexOf(this.entitySet[prop]) !== -1;
         });
       } else {
         this.tableAllData = this.applySubFun.map((item, index) => {

@@ -9,34 +9,10 @@
           @checkboxselect="handleCheckBox"
           @checkboxclear="handleClearCheckBox"
           :isSelect="isCheckBoxSelect"
-          :importData="dataOutPutList"
+          :importData="bulkySelect"
         ></dataOutPut>
       </div>
       <div class="ov-operation-list">
-        <!-- <div v-if="!mixQuery">
-          <el-select
-            v-model="queryField"
-            class="select-input"
-            :placeholder="$t('请选择')"
-          >
-            <el-option
-              v-for="item in queryOption"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-          <el-input
-            :disabled="!queryField"
-            v-model="querystr"
-            class="query-input"
-            @keydown.native="query"
-            :placeholder="$t('请输入搜索内容')"
-          ></el-input>
-        </div>
-        <div v-if="mixQuery">
-          <mixQuery :mixQuery="mixQuery"></mixQuery>
-        </div> -->
         <mixQuery
           :mixQuery="mixQuery"
           :queryOption="queryOption"
@@ -85,11 +61,7 @@
       >
         <template slot-scope="scope">
           <div v-if="item.prop !== 'operator'">
-            {{
-              scope.row[item.prop]
-                ? typeCast(scope.row[item.prop], item)
-                : "暂无"
-            }}
+            {{ typeCast(scope.row[item.prop], item) }}
           </div>
           <div v-else>
             <div
@@ -109,6 +81,7 @@
         </template>
       </el-table-column>
     </el-table>
+    
   </div>
 </template>
 
@@ -119,11 +92,17 @@ import { checkAuth } from "../../utils/index";
 import moment from "moment";
 import dataOutPut from "../dataOutput";
 import mixQuery from "../mixQuery";
+import ovDialog from "components/ovDialog";
 export default {
   //import引入的组件需要注入到对象中才能使用
   props: {
-    isImportData: Boolean,
-    title: String,
+    bulkySelect:{
+      type:Object,
+      default:()=>{}
+    },
+    isImportData: Boolean,//是否需要导入数据
+    isBatchDelete:Boolean,//是否批量删除
+    title: String,//标题
     total: Number,
     pageSize: {
       type: Number,
@@ -134,6 +113,10 @@ export default {
     tableColumn: {
       type: Array,
       default: () => [],
+    },
+    queryOption:{
+      type:Array,
+      default:()=>[]
     },
     currentPage: {
       type: Number,
@@ -148,6 +131,7 @@ export default {
   components: {
     dataOutPut,
     mixQuery,
+    ovDialog,
   },
   data() {
     //这里存放数据
@@ -158,7 +142,6 @@ export default {
       moment: moment,
       isCheckBoxSelect: false,
       multipleSelection: [],
-      dataOutPutList: {},
       isPageChange: false,
     };
   },
@@ -167,31 +150,18 @@ export default {
     maxPage() {
       return Math.ceil(this.total / this.pageSize);
     },
-    queryOption() {
-      let arr = [];
-      this.tableColumn.map((item) => {
-        console.log(item);
-        if (!item.noQuery && item.prop !== "operator") {
-          item["label"] = item.name
-          item["value"] = item.prop
-          arr.push(item);
-        }
-      });
-      return arr;
-    },
   },
   //监控data中的数据变化
   watch: {
     currentPage() {
-      // console.log("page change");
       this.isPageChange = true; //检测到page发生变化
     },
     tableData() {
       //data发生变化,需要修改当前output的状态
       if (this.isCheckBoxSelect) {
         this.$nextTick(() => {
-          if (this.dataOutPutList[this.currentPage]) {
-            this.dataOutPutList[this.currentPage].map((item) => {
+          if (this.bulkySelect[this.currentPage]) {
+            this.bulkySelect[this.currentPage].map((item) => {
               this.tableData.map((row, index) => {
                 if (row.id == item.id) {
                   this.$refs.multipleTable.toggleRowSelection(
@@ -221,7 +191,8 @@ export default {
     handleSelectionChange(val) {
       if (!this.isPageChange || val.length > 0) {
         // console.log(val);
-        this.dataOutPutList[this.currentPage] = val;
+        this.$emit("addBulkySelect",this.currentPage,val)
+        // this.bulkySelect[this.currentPage] = val;
         this.isPageChange = false;
       }
     },
@@ -231,6 +202,7 @@ export default {
       this.handleClearCheckBox();
     },
     typeCast(item, rule) {
+      
       if (rule.type == "time") {
         item = moment(item).format("YYYY-MM-DD");
       } else if (rule.type == "boolean") {
@@ -239,6 +211,15 @@ export default {
         } else if (item == 0) {
           item = "否";
         }
+      }
+      if (item == 0) {
+        return 0;
+      }
+      if (!item) {
+        return "暂无";
+      }
+      if (item === "Invalid date") {
+        return "暂无";
       }
       return item;
     },
@@ -251,7 +232,8 @@ export default {
     handleClearCheckBox() {
       this.$refs.multipleTable.clearSelection();
       this.multipleSelection = [];
-      this.dataOutPutList = {};
+      // this.bulkySelect = {};
+      this.$emit("clearBulkySelect")
     },
   },
   //生命周期 - 创建完成（可以访问当前this实例）

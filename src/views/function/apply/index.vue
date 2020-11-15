@@ -1,16 +1,16 @@
 <!--  -->
 <template>
   <div class>
-    <list
-      :total="tableAllData.length"
-      title="申报登记列表"
-      :tableColumn="tableColumn"
-      @pageChange="pageChange"
-      :tableData="tableData"
-      @handleCheck="handleCheck"
-      @query='query'
-      @pagesizechange="handlePageChange"
-    ></list>
+      <list
+        :total="tableAllData.length"
+        title="申报登记列表"
+        :tableColumn="tableColumn"
+        @pageChange="pageChange"
+        :tableData="tableData"
+        @handleCheck="handleCheck"
+        @query="query"
+        @pagesizechange="handlePageChange"
+      ></list>
   </div>
 </template>
 
@@ -26,7 +26,7 @@ export default {
     //这里存放数据
     return {
       tableData: [],
-      tableAllData:[],
+      tableAllData: [],
       tableColumn: [
         { prop: "num", name: "序号" },
         { prop: "name", name: "申报登记项目", width: 400 },
@@ -44,7 +44,7 @@ export default {
       ],
       currentPage: 1,
       pageSize: 9,
-      entitySet:null,
+      entitySet: {},
     };
   },
   //监听属性 类似于data概念
@@ -80,14 +80,16 @@ export default {
       this.getData();
       // console.log(this.tableData);
     },
-    handlePageChange(val){
-      this.pageSize = val
-      this.getData()
+    handlePageChange(val) {
+      this.pageSize = val;
+      this.getData();
     },
     getData() {
-      if (this.entitySet&&this.entitySet.str) {
+      if (Object.keys(this.entitySet).length > 0) {
+        let keys = Object.keys(this.entitySet);
+        let prop = keys[0];
         this.tableAllData = this.tableAllData.filter((item) => {
-          return String(item[this.entitySet.prop]).indexOf(this.entitySet.str) !== -1;
+          return String(item[prop]).indexOf(this.entitySet[prop]) !== -1;
         });
       } else {
         this.tableAllData = this.applySubFun.map((item, index) => {

@@ -7,7 +7,8 @@ module.exports = {
         'network': '@/network',
         'views': '@/views',
         'common': '@/common',
-        'validator':"@/validator"
+        'validator':"@/validator",
+        'map':"@/map"
       }
     }
   },
