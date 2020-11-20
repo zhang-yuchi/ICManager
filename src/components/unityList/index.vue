@@ -135,7 +135,10 @@ export default {
               message: res.msg,
               type: "error",
             });
-            this.$router.push("/"); //权限错误
+            // this.$router.push("/"); //权限错误
+            if(res.code==401){
+              this.$router.push("/")
+            }
           }
           let result = res.page;
           this.tableData = result.list;
