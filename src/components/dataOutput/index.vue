@@ -10,7 +10,7 @@
     <el-button v-if="isSelect" size="small" @click="emitClear"
       >清除选择</el-button
     >
-    <a ref="download" display="none" :href="`${baseUrl}/file?fileName=${fileName}`"></a>
+    <a ref="download" display="none" :href="`${baseUrl}/file/download?fileName=${fileName}`"></a>
   </div>
 </template>
 

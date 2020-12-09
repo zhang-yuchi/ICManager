@@ -1,3 +1,4 @@
+const role = require('../../../enum/selector/role')
 module.exports = {
   user: {
     title: "用户管理",
@@ -9,19 +10,28 @@ module.exports = {
       update: {
         url: "/endpoint/icuser/update",
         method: "post"
+      },
+      add:{
+        url:"/endpoint/icuser/save",
+        type:"put"
       }
     },
     column: [{
         name: "角色",
-        prop: "icRole"
+        prop: "icRole",
+        type:"select",
+        required:true,
+        enum:role
       },
       {
         name: "机构Id",
-        prop: "orgId"
+        prop: "orgId",
+        required:true
       },
       {
         name: "用户名",
-        prop: "username"
+        prop: "username",
+        required:true
       },
       // {
       //   name:"密码",

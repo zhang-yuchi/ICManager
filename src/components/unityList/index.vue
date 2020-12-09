@@ -14,6 +14,8 @@
       :mixQuery="true"
       :bulkySelect="bulkySelect"
       :needAdd="true"
+      :request="tableDef.reqOpt"
+      @refresh="refresh"
       @pageChange="pageChange"
       @query="queryKey"
       @handleCheck="handleCheck"
@@ -39,6 +41,7 @@
 <script>
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 //例如：import 《组件名称》 from '《组件路径》';
+import qs from 'qs'
 import ovlist from "../list";
 import moment from 'moment'
 import ovDialog from "components/ovDialog";
@@ -171,6 +174,9 @@ export default {
           this.query
         )
       );
+    },
+    refresh(){
+      this.commondQuery()
     },
     getParams(obj) {
       let queryField = {};
@@ -328,6 +334,8 @@ export default {
       let obj = {}
       obj.ids = arr
       let promise = null;
+      console.log(obj);
+      console.log(qs.stringify(obj));
       if (typeof this.tableDef["reqOpt"]["delete"] == "string") {
         promise = service.delete(this.tableDef["reqOpt"]['delete'],obj);
       } else if (typeof this.tableDef["reqOpt"]["delete"] == "object") {

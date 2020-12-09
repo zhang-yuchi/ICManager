@@ -11,7 +11,12 @@
           :isSelect="isCheckBoxSelect"
           :importData="bulkySelect"
         ></dataOutPut>
-        <addBtn v-if="needAdd"></addBtn>
+        <addBtn
+          @refresh="refresh"
+          :addColumn="tableColumn"
+          :request="requestAdd"
+          v-if="needAdd"
+        ></addBtn>
 
         <dataDel
           v-if="needDelete"
@@ -108,7 +113,7 @@ import dataOutPut from "../dataOutput";
 import dataDel from "../dataDel";
 import mixQuery from "../mixQuery";
 import ovDialog from "components/ovDialog";
-import addBtn from 'components/addBtn'
+import addBtn from "components/addBtn";
 export default {
   //import引入的组件需要注入到对象中才能使用
   props: {
@@ -148,13 +153,16 @@ export default {
       type: Boolean,
       default: false,
     },
+    request: {
+      type: Object,
+    },
   },
   components: {
     dataOutPut,
     mixQuery,
     ovDialog,
     dataDel,
-    addBtn
+    addBtn,
   },
   data() {
     //这里存放数据
@@ -166,6 +174,7 @@ export default {
       isCheckBoxSelect: false,
       multipleSelection: [],
       isPageChange: false,
+      requestAdd: {},
       isBatchDeleteBoxSelect: false,
     };
   },
@@ -265,6 +274,9 @@ export default {
       // console.log(data);
       this.$emit("bulkyDelete", data);
     },
+    refresh() {
+      this.$emit("refresh");
+    },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {},
@@ -272,6 +284,7 @@ export default {
   mounted() {
     this.$nextTick(() => {
       this.columnKey = this.tableColumn[0].prop;
+      this.requestAdd = this.request.add;
     });
   },
   beforeCreate() {}, //生命周期 - 创建之前

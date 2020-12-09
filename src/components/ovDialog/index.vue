@@ -8,11 +8,21 @@
           :key="keys"
           :label="mixQueryForm[keys]['label']"
           label-width="300"
+          :required="mixQueryForm[keys]['required']"
         >
-          <el-input
-            v-if="mixQueryForm[keys]['type'] != 'time'"
+          <el-select
+            placeholder="请选择"
+            v-if="mixQueryForm[keys]['type'] == 'select'"
             v-model="mixQueryForm[keys]['value']"
-          ></el-input>
+          >
+            <el-option
+              v-for="(item) in Object.keys(mixQueryForm[keys]['enum'])"
+              :key="item"
+              :label="mixQueryForm[keys]['enum'][item]"
+              :value="item"
+            >
+            </el-option>
+          </el-select>
           <div v-if="mixQueryForm[keys]['type'] == 'time' && !isUpdate">
             <el-date-picker
               v-model="mixQueryForm[keys]['startTime']"
@@ -39,6 +49,10 @@
             >
             </el-date-picker>
           </div>
+          <el-input
+            v-if="mixQueryForm[keys]['type'] == null"
+            v-model="mixQueryForm[keys]['value']"
+          ></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -114,7 +128,7 @@ export default {
             tempForm[op.prop] = {
               label: op.label,
               startTime: "",
-              endTime:"",
+              endTime: "",
               type: op["type"],
             };
           } else {
@@ -122,9 +136,12 @@ export default {
               label: op.label,
               value: "",
               type: op["type"],
+              required:op.required,
+              enum:op.enum?op.enum:null
             };
           }
         });
+        
         this.mixQueryForm = { ...tempForm };
       });
     },
@@ -137,6 +154,15 @@ export default {
       //取消
       this.$emit("handleDialogCancel");
     },
+    //伪数组->数组
+    objToArr(obj){
+      let arr = []
+      console.log(obj);
+      Object.keys(obj).map(i=>{
+        arr[i] = obj[i]
+      })
+      return arr
+    }
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {},

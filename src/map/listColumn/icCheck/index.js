@@ -1,15 +1,22 @@
 module.exports = {
   'IC': {
     reqOpt:{
-      get:"/endpoint/icorg/list2"
+      get:"/endpoint/icorg/list2",
+      add:{
+        url:"/endpoint/icorg/save",
+        type:"put"
+      },
+      delete:"/endpoint/icorg/delete"
     },
     column: [{
         prop: "orgCode",
         name: "国合机构码",
+        required:true
       },
       {
         prop: "orgCnName",
         name: "机构名称",
+        required:true
       },
       {
         prop:"orgType",
