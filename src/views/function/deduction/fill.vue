@@ -1,12 +1,12 @@
 <!--  -->
 <template>
-  <div class="fun-info-page deduction-fill-page">
+  <div class="fun-info-page">
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span>{{ data.title }}填报</span>
       </div>
       <elform
-        class="form-com"
+        class="form-com deduction-fill-page"
         :title="data.title"
         :config="data.config"
         :rules="data.rules"
@@ -20,9 +20,9 @@
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 //例如：import 《组件名称》 from '《组件路径》';
 import elform from "components/form";
-import { createDeduction } from "@/map/function/index";
+import { createDeductionFill } from "@/map/function/index";
 
-import {deductionitem} from 'network/deduction/deduction'
+import { deductionitem } from "network/deduction/deduction";
 
 export default {
   //import引入的组件需要注入到对象中才能使用
@@ -41,14 +41,23 @@ export default {
   methods: {
     submit(form) {
       console.log(form);
-      deductionitem(form).then(res=>{
+      deductionitem(form).then((res) => {
         console.log(res);
-      })
+        if (res.code === 0) {
+          this.$message({
+            message: "提交成功",
+            type: "success",
+          });
+          this.$route.go(-1);
+        } else {
+          this.$message.error(res.msg);
+        }
+      });
     },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {
-    this.data = createDeduction("fill");
+    this.data = createDeductionFill("fill");
   },
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {},
@@ -63,8 +72,8 @@ export default {
 };
 </script>
 <style lang="less">
-.deduction-fill-page{
-  .el-radio{
+.deduction-fill-page {
+  .el-radio {
     width: 100%;
     margin: 8px 0;
   }

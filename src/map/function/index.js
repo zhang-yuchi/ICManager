@@ -11,6 +11,8 @@ export const creatFormConfig = (role, that) => {
   for (let item of formConfig.config) {
     if (item.role == 3 && !roles.includes(3)) {
       item.disabled = true;
+    } else {
+      item.disabled = false;
     }
     formConfig.rules[item.prop] = [];
     let obj = {};
@@ -43,7 +45,6 @@ export const createStaticFormInfo = (role, that) => {
   }
   for (let item of formConfig.config) {
     item.disabled = true;
-    // console.log(item.role);
     if (item.role == 3) {
       item.disabled = false;
     }
@@ -54,14 +55,17 @@ export const createStaticFormInfo = (role, that) => {
   return formConfig;
 };
 
-export const createDeduction = (role) => {
-  // fill、detail、check
-  let formConfig = Object.assign({}, deduction[role]);
+export const createDeductionFill = () => {
+  let formConfig = Object.assign({}, deduction["fill"]);
   formConfig.rules = {};
+  for (let item of formConfig.config) {
+    item.disabled = false;
+  }
   for (let item of formConfig.config) {
     formConfig.rules[item.prop] = [];
     let obj = {};
-    if (typeof item.required === "undefined" || item.required) {
+    console.log(typeof item.required);
+    if (typeof item.required == "undefined" || item.required) {
       obj = {
         required: true,
         message: "请输入" + item.label,
@@ -72,6 +76,18 @@ export const createDeduction = (role) => {
       formConfig.rules[item.prop].push({ required: false });
     }
   }
-  // console.log(formConfig);
+
+  return formConfig;
+};
+
+export const createDeductionDetail = () => {
+  let formConfig = Object.assign({}, deduction["fill"]);
+  formConfig.submitHide = true;
+  for (let item of formConfig.config) {
+    item.disabled = true;
+    item.required = false;
+  }
+  formConfig.rules = {};
+  console.log(formConfig);
   return formConfig;
 };

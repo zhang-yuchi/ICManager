@@ -7,11 +7,11 @@
       </div>
       <elform
         ref="form"
-        class="form-com"
+        class="form-com deduction-fill-page"
         :title="data.title"
         :config="data.config"
         :rules="data.rules"
-        :submitFlag="!data.submitHide"
+        :submitFlag="false"
         @submit="submit"
         @delForm="del"
       ></elform>
@@ -25,7 +25,13 @@
 let path = "";
 
 import elform from "components/form/info";
-import { createStaticFormInfo } from "@/map/function/index.js";
+import { createDeductionDetail } from "@/map/function/index.js";
+
+import {
+  deductionitem,
+  deductionGet,
+  deductionDel,
+} from "network/deduction/deduction";
 
 import infoMap from "@/map/function/statics/request";
 import parameterMap from "@/map/function/statics/parameter";
@@ -48,17 +54,26 @@ export default {
   //方法集合
   methods: {
     submit(form) {
-      // 只提交 userOrg,username
-      let obj = {};
-      obj[parameterMap[path]] = {
-        userOrg: form.userOrg,
-        username: form.username,
-      };
-      service[this.data.request](obj).then((res) => {
+      // service[this.data.request](obj).then((res) => {
+      //   console.log(res);
+      //   if (res.code === 0) {
+      //     this.$message({
+      //       message: "提交成功",
+      //       type: "success",
+      //     });
+      //     this.$route.go(-1);
+      //   } else {
+      //     this.$message.error(res.msg);
+      //   }
+      // });
+    },
+    del() {
+      console.log(this.$route.query.id);
+      deductionDel([this.$route.query.id]).then((res) => {
         console.log(res);
         if (res.code === 0) {
           this.$message({
-            message: "提交成功",
+            message: "删除成功",
             type: "success",
           });
           this.$route.go(-1);
@@ -67,48 +82,23 @@ export default {
         }
       });
     },
-    del() {
-      del[infoMap[path]]([this.$route.query.id]).then((res) => {
-        console.log(res);
-      });
-    },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {
-    let routeArr = this.$route.path.split("/");
-    path = routeArr[routeArr.length - 3];
-    console.log(infoMap[path]);
-    this.data = createStaticFormInfo(path, this);
-    info[infoMap[path]](this.$route.query.id).then((res) => {
+    this.data = createDeductionDetail();
+    deductionGet(this.$route.query.id).then((res) => {
       console.log(res);
-      if (res.code === 0) {
+      if (res.code == 0) {
         if (res.data.files) {
           res.data.fileList = res.data.files.split[","];
         } else {
           res.data.fileList = [];
         }
-        if (res.data.course) {
-          res.data.courseList = res.data.course.split(",");
-        } else {
-          res.data.courseList = [];
-        }
-
-        //----------------假数据---------------
-        res.data.fileList = [
-          "https://element.eleme.io",
-          "https://element.eleme.io",
-          "https://element.eleme.io",
-          "https://element.eleme.io",
-        ];
-        res.data.courseList = ["高等数学", "国际文化与留学教育", "川农大精神"];
-        //-------------------------
-
         this.$refs.form.form = res.data;
       } else {
         this.$message.error(res.msg);
       }
     });
-    // console.log(this.data);
   },
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {},
@@ -122,4 +112,11 @@ export default {
   deactivated() {}, //如果有keep-alive缓存功能,当该页面撤销使这个函数会触发
 };
 </script>
-<style lang="less"></style>
+<style lang="less">
+.deduction-fill-page {
+  .el-radio {
+    width: 100%;
+    margin: 8px 0;
+  }
+}
+</style>

@@ -76,13 +76,13 @@ module.exports = [{
     name:"扣分项填写"
   },
   {
-    path:"deduction/check",
+    path:"deduction/:router/list",
     component:()=>import("views/function/deduction/check"),
     name:"扣分项查看"
   },
   {
-    path:"deduction/detail/:id",
-    component:()=>import("views/function/deduction/check")
+    path:"deduction/:router/list/:id",
+    component:()=>import("views/function/deduction/detail")
   },
 
   {

@@ -1,4 +1,5 @@
-const baseurl = "http://39.107.24.47:8080/file/upload";
+let config = require('../../../network/config');
+const baseurl = config.upFileUrl;
 // const tip = '只能上传 doc，docx，pdf，png，jpg 文件，且不超过500kb'
 const tip = "";
 
@@ -47,7 +48,7 @@ module.exports = {
         type: "file",
         prop: "files",
         label: "附件",
-        limit: 1,
+        limit: 3,
         required: false,
         action: baseurl,
         tip,

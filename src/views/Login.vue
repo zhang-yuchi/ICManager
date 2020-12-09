@@ -35,7 +35,7 @@
             :placeholder="$t('password')"
           ></el-input>
         </div>
-        <div class="form-line">
+        <!-- <div class="form-line">
           <img class="icon" src="~assets/image/quanxian.svg" alt="" />
           <el-radio-group v-model="role">
             <el-radio-button
@@ -45,7 +45,7 @@
               >{{ $t(item.role) }}</el-radio-button
             >
           </el-radio-group>
-        </div>
+        </div> -->
         <div class="form-line">
           <el-button type="primary" @click="to">{{ $t("login") }}</el-button>
         </div>
@@ -91,15 +91,15 @@ export default {
     return {
       account: "",
       pwd: "",
-      roles: [
-        { role: "学生", index: 5 },
-        { role: "教职工", index: 4 },
-        { role: "秘书", index: 3 },
-        { role: "工作人员", index: 2 },
-        { role: "校领导", index: 1 },
-        { role: "管理员", index: 0 },
-      ],
-      role: "",
+      // roles: [
+      //   { role: "学生", index: 5 },
+      //   { role: "教职工", index: 4 },
+      //   { role: "秘书", index: 3 },
+      //   { role: "工作人员", index: 2 },
+      //   { role: "校领导", index: 1 },
+      //   { role: "管理员", index: 0 },
+      // ],
+      // role: "",
       dialogFormVisible: false,
       register: {},
     };
@@ -117,29 +117,39 @@ export default {
     to() {
       if (!this.account || !this.pwd) {
         this.$message.error("请输入账号或密码");
-      } else if (!this.role && this.role !== 0) {
-        this.$message.error("请 选 择 身 份");
-        return 0;
-      } else {
-        this.$store.commit("setRole", [this.role]);
+      }
+      //  else if (!this.role && this.role !== 0) {
+      //   this.$message.error("请 选 择 身 份");
+      //   return 0;
+      // }
+      else {
         // console.log(this.$store.state.role);
         let obj = {
           username: this.account,
           password: this.pwd,
-          icRole: this.role,
+          // icRole: this.role,
         };
-        console.log(this.role);
         login(obj).then((res) => {
           console.log(res);
           if (res.code === 0) {
             sessionStorage.setItem("ICtoken", res.token);
+            let roleArr = [];
+            for (let i = 5; i >= 0; i--) {
+              if (res.role <= i) {
+                roleArr.push(i);
+              }
+            }
+            console.log(roleArr);
+            this.$store.commit("setRole", roleArr);
             this.$store.commit({
               type: "changeFunModule",
               module: mergeFun(this.$store.state.role),
             });
             this.$router.push(
               this.$store.state.funModule[0].hasSub
-                ? this.$store.state.funModule[0].path+"/"+this.$store.state.funModule[0].subMenu[0].path
+                ? this.$store.state.funModule[0].path +
+                    "/" +
+                    this.$store.state.funModule[0].subMenu[0].path
                 : this.$store.state.funModule[0].path
             );
           } else {

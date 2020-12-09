@@ -92,17 +92,6 @@ export default {
         } else {
           res.data.courseList = [];
         }
-
-        //----------------假数据---------------
-        res.data.fileList = [
-          "https://element.eleme.io",
-          "https://element.eleme.io",
-          "https://element.eleme.io",
-          "https://element.eleme.io",
-        ];
-        res.data.courseList = ["高等数学", "国际文化与留学教育", "川农大精神"];
-        //-------------------------
-
         this.$refs.form.form = res.data;
       } else {
         this.$message.error(res.msg);

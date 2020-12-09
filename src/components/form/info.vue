@@ -69,35 +69,10 @@
         </template>
 
         <template v-else-if="item.type == 'file'">
-          <!-- <el-upload
-            ref="upload"
-            :action="item.action"
-            :headers="myHeaders"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
-            :on-success="upFileSuccess"
-            :on-error="upFileError"
-            :before-remove="beforeRemove"
-            :multiple="item.limit > 1"
-            :limit="item.limit"
-            :disabled="item.disabled"
-            :on-exceed="
-              (files, fileList) => handleExceed(files, fileList, item.limit)
-            "
-            :file-list="form.fileList"
-            :auto-upload="false"
-          >
-            <el-button size="small" type="primary" :disabled="item.disabled"
-              >点击上传</el-button
-            >
-            <div slot="tip" class="el-upload__tip">
-              {{ item.tip }}
-            </div>
-          </el-upload> -->
           <div class="file-line-box">
             <el-link
               class="file-line"
-              :href="file"
+              :href="baseUrl + '/file/download?fileName=' + file"
               target="_blank"
               v-for="(file, indey) in form.fileList"
               :key="indey"
@@ -130,6 +105,7 @@
   </div>
 </template>
 <script>
+import baseUrl from "network/config.js";
 export default {
   props: {
     title: {
@@ -196,6 +172,7 @@ export default {
     console.log(token);
     this.myHeaders = { token };
     console.log(this.form);
+    this.baseUrl = baseUrl.baseUrl;
   },
   mounted() {},
 };
@@ -229,9 +206,8 @@ export default {
       }
     }
   }
-  .info-page-add-input-line{
+  .info-page-add-input-line {
     letter-spacing: 2px;
-    
   }
 }
 </style>
