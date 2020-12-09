@@ -144,6 +144,7 @@ export default {
             this.$store.commit({
               type: "changeFunModule",
               module: mergeFun(this.$store.state.role),
+              // module: mergeFun([0,1,2,3,4,5]),
             });
             this.$router.push(
               this.$store.state.funModule[0].hasSub
