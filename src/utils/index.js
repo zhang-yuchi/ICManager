@@ -5,8 +5,10 @@ import {
 export const mergeFun = function (auth) {
   let authBox = []
   auth.map((authNum) => {
+    console.log(authNum);
     authMap[authNum].map((funModule) => {
       if (!funModule.subMenu) {
+        //如果这个模块没有子模块
         let result = authBox.findIndex(authEle => {
           return authEle.path == funModule.path
         })
@@ -14,6 +16,7 @@ export const mergeFun = function (auth) {
           authBox.push(funModule)
         }
       } else {
+        //如果有子模块,则将子模块合并
         if (authBox.findIndex(val => {
             return val.path == funModule.path
           }) == -1) {
@@ -22,7 +25,8 @@ export const mergeFun = function (auth) {
           let objectModule = authBox.find(v => {
             return v.path === funModule.path
           })
-          // console.log(objectModule);
+          console.log(funModule.subMenu);
+          console.log(objectModule.subMenu);
           objectModule.subMenu = _flat(objectModule['subMenu'], funModule.subMenu)
         }
       }
@@ -73,14 +77,15 @@ export const getCurModule = (that, tableRule) => {
   } else if (deduction.test(router)) {
     module = "deduction"
   }
-  console.log(module);
+  // console.log(module);
   let params = that.$route.params.router;
-  console.log(params);
+  // console.log(params);
   return tableRule[module][params];
 
 }
 
 function _flat(obj, src) {
+  console.log(src);
   const len = obj.length
   src.map(item => {
     obj.push(item)

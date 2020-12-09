@@ -16,31 +16,31 @@ export const authMap = {
     deduction(),//扣分项
   ],
   "1": [
-    info,
+    // info,
     checkIC ,
     statistics([0,1,20,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]),
     deduction()
   ],
   "2": [
-    info,
+    // info,
     checkIC,
     apply([18]),
     statistics([0,1,20,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]),
     deduction()
   ],
   "3": [
-    info,
+    // info,
     checkIC,
     apply([3,20, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]),
     statistics([0,1,20,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18])
   ],
   "4": [
-    info,
+    // info,
     checkIC,
     apply([0, 1, 3,20, 7, 12])
   ],
   "5": [
-    info,
+    // info,
     checkIC,
     apply([1, 2])
   ]
