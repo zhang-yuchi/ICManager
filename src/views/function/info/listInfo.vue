@@ -50,7 +50,7 @@ export default {
     submit(form) {
       // 只提交 userOrg,username
       let obj = {};
-      obj[parameterMap[path]] = {
+      obj = {
         userOrg: form.userOrg,
         username: form.username,
       };
@@ -61,7 +61,7 @@ export default {
             message: "提交成功",
             type: "success",
           });
-          this.$route.go(-1);
+          this.$router.go(-1);
         } else {
           this.$message.error(res.msg);
         }

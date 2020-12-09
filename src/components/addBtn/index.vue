@@ -21,7 +21,8 @@
 <script>
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 //例如：import 《组件名称》 from '《组件路径》';
-import ovDialog from 'components/ovDialog'
+import ovDialog from 'components/ovDialog';
+import staticMap from 'map/function/statics/map.js'
 export default {
   //import引入的组件需要注入到对象中才能使用
   components: {
@@ -38,7 +39,11 @@ export default {
   //方法集合
   methods: {
     addOneData(){
-
+      let arr = this.$route.path.split('/');
+      let path = staticMap[arr[arr.length-2]];
+      if(path){ // 统计汇总
+        this.$router.push(`/user/apply/${path}/info`)
+      }
     }
   },
   //生命周期 - 创建完成（可以访问当前this实例）
