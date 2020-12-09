@@ -13,6 +13,7 @@
       :needDelete="needDelete"
       :mixQuery="true"
       :bulkySelect="bulkySelect"
+      :needAdd="true"
       @pageChange="pageChange"
       @query="queryKey"
       @handleCheck="handleCheck"
@@ -337,7 +338,7 @@ export default {
       promise.then(res=>{
         console.log(res);
       })
-    }
+    },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {},

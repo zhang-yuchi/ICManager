@@ -11,6 +11,8 @@
           :isSelect="isCheckBoxSelect"
           :importData="bulkySelect"
         ></dataOutPut>
+        <addBtn v-if="needAdd"></addBtn>
+
         <dataDel
           v-if="needDelete"
           :DeleteData="bulkySelect"
@@ -106,6 +108,7 @@ import dataOutPut from "../dataOutput";
 import dataDel from "../dataDel";
 import mixQuery from "../mixQuery";
 import ovDialog from "components/ovDialog";
+import addBtn from 'components/addBtn'
 export default {
   //import引入的组件需要注入到对象中才能使用
   props: {
@@ -141,12 +144,17 @@ export default {
       type: Boolean,
       default: false,
     },
+    needAdd: {
+      type: Boolean,
+      default: false,
+    },
   },
   components: {
     dataOutPut,
     mixQuery,
     ovDialog,
     dataDel,
+    addBtn
   },
   data() {
     //这里存放数据
@@ -253,10 +261,10 @@ export default {
       // this.bulkySelect = {};
       this.$emit("clearBulkySelect");
     },
-    emitDelete(data){
+    emitDelete(data) {
       // console.log(data);
-      this.$emit("bulkyDelete",data)
-    }
+      this.$emit("bulkyDelete", data);
+    },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {},
@@ -287,6 +295,13 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+  .add-btn {
+    position: relative;
+    top: -50%;
+    transform: translateY(30%);
+    width: 25px;
+    cursor: pointer;
   }
   .ov-operation-list {
     display: flex;
