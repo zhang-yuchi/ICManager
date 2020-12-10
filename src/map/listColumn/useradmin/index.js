@@ -14,7 +14,8 @@ module.exports = {
       add:{
         url:"/endpoint/icuser/save",
         type:"put"
-      }
+      },
+      delete:"/endpoint/icuser/delete"
     },
     column: [{
         name: "角色",
