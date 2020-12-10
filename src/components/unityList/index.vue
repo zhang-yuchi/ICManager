@@ -337,10 +337,10 @@ export default {
       console.log(obj);
       console.log(qs.stringify(obj));
       if (typeof this.tableDef["reqOpt"]["delete"] == "string") {
-        promise = service.delete(this.tableDef["reqOpt"]['delete'],obj);
+        promise = service.delete(this.tableDef["reqOpt"]['delete'],{data:obj});
       } else if (typeof this.tableDef["reqOpt"]["delete"] == "object") {
         promise = service[this.tableDef["reqOpt"]["delete"]["method"]](
-          this.tableDef["reqOpt"]["delete"]["url"],obj
+          this.tableDef["reqOpt"]["delete"]["url"],{data:obj}
         );
       }
       promise.then(res=>{

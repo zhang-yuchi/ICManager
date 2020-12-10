@@ -5,7 +5,7 @@ module.exports = {
     getOne: (id) => { //获取详情 or 跳转?
       return "/endpoint/teacherexchange/info/" + id
     },
-    delete:""
+    delete:"/endpoint/expertintroplan/delete"
   },
   column: [{
       name: "登记人id",

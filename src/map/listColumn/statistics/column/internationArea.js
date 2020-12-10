@@ -4,7 +4,8 @@ module.exports = {
     get: "/endpoint/nationalregionalcenter/list2",
     getOne: (id) => { //获取详情 or 跳转?
       return "/endpoint/teacherexchange/info/" + id
-    }
+    },
+    delete:"/endpoint/nationalregionalcenter/delete"
   },
   column: [{
       name: "登记人id",

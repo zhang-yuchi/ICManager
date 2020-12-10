@@ -1,10 +1,11 @@
 module.exports = {
-  title: "国际联合科研平台汇总",
+  title: "国际成果转化或人才培训平台汇总",
   reqOpt: {
     get: "/endpoint/itachievementtrainingplatform/list2",
     getOne: (id) => { //获取详情 or 跳转?
       return "/endpoint/teacherexchange/info/" + id
-    }
+    },
+    delete:"/endpoint/itachievementtrainingplatform/delete"
   },
   column: [{
       name: "登记人id",
