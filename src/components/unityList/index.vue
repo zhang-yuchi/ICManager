@@ -337,14 +337,26 @@ export default {
       // console.log(obj);
       // console.log(qs.stringify(obj));
       if (typeof this.tableDef["reqOpt"]["delete"] == "string") {
-        promise = service.delete(this.tableDef["reqOpt"]['delete'],{data:obj});
+        promise = service.delete(this.tableDef["reqOpt"]['delete'],{data:obj.ids});
       } else if (typeof this.tableDef["reqOpt"]["delete"] == "object") {
         promise = service[this.tableDef["reqOpt"]["delete"]["method"]](
-          this.tableDef["reqOpt"]["delete"]["url"],{data:obj}
+          this.tableDef["reqOpt"]["delete"]["url"],{data:obj.ids}
         );
       }
       promise.then(res=>{
-        console.log(res);
+        // console.log(res);
+        if(res.code==0){
+          this.$message({
+            message:"操作成功",
+            type:"success"
+          })
+          this.commondQuery()
+        }else{
+          this.$message({
+            message:res.message,
+            type:"error"
+          })
+        }
       })
     },
   },

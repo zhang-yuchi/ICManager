@@ -64,7 +64,7 @@ export const createDeductionFill = () => {
   for (let item of formConfig.config) {
     formConfig.rules[item.prop] = [];
     let obj = {};
-    console.log(typeof item.required);
+    // console.log(typeof item.required);
     if (typeof item.required == "undefined" || item.required) {
       obj = {
         required: true,
