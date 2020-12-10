@@ -169,9 +169,9 @@ export default {
     //   }
     // }
     let token = sessionStorage.getItem("ICtoken");
-    console.log(token);
+    // console.log(token);
     this.myHeaders = { token };
-    console.log(this.form);
+    // console.log(this.form);
     this.baseUrl = baseUrl.baseUrl;
   },
   mounted() {},

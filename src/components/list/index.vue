@@ -155,6 +155,7 @@ export default {
     },
     request: {
       type: Object,
+      default:()=>{}
     },
   },
   components: {
@@ -284,7 +285,11 @@ export default {
   mounted() {
     this.$nextTick(() => {
       this.columnKey = this.tableColumn[0].prop;
-      this.requestAdd = this.request.add;
+      // console.log(this.request)
+      if(this.request){
+        this.requestAdd = this.request.add;
+      }
+
     });
   },
   beforeCreate() {}, //生命周期 - 创建之前

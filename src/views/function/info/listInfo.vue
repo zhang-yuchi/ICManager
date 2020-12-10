@@ -55,7 +55,7 @@ export default {
         username: form.username,
       };
       service[this.data.request](obj).then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.code === 0) {
           this.$message({
             message: "提交成功",

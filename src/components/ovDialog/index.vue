@@ -157,7 +157,7 @@ export default {
     //伪数组->数组
     objToArr(obj){
       let arr = []
-      console.log(obj);
+      // console.log(obj);
       Object.keys(obj).map(i=>{
         arr[i] = obj[i]
       })

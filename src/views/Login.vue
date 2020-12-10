@@ -130,7 +130,7 @@ export default {
           // icRole: this.role,
         };
         login(obj).then((res) => {
-          console.log(res);
+          // console.log(res);
           if (res.code === 0) {
             sessionStorage.setItem("ICtoken", res.token);
             let roleArr = [];
@@ -139,7 +139,7 @@ export default {
                 roleArr.push(i);
               }
             }
-            console.log(roleArr);
+            // console.log(roleArr);
             this.$store.commit("setRole", roleArr);
             this.$store.commit({
               type: "changeFunModule",

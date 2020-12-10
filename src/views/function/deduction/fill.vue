@@ -40,9 +40,9 @@ export default {
   //方法集合
   methods: {
     submit(form) {
-      console.log(form);
+      // console.log(form);
       deductionitem(form).then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.code === 0) {
           this.$message({
             message: "提交成功",

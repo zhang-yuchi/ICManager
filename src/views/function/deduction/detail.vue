@@ -68,9 +68,9 @@ export default {
       // });
     },
     del() {
-      console.log(this.$route.query.id);
+      // console.log(this.$route.query.id);
       deductionDel([this.$route.query.id]).then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.code === 0) {
           this.$message({
             message: "删除成功",
@@ -87,7 +87,7 @@ export default {
   created() {
     this.data = createDeductionDetail();
     deductionGet(this.$route.query.id).then((res) => {
-      console.log(res);
+      // console.log(res);
       if (res.code == 0) {
         if (res.data.files) {
           res.data.fileList = res.data.files.split[","];

@@ -5,7 +5,7 @@ import {
 export const mergeFun = function (auth) {
   let authBox = []
   auth.map((authNum) => {
-    console.log(authNum);
+    // console.log(authNum);
     authMap[authNum].map((funModule) => {
       if (!funModule.subMenu) {
         //如果这个模块没有子模块
@@ -25,8 +25,8 @@ export const mergeFun = function (auth) {
           let objectModule = authBox.find(v => {
             return v.path === funModule.path
           })
-          console.log(funModule.subMenu);
-          console.log(objectModule.subMenu);
+          // console.log(funModule.subMenu);
+          // console.log(objectModule.subMenu);
           objectModule.subMenu = _flat(objectModule['subMenu'], funModule.subMenu)
         }
       }
@@ -85,7 +85,7 @@ export const getCurModule = (that, tableRule) => {
 }
 
 function _flat(obj, src) {
-  console.log(src);
+  // console.log(src);
   const len = obj.length
   src.map(item => {
     obj.push(item)

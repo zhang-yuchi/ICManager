@@ -31,7 +31,7 @@ export const creatFormConfig = (role, that) => {
       formConfig.rules[item.prop].push({ required: false });
     }
   }
-  console.log(formConfig);
+  // console.log(formConfig);
   return formConfig;
 };
 

@@ -50,7 +50,7 @@ export default {
     addOption() {
       return this.addColumn.map((item) => {
         if(item.prop!=='operator'){
-          console.log(item);
+          // console.log(item);
           item.label = item.name
         }
         return item;
@@ -83,14 +83,14 @@ export default {
       this.echoQuery = echo;
     },
     queryMany(query) {
-      console.log(query);
+      // console.log(query);
       let obj ={}
       Object.keys(query).map(key=>{
         // console.log(key);
         obj[key] = query[key]['value']
       })
       service[this.request['type']](this.request['url'],obj).then(res=>{
-        console.log(res);
+        // console.log(res);
         if(res.code==0){
           this.$message({
             type:"success",

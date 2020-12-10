@@ -41,9 +41,9 @@ export default {
   //方法集合
   methods: {
     submit(form) {
-      console.log(form);
+      // console.log(form);
       service[this.data.request](form).then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.code === 0) {
           this.$message({
             message: "提交成功",
@@ -59,7 +59,7 @@ export default {
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {
     routeArr = this.$route.path.split("/");
-    console.log(routeArr[routeArr.length - 2]);
+    // console.log(routeArr[routeArr.length - 2]);
     // 个人填报
     this.data = creatFormConfig(routeArr[routeArr.length - 2], this);
   },

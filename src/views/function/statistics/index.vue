@@ -114,7 +114,7 @@ export default {
           return String(item[prop]).indexOf(this.entitySet[prop]) !== -1;
         });
       } else {
-        console.log("重新加载一次");
+        // console.log("重新加载一次");
         this.tableAllData = this.applySubFun.map((item, index) => {
           return {
             num: index + 1,
@@ -129,7 +129,7 @@ export default {
     },
     query(entitySet) {
       this.entitySet = entitySet;
-      console.log(this.entitySet);
+      // console.log(this.entitySet);
       this.getData();
     },
   },

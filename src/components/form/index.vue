@@ -163,12 +163,12 @@ export default {
       this.$message.error("文件上传服务器失败，原因：" + err);
     },
     upFileSuccess(response, file, fileList) {
-      console.log(response);
+      // console.log(response);
       if (response.code != 0) {
         this.upFileError(response.msg);
         return false;
       } else {
-        console.log(this.fileList);
+        // console.log(this.fileList);
         for (let item of this.fileList) {
           if (item.status != "success") return;
         }
@@ -182,11 +182,11 @@ export default {
       this.form[prop].splice(index, 1);
     },
     onSubmit() {
-      console.log(this.fileList);
+      // console.log(this.fileList);
       let that = this;
       let routeArr = this.$route.path.split("/");
-      console.log(routeArr[routeArr.length - 2]);
-      console.log(this.form, this.rules);
+      // console.log(routeArr[routeArr.length - 2]);
+      // console.log(this.form, this.rules);
       this.$refs.elform.validate((valid) => {
         if (valid) {
           if (this.fileList.length) {
@@ -220,11 +220,11 @@ export default {
       this.fileList = fileList;
     },
     handleRemove(file, fileList) {
-      console.log(file, fileList);
+      // console.log(file, fileList);
       this.fileList = fileList;
     },
     handlePreview(file) {
-      console.log(file);
+      // console.log(file);
     },
     handleExceed(files, fileList, limit) {
       this.$message.warning(
@@ -245,9 +245,9 @@ export default {
       }
     }
     let token = sessionStorage.getItem("ICtoken");
-    console.log(token);
+    // console.log(token);
     this.myHeaders = { token, "Content-Type": "multipart/form-data" };
-    console.log(this.form);
+    // console.log(this.form);
   },
   mounted() {},
 };
