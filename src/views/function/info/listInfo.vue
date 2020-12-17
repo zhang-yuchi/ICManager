@@ -70,6 +70,15 @@ export default {
     del() {
       del[infoMap[path]]([this.$route.query.id]).then((res) => {
         console.log(res);
+        if (res.code === 0) {
+          this.$message({
+            message: "删除成功",
+            type: "success",
+          });
+          this.$router.go(-1);
+        } else {
+          this.$message.error(res.msg);
+        }
       });
     },
   },
