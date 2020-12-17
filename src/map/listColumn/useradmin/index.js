@@ -34,11 +34,11 @@ module.exports = {
         prop: "username",
         required:true
       },
-      // {
-      //   name:"密码",
-      //   prop:"password",
-      //   noQuery:true,
-      // },
+      {
+        name:"密码",
+        prop:"password",
+        noQuery:true,
+      },
       {
         name: "用户类型",
         prop: "userType"
