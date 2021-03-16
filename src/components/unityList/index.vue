@@ -9,6 +9,7 @@
       :tableColumn="tableDef.column"
       :queryOption="queryOption"
       :isLoading="loading"
+      :needOutput="needOutput"
       :needImport="needImport"
       :needDelete="needDelete"
       :mixQuery="true"
@@ -65,8 +66,9 @@ export default {
         column: [],
       },
       bulkySelect: {},
-      needImport: false,
+      needOutput: false,
       needDelete:true,
+      needImport:true,
       pageSize: 9,
       currentPage: 1,
       loading: false,

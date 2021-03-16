@@ -5,7 +5,7 @@
       <div class="title-text">
         {{ title }}
         <dataOutPut
-          v-if="needImport"
+          v-if="needOutput"
           @checkboxselect="handleCheckBox"
           @checkboxclear="handleClearCheckBox"
           :isSelect="isCheckBoxSelect"
@@ -28,6 +28,7 @@
           @checkboxclear="handleClearCheckBox"
         ></dataDel>
       </div>
+      <dataImport v-if="needImport"></dataImport>
       <div class="ov-operation-list">
         <mixQuery
           :mixQuery="mixQuery"
@@ -114,6 +115,7 @@ import dataDel from "../dataDel";
 import mixQuery from "../mixQuery";
 import ovDialog from "components/ovDialog";
 import addBtn from "components/addBtn";
+import dataImport from "../dataImport"
 export default {
   //import引入的组件需要注入到对象中才能使用
   props: {
@@ -122,7 +124,11 @@ export default {
       default: () => {},
     },
     needDelete: Boolean,
-    needImport: Boolean, //是否需要导入数据
+    needImport:{
+      type:Boolean,
+      default:false
+    },
+    needOutput: Boolean, //是否需要导入数据
     isBatchDelete: Boolean, //是否批量删除
     title: String, //标题
     total: Number,
@@ -164,6 +170,7 @@ export default {
     ovDialog,
     dataDel,
     addBtn,
+    dataImport
   },
   data() {
     //这里存放数据

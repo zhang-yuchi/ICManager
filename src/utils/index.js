@@ -71,7 +71,8 @@ export const getCurModule = (that, tableRule) => {
     module = "apply";
   } else if (statistics.test(router)) {
     module = "statistics";
-    that.needImport = true
+    that.needOutput = true
+    // that.needImport = true
   } else if (useradmin.test(router)) {
     module = "useradmin";
   } else if (deduction.test(router)) {

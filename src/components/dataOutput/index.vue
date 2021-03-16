@@ -62,6 +62,7 @@ export default {
         });
       });
       const table = getCurModule(this, tableRule);
+      console.log(table);
       this.form.clazzName = table.backendTableName;
       this.form.jsonList = importJson;
       // this.$refs['outputAction'].submit()
