@@ -17,7 +17,6 @@
           :request="requestAdd"
           v-if="needAdd"
         ></addBtn>
-
         <dataDel
           v-if="needDelete"
           :DeleteData="bulkySelect"
